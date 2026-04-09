@@ -7,7 +7,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    SUPABASE_SECRET_KEY: z.string().min(1).optional(),
+    SUPABASE_SECRET_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
@@ -20,6 +20,4 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
-  // Skip validation in build when env vars aren't available yet
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
