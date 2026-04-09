@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { loginSchema, signupSchema } from "@/schemas/auth";
 
@@ -24,7 +25,7 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/es/admin/links");
+  return { success: true };
 }
 
 export async function signup(formData: FormData) {
@@ -52,7 +53,7 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/es/admin/links");
+  return { success: true };
 }
 
 export async function signInWithGoogle() {
@@ -78,5 +79,7 @@ export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath("/", "layout");
-  redirect("/es/login");
+
+  const locale = await getLocale();
+  redirect(`/${locale}/login`);
 }

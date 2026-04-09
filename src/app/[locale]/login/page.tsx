@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { useTranslations } from "next-intl";
@@ -10,6 +10,7 @@ import { login, signup, signInWithGoogle } from "@/actions/auth";
 export default function LoginPage() {
   const t = useTranslations("login");
   const tc = useTranslations("common");
+  const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,11 +34,16 @@ export default function LoginPage() {
           const fieldErrors = Object.values(result.error).flat();
           setError(fieldErrors[0] as string);
         }
+      } else if (result?.success) {
+        router.push("/admin/links");
       }
     } catch {
-      // redirect throws an error in Server Actions — that's expected behavior
+      // Handle potential errors
     } finally {
-      setLoading(false);
+      if (!isSignUp) {
+        // If redirecting, we may not want to clear loading right away, but to be sure we do unless routing logic takes over
+        setLoading(false);
+      }
     }
   }
 
@@ -47,7 +53,7 @@ export default function LoginPage() {
     try {
       await signInWithGoogle();
     } catch {
-      // redirect throws
+      // redirect throws in actions but not likely if doing oAuth? actually oAuth redirects.
     } finally {
       setLoading(false);
     }
@@ -175,7 +181,7 @@ export default function LoginPage() {
               </div>
 
               {/* OAuth Buttons */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <button
                   onClick={handleGoogleLogin}
                   disabled={loading}
@@ -187,13 +193,6 @@ export default function LoginPage() {
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqun8tMiSkqxxt8FN8RrRla4zfV3BY3iCDlla7rZnLPVaiPezHDUYdr0bYLx46sQ-matxsFlzDgBMfz9ozz6d9rNHHIIluFdKHSm0_x5nvPBZrzcBW4DkGWLXRK9jUh-c4PTC6XoEiU_h5k-J4CbWdVcEfapRwbvbeDGZrol5snkPbnyM5pkGddPt-P4Hel0gh8D8LPteLHVJG7p823nbcphgBEVcM9uuVFTOd6PdKd82dEiLehCVQd64KRucCru2pI7nKAg2n2Hs"
                   />
                   <span className="text-sm font-medium">Google</span>
-                </button>
-                <button
-                  disabled={loading}
-                  className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all disabled:opacity-50"
-                >
-                  <Icon name="terminal" className="text-xl" />
-                  <span className="text-sm font-medium">GitHub</span>
                 </button>
               </div>
 
@@ -220,7 +219,7 @@ export default function LoginPage() {
         {/* Support Link */}
         <footer className="mt-12">
           <Link
-            href="#"
+            href="/support"
             className="font-label text-outline flex items-center gap-2 text-xs tracking-[0.2em] uppercase transition-colors hover:text-white"
           >
             <Icon name="help_outline" className="text-sm" />

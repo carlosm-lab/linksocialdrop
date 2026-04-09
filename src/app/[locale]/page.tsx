@@ -174,19 +174,19 @@ function LandingContent() {
           </div>
           <div className="font-body flex gap-8 text-sm">
             <Link
-              href="#"
+              href="/privacy"
               className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("privacy")}
             </Link>
             <Link
-              href="#"
+              href="/terms"
               className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("terms")}
             </Link>
             <Link
-              href="#"
+              href="/support"
               className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("support")}

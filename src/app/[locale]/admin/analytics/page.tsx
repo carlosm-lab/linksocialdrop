@@ -1,17 +1,32 @@
 import { Icon } from "@/components/ui/icon";
 import { useTranslations } from "next-intl";
+import { getAnalyticsDashboard } from "@/actions/analytics";
+import { redirect } from "next/navigation";
 
-export default function AdminAnalyticsPage() {
-  const t = useTranslations("adminAnalytics");
+export default async function AdminAnalyticsPage() {
+  const t = await import(`../../../../../messages/es.json`).then(
+    (m) => m.adminAnalytics
+  );
+
+  let stats;
+  try {
+    stats = await getAnalyticsDashboard();
+  } catch (error) {
+    redirect("/login");
+  }
+
+  const { views, clicks, leaderboard } = stats;
+
+  const ctr = views > 0 ? ((clicks / views) * 100).toFixed(1) : "0.0";
 
   return (
     <main className="mx-auto max-w-7xl px-6 pt-24 pb-32">
       <section className="mb-12">
         <h2 className="font-headline text-on-surface mb-2 text-6xl font-black tracking-tighter">
-          {t("title")}
+          {t.title}
         </h2>
         <p className="max-w-lg leading-relaxed text-slate-400">
-          {t("description")}
+          {t.description}
         </p>
       </section>
 
@@ -22,19 +37,16 @@ export default function AdminAnalyticsPage() {
               <span className="bg-primary-container/10 text-primary-container rounded-xl p-3">
                 <Icon name="visibility" />
               </span>
-              <span className="font-label text-primary-container text-xs font-bold tracking-widest uppercase">
-                +12.5%
-              </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t("totalVisits")}
+              {t.totalVisits}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
-              42.8k
+              {views}
             </p>
           </div>
           <div className="bg-surface-container-highest mt-6 h-1 w-full overflow-hidden rounded-full">
-            <div className="luminous-glow h-full w-[75%]"></div>
+            <div className="luminous-glow h-full w-[100%]"></div>
           </div>
         </div>
 
@@ -44,19 +56,16 @@ export default function AdminAnalyticsPage() {
               <span className="bg-primary-container/10 text-primary-container rounded-xl p-3">
                 <Icon name="ads_click" />
               </span>
-              <span className="font-label text-primary-container text-xs font-bold tracking-widest uppercase">
-                +8.2%
-              </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t("uniqueClicks")}
+              {t.uniqueClicks}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
-              12.4k
+              {clicks}
             </p>
           </div>
           <div className="bg-surface-container-highest mt-6 h-1 w-full overflow-hidden rounded-full">
-            <div className="luminous-glow h-full w-[45%]"></div>
+            <div className="luminous-glow h-full w-[100%]"></div>
           </div>
         </div>
 
@@ -66,19 +75,19 @@ export default function AdminAnalyticsPage() {
               <span className="bg-primary-container/10 text-primary-container rounded-xl p-3">
                 <Icon name="analytics" />
               </span>
-              <span className="font-label text-primary-container text-xs font-bold tracking-widest uppercase">
-                +2.1%
-              </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t("ctrAvg")}
+              {t.ctrAvg}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
-              28.9%
+              {ctr}%
             </p>
           </div>
           <div className="bg-surface-container-highest mt-6 h-1 w-full overflow-hidden rounded-full">
-            <div className="luminous-glow h-full w-[28.9%]"></div>
+            <div
+              className="luminous-glow h-full min-w-[5%]"
+              style={{ width: `${ctr}%` }}
+            ></div>
           </div>
         </div>
       </div>
@@ -88,13 +97,13 @@ export default function AdminAnalyticsPage() {
           <div className="mb-12 flex items-end justify-between">
             <div>
               <h4 className="font-headline text-on-surface text-2xl font-bold">
-                {t("trafficVelocity")}
+                {t.trafficVelocity}
               </h4>
-              <p className="text-sm text-slate-500">{t("last30Days")}</p>
+              <p className="text-sm text-slate-500">{t.last30Days}</p>
             </div>
             <div className="flex gap-2">
               <button className="bg-surface-container-highest text-primary-container font-label hover:bg-surface-container-highest/80 rounded-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors">
-                {t("export")}
+                {t.export}
               </button>
             </div>
           </div>
@@ -128,62 +137,49 @@ export default function AdminAnalyticsPage() {
 
         <div className="bg-surface-container-low rounded-xl p-8">
           <h4 className="font-headline text-on-surface mb-8 text-lg font-bold">
-            {t("performanceLeaderboard")}
+            {t.performanceLeaderboard}
           </h4>
           <div className="space-y-8">
-            {[
-              { rank: "01", name: "Summer Lookbook", clicks: "4.2k", w: "88%" },
-              {
-                rank: "02",
-                name: "Photography Workshop",
-                clicks: "3.1k",
-                w: "65%",
-              },
-              {
-                rank: "03",
-                name: "Latest Newsletter",
-                clicks: "2.8k",
-                w: "58%",
-              },
-              {
-                rank: "04",
-                name: "Portfolio Review",
-                clicks: "1.9k",
-                w: "40%",
-              },
-              {
-                rank: "05",
-                name: "Shop Essentials",
-                clicks: "1.2k",
-                w: "25%",
-              },
-            ].map((item) => (
-              <div key={item.rank} className="group">
-                <div className="mb-2 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="font-headline text-xs font-black text-slate-700">
-                      {item.rank}
-                    </span>
-                    <span className="text-on-surface text-sm font-bold">
-                      {item.name}
-                    </span>
+            {leaderboard.length === 0 ? (
+              <p className="text-sm text-slate-500 italic">No activity yet</p>
+            ) : (
+              leaderboard.slice(0, 5).map((item, index) => {
+                const rank = String(index + 1).padStart(2, "0");
+                const maxClicks = leaderboard[0].clicks || 1;
+                const widthPercent = Math.max(
+                  (item.clicks / maxClicks) * 100,
+                  5
+                );
+
+                return (
+                  <div key={item.id} className="group">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-headline text-xs font-black text-slate-700">
+                          {rank}
+                        </span>
+                        <span className="text-on-surface block max-w-[150px] truncate text-sm font-bold">
+                          {item.title}
+                        </span>
+                      </div>
+                      <span className="text-primary-container text-xs font-bold">
+                        {item.clicks}
+                      </span>
+                    </div>
+                    <div className="bg-surface-container-highest h-1.5 w-full overflow-hidden rounded-full">
+                      <div
+                        className="luminous-glow h-full transition-opacity group-hover:opacity-80"
+                        style={{ width: `${widthPercent}%` }}
+                      ></div>
+                    </div>
                   </div>
-                  <span className="text-primary-container text-xs font-bold">
-                    {item.clicks}
-                  </span>
-                </div>
-                <div className="bg-surface-container-highest h-1.5 w-full overflow-hidden rounded-full">
-                  <div
-                    className="luminous-glow h-full transition-opacity group-hover:opacity-80"
-                    style={{ width: item.w }}
-                  ></div>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            )}
           </div>
 
           <button className="font-label mt-10 w-full border-t border-slate-800/50 py-4 pt-8 text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase transition-colors hover:text-white">
-            {t("viewDetailedAudit")}
+            {t.viewDetailedAudit}
           </button>
         </div>
       </div>
