@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { TopAppBar } from "@/components/layout/TopAppBar";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 
 export default function LandingPage({
   params,
@@ -68,11 +69,14 @@ function LandingContent() {
                 <div className="from-primary-container/20 absolute top-0 h-40 w-full bg-gradient-to-b to-transparent"></div>
                 <div className="flex flex-col items-center px-6 pt-12">
                   <div className="bg-surface-container-high border-primary-container mb-4 h-20 w-20 rounded-full border-2 p-1">
-                    <img
+                    <Image
                       alt="Avatar"
                       className="h-full w-full rounded-full object-cover"
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDMOLQiO_TAF5LTsMXCcT7uLBn0XehLjwgWs_-YJHZQkmXIO48FhxJh0veE0yoN8zM41T99e2fppB9t6vnUpleEjTSsImQ_5AgqJUO5Gs-CWmu0d6-cP_AbvQ4up7-HXTQoG8ZnxgLWMCJyOZGak3Pht1W-Yh39S6fH_9i6ooxQTvjNzpOV5YD_M0zrxrNeMLZVvlVugdWbMbRWZ4rXlcVC67BedZ5TULE-kRdr5xtfY7MjtMWqAdVwnkgTamFjtlhM65SH1GPmPM"
-                      fetchPriority="high"
+                      width={119}
+                      height={119}
+                      quality={75}
+                      priority
                     />
                   </div>
                   <h2 className="font-headline text-lg font-bold">

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 import { signOut } from "@/actions/auth";
+import Image from "next/image";
 
 interface TopAppBarProps {
   isAuthenticated?: boolean;
@@ -21,10 +22,15 @@ export function TopAppBar({
     <header className="fixed top-0 z-50 w-full bg-[#111316]/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-4">
-          <Icon name="grid_view" className="text-2xl text-[#00F5FF]" />
+          <Icon
+            name="grid_view"
+            className="flex-shrink-0 text-2xl text-[#00F5FF]"
+            style={{ width: "24px", height: "24px" }}
+          />
           <Link
             href="/"
             className="font-headline text-xl font-black tracking-tighter text-[#00F5FF]"
+            style={{ minHeight: "28px" }}
           >
             LinkSocialDrop
           </Link>
@@ -56,10 +62,13 @@ export function TopAppBar({
               <div className="flex items-center gap-3">
                 <div className="border-primary-container/20 ml-4 h-10 w-10 overflow-hidden rounded-full border-2">
                   {avatarUrl ? (
-                    <img
+                    <Image
                       alt="User Profile"
                       className="h-full w-full object-cover"
                       src={avatarUrl}
+                      width={119}
+                      height={119}
+                      quality={75}
                     />
                   ) : (
                     <div className="bg-primary-container/20 flex h-full w-full items-center justify-center">
