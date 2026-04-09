@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#111316",
+              "on-secondary-container": "#83bfc3",
+              "on-error": "#690005",
+              "on-secondary-fixed": "#002021",
+              "on-primary-fixed": "#002021",
+              "surface-tint": "#00dce5",
+              "surface-dim": "#111316",
+              "secondary": "#95d1d4",
+              "on-primary": "#003739",
+              "on-surface-variant": "#b9caca",
+              "secondary-fixed-dim": "#95d1d4",
+              "surface-container-low": "#1a1c1f",
+              "primary": "#e9feff",
+              "secondary-container": "#044f52",
+              "on-tertiary-fixed-variant": "#544600",
+              "error-container": "#93000a",
+              "surface-container-lowest": "#0c0e11",
+              "on-error-container": "#ffdad6",
+              "inverse-surface": "#e2e2e6",
+              "primary-container": "#00f5ff",
+              "tertiary-fixed-dim": "#e7c427",
+              "on-tertiary-fixed": "#221b00",
+              "primary-fixed": "#63f7ff",
+              "surface-container-highest": "#333538",
+              "tertiary": "#fff9f0",
+              "on-surface": "#e2e2e6",
+              "on-tertiary-container": "#736000",
+              "error": "#ffb4ab",
+              "on-secondary": "#003739",
+              "surface-variant": "#333538",
+              "inverse-primary": "#00696e",
+              "secondary-fixed": "#b0edf1",
+              "outline": "#849495",
+              "surface-container": "#1e2023",
+              "on-primary-fixed-variant": "#004f53",
+              "on-tertiary": "#3a3000",
+              "on-primary-container": "#006c71",
+              "surface-container-high": "#282a2d",
+              "background": "#111316",
+              "primary-fixed-dim": "#00dce5",
+              "tertiary-fixed": "#ffe16c",
+              "surface-bright": "#37393d",
+              "inverse-on-surface": "#2f3034",
+              "tertiary-container": "#ffdb3f",
+              "on-secondary-fixed-variant": "#044f52",
+              "on-background": "#e2e2e6",
+              "outline-variant": "#3a494a"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .luminous-gradient {
+            background: linear-gradient(135deg, #63f7ff 0%, #00F5FF 100%);
+        }
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .spotlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111316]/70 backdrop-blur-xl">
+<nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#00F5FF] text-2xl" data-icon="grid_view">grid_view</span>
+<span class="text-xl font-black text-[#00F5FF] tracking-tighter font-headline">LinkDrop</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors font-medium" href="#">Links</a>
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors font-medium" href="#">Appearance</a>
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors font-medium" href="#">Analytics</a>
+<button class="luminous-gradient text-on-primary-fixed px-6 py-2.5 rounded-full font-bold text-sm hover:scale-[0.98] transition-transform">
+                    Get Started
+                </button>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-on-surface" data-icon="menu">menu</span>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
+<!-- Background Accent -->
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-container/10 blur-[120px] rounded-full"></div>
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+<div class="w-full md:w-1/2 space-y-8">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high border border-outline-variant/15">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-xs font-label uppercase tracking-widest text-primary-container">Now in Public Beta</span>
+</div>
+<h1 class="text-6xl md:text-8xl font-headline font-black tracking-tight leading-[0.9] text-on-surface">
+                        Your links, <br/>
+<span class="text-transparent bg-clip-text luminous-gradient">your identity.</span>
+</h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-lg leading-relaxed">
+                        The Digital Curator's platform. Elevate your online presence with a premium, editorial-style bio page designed for creative professionals.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="luminous-gradient text-on-primary-fixed px-8 py-4 rounded-full font-bold text-lg shadow-[0_12px_32px_rgba(0,245,255,0.2)] hover:scale-[0.98] transition-transform">
+                            Start for Free
+                        </button>
+<button class="bg-surface-container-highest text-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-surface-container-high transition-colors">
+                            View Showcase
+                        </button>
+</div>
+</div>
+<!-- Floating Mockup -->
+<div class="w-full md:w-1/2 flex justify-center items-center relative">
+<div class="relative w-72 h-[580px] bg-surface-container-lowest rounded-[3rem] border-[8px] border-surface-container-highest shadow-2xl overflow-hidden rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+<div class="absolute top-0 w-full h-40 bg-gradient-to-b from-primary-container/20 to-transparent"></div>
+<div class="px-6 pt-12 flex flex-col items-center">
+<div class="w-20 h-20 rounded-full bg-surface-container-high border-2 border-primary-container p-1 mb-4">
+<img class="w-full h-full rounded-full object-cover" data-alt="close-up portrait of a stylish woman with neon lighting reflecting on her face, editorial fashion aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDMOLQiO_TAF5LTsMXCcT7uLBn0XehLjwgWs_-YJHZQkmXIO48FhxJh0veE0yoN8zM41T99e2fppB9t6vnUpleEjTSsImQ_5AgqJUO5Gs-CWmu0d6-cP_AbvQ4up7-HXTQoG8ZnxgLWMCJyOZGak3Pht1W-Yh39S6fH_9i6ooxQTvjNzpOV5YD_M0zrxrNeMLZVvlVugdWbMbRWZ4rXlcVC67BedZ5TULE-kRdr5xtfY7MjtMWqAdVwnkgTamFjtlhM65SH1GPmPM"/>
+</div>
+<h3 class="font-headline text-lg font-bold">@alexa_curates</h3>
+<p class="text-[10px] text-primary-container uppercase tracking-widest mb-6">Digital Strategist</p>
+<div class="w-full space-y-3">
+<div class="w-full h-12 bg-surface-container-high rounded-xl flex items-center px-4 gap-3 border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary-container" data-icon="brush">brush</span>
+<div class="h-2 w-24 bg-on-surface-variant/20 rounded"></div>
+</div>
+<div class="w-full h-12 bg-surface-container-high rounded-xl flex items-center px-4 gap-3 border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary-container" data-icon="camera">camera</span>
+<div class="h-2 w-32 bg-on-surface-variant/20 rounded"></div>
+</div>
+<div class="w-full h-12 bg-surface-container-high rounded-xl flex items-center px-4 gap-3 border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary-container" data-icon="shopping_bag">shopping_bag</span>
+<div class="h-2 w-20 bg-on-surface-variant/20 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container/5 rounded-full blur-[100px]"></div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-24 px-6 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16 md:mb-24 space-y-4">
+<h2 class="text-4xl md:text-6xl font-headline font-black tracking-tight">The editorial edge.</h2>
+<p class="text-on-surface-variant max-w-xl text-lg">We've stripped away the noise to give your links the breathing room they deserve.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature Card 1: Fast -->
+<div class="spotlight-card bg-surface-container-high p-8 rounded-xl space-y-6 group hover:bg-surface-container-highest transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<h3 class="text-2xl font-headline font-bold">Fast</h3>
+<p class="text-on-surface-variant leading-relaxed">Lightning-fast load times. Optimized for mobile-first scrolling because your audience doesn't wait.</p>
+<div class="pt-4">
+<span class="text-primary-container text-sm font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+                                Learn more <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</div>
+</div>
+<!-- Feature Card 2: Private -->
+<div class="spotlight-card bg-surface-container-high p-8 rounded-xl space-y-6 group hover:bg-surface-container-highest transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<h3 class="text-2xl font-headline font-bold">Private</h3>
+<p class="text-on-surface-variant leading-relaxed">No invasive tracking or data mining. Your links and your data remain yours, protected by design.</p>
+<div class="pt-4">
+<span class="text-primary-container text-sm font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+                                Learn more <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</div>
+</div>
+<!-- Feature Card 3: Customizable -->
+<div class="spotlight-card bg-surface-container-high p-8 rounded-xl space-y-6 group hover:bg-surface-container-highest transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<h3 class="text-2xl font-headline font-bold">Customizable</h3>
+<p class="text-on-surface-variant leading-relaxed">Beyond templates. Fine-tune every margin, color, and font to match your unique brand identity.</p>
+<div class="pt-4">
+<span class="text-primary-container text-sm font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+                                Learn more <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 px-6">
+<div class="max-w-5xl mx-auto rounded-3xl p-12 md:p-24 relative overflow-hidden bg-surface-container-highest flex flex-col items-center text-center">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 blur-[80px] rounded-full"></div>
+<h2 class="text-4xl md:text-7xl font-headline font-black mb-8 leading-tight">Ready to curate your world?</h2>
+<button class="luminous-gradient text-on-primary-fixed px-12 py-5 rounded-full font-black text-xl shadow-[0_20px_40px_rgba(0,245,255,0.15)] hover:scale-[1.02] transition-transform">
+                    Start for Free
+                </button>
+<p class="mt-8 text-on-surface-variant">Join 12,000+ creators who demand authority.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-800/50 bg-[#111316]">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-sm text-slate-500 font-body">
+                © 2024 LinkDrop. Editorial Authority.
+            </div>
+<div class="flex gap-8 text-sm font-body">
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Privacy</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Terms</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Support</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Twitter</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-sm" data-icon="language">language</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 w-full z-50 rounded-t-[1.5rem] bg-[#111316]/80 backdrop-blur-2xl shadow-[0_-12px_32px_rgba(0,0,0,0.4)]">
+<div class="flex justify-around items-center w-full px-4 pb-6 pt-2">
+<div class="flex flex-col items-center justify-center text-[#00F5FF] bg-[#00F5FF]/10 rounded-2xl px-4 py-2 scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="link">link</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Links</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Appearance</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Settings</span>
+</div>
+</div>
+</div>
+</body></html>

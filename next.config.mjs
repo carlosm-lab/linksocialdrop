@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    typedRoutes: true,
-  },
+  // removed typedRoutes to prevent memory crashes
 };
 
 export default nextConfig;

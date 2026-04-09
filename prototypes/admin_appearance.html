@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LinkDrop Admin - Appearance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#111316",
+              "on-secondary-container": "#83bfc3",
+              "on-error": "#690005",
+              "on-secondary-fixed": "#002021",
+              "on-primary-fixed": "#002021",
+              "surface-tint": "#00dce5",
+              "surface-dim": "#111316",
+              "secondary": "#95d1d4",
+              "on-primary": "#003739",
+              "on-surface-variant": "#b9caca",
+              "secondary-fixed-dim": "#95d1d4",
+              "surface-container-low": "#1a1c1f",
+              "primary": "#e9feff",
+              "secondary-container": "#044f52",
+              "on-tertiary-fixed-variant": "#544600",
+              "error-container": "#93000a",
+              "surface-container-lowest": "#0c0e11",
+              "on-error-container": "#ffdad6",
+              "inverse-surface": "#e2e2e6",
+              "primary-container": "#00f5ff",
+              "tertiary-fixed-dim": "#e7c427",
+              "on-tertiary-fixed": "#221b00",
+              "primary-fixed": "#63f7ff",
+              "surface-container-highest": "#333538",
+              "tertiary": "#fff9f0",
+              "on-surface": "#e2e2e6",
+              "on-tertiary-container": "#736000",
+              "error": "#ffb4ab",
+              "on-secondary": "#003739",
+              "surface-variant": "#333538",
+              "inverse-primary": "#00696e",
+              "secondary-fixed": "#b0edf1",
+              "outline": "#849495",
+              "surface-container": "#1e2023",
+              "on-primary-fixed-variant": "#004f53",
+              "on-tertiary": "#3a3000",
+              "on-primary-container": "#006c71",
+              "surface-container-high": "#282a2d",
+              "background": "#111316",
+              "primary-fixed-dim": "#00dce5",
+              "tertiary-fixed": "#ffe16c",
+              "surface-bright": "#37393d",
+              "inverse-on-surface": "#2f3034",
+              "tertiary-container": "#ffdb3f",
+              "on-secondary-fixed-variant": "#044f52",
+              "on-background": "#e2e2e6",
+              "outline-variant": "#3a494a"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .luminous-gradient {
+        background: linear-gradient(135deg, #63f7ff 0%, #00F5FF 100%);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #333538;
+        border-radius: 10px;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111316]/70 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#00F5FF]">grid_view</span>
+<h1 class="font-['Epilogue'] tracking-tighter font-bold text-xl text-[#00F5FF]">LinkDrop</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors text-sm font-medium" href="#">Links</a>
+<a class="text-[#00F5FF] hover:text-[#63f7ff] transition-colors text-sm font-medium" href="#">Appearance</a>
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors text-sm font-medium" href="#">Analytics</a>
+<a class="text-slate-400 hover:text-[#63f7ff] transition-colors text-sm font-medium" href="#">Settings</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/20 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="minimalist avatar of a digital creator with glasses and short hair on a teal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARJgR1RPuroqI1dKJk4nIsQjNsSA9C4PVIQe_1UmjWEoxEb-ry4kdWmEnKEIaS2zNWhsd46rK2JG9FhyWg4XPTbazifiWuBkJ9XGWKGY2i5cGu-Fu6zY2-d128EdiOlY6bGjTIr0c776sWMERASpzbpNm5B_v6uOEMYSr3seSReXTjw_hEF_JWXb8Sg4aqf-k8hsj4PqWYVqvlTe4PmAAwLhcFlKDtiKSksxVHhN8I8EgTaqzsLMyM_NX6_cTJ-RbknybhOquqOnw"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Controls -->
+<div class="lg:col-span-7 space-y-8">
+<header>
+<h2 class="font-headline text-4xl font-black tracking-tighter mb-2">Appearance</h2>
+<p class="text-on-surface-variant font-light">Curate your digital gallery's visual signature.</p>
+</header>
+<!-- Profile Customization -->
+<section class="bg-surface-container-low rounded-xl p-8 space-y-6">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-headline font-bold mb-1">Profile Identity</h3>
+<p class="text-sm text-on-surface-variant">Update your avatar and bio display.</p>
+</div>
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-sm font-medium hover:bg-surface-container-highest transition-all">
+                        Pick Image
+                    </button>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<div class="w-24 h-24 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border-2 border-primary-container/20">
+<img alt="Preview Avatar" class="w-full h-full object-cover" data-alt="Stylized portrait of a creative professional with vibrant teal accent lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD7D98IMkWrM2jo7tJY0s2W275Qu2GdFV_1_DuFJgULt2y2FQ59Li9_3iGmTH8mqmydceRzI7MStTKmZb7cFmbkbpsGLUr_OxU0rIUq5rdy-5H4dC62zyEl_CDprsyWGTBviVR_4pWimSc1LN3Tgk_Ox7R_d4-mx6IMOSVf8dhQkM21iakrw0Xk9CiuSxQUlB6jnFmutkCxlWUtl1sh-Ds8C8JLEirUCZYYzRR0vKKVioAXlbslK7QEyDYfTzRGAp8G08cKdjjr3E"/>
+</div>
+<div class="absolute inset-0 bg-surface/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-full cursor-pointer">
+<span class="material-symbols-outlined text-white">upload</span>
+</div>
+</div>
+<div class="flex-1 space-y-4">
+<div class="bg-surface-container-highest/30 rounded-lg px-4 py-3 border-b border-primary/10">
+<label class="block text-[10px] uppercase tracking-widest text-primary-container font-bold mb-1">Profile Title</label>
+<input class="bg-transparent border-none p-0 w-full focus:ring-0 font-headline font-bold text-lg text-white" type="text" value="Digital Curator"/>
+</div>
+<div class="bg-surface-container-highest/30 rounded-lg px-4 py-3 border-b border-primary/10">
+<label class="block text-[10px] uppercase tracking-widest text-primary-container font-bold mb-1">Bio Description</label>
+<textarea class="bg-transparent border-none p-0 w-full focus:ring-0 text-sm text-on-surface-variant resize-none" rows="2">Synthesizing modern aesthetics with functional digital architecture.</textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- Themes & Colors (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Color Swatches -->
+<section class="bg-surface-container-low rounded-xl p-8 space-y-6">
+<h3 class="text-lg font-headline font-bold">Accent Color</h3>
+<div class="grid grid-cols-4 gap-3">
+<button class="w-full aspect-square rounded-full bg-[#00F5FF] ring-2 ring-[#00F5FF] ring-offset-4 ring-offset-surface-container-low transition-transform active:scale-95"></button>
+<button class="w-full aspect-square rounded-full bg-[#FFD700] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-[#FF6B6B] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-[#A061FF] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-[#4ECDC4] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-[#FF8C42] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-[#FFFFFF] hover:scale-105 transition-transform"></button>
+<button class="w-full aspect-square rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs">add</span>
+</button>
+</div>
+</section>
+<!-- Font Selector -->
+<section class="bg-surface-container-low rounded-xl p-8 space-y-6">
+<h3 class="text-lg font-headline font-bold">Typography</h3>
+<div class="space-y-3">
+<button class="w-full flex justify-between items-center px-4 py-3 bg-surface-container-highest border border-primary-container/30 rounded-xl">
+<span class="font-headline font-bold">Epilogue</span>
+<span class="material-symbols-outlined text-primary-container text-sm">check_circle</span>
+</button>
+<button class="w-full flex justify-between items-center px-4 py-3 bg-surface-container-highest/40 hover:bg-surface-container-highest rounded-xl transition-colors">
+<span class="font-body font-medium">Inter</span>
+</button>
+<button class="w-full flex justify-between items-center px-4 py-3 bg-surface-container-highest/40 hover:bg-surface-container-highest rounded-xl transition-colors">
+<span class="font-sans font-medium">Roboto</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Button Styles -->
+<section class="bg-surface-container-low rounded-xl p-8 space-y-6">
+<h3 class="text-lg font-headline font-bold">Button Architecture</h3>
+<div class="grid grid-cols-3 gap-4">
+<button class="flex flex-col items-center gap-3 p-4 bg-surface-container-highest rounded-xl border-2 border-primary-container">
+<div class="w-full h-8 rounded-full bg-primary-container/20 border border-primary-container"></div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary-container">Pill</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-4 bg-surface-container-highest/40 hover:bg-surface-container-highest rounded-xl border-2 border-transparent transition-all">
+<div class="w-full h-8 rounded-lg bg-on-surface-variant/20 border border-on-surface-variant/30"></div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Rounded</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-4 bg-surface-container-highest/40 hover:bg-surface-container-highest rounded-xl border-2 border-transparent transition-all">
+<div class="w-full h-8 rounded-none bg-on-surface-variant/20 border border-on-surface-variant/30"></div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Square</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Right Column: Live Preview Sticky -->
+<aside class="lg:col-span-5 relative">
+<div class="lg:sticky lg:top-24 space-y-6">
+<div class="flex items-center justify-between px-2">
+<h3 class="text-sm font-bold uppercase tracking-[0.2em] text-on-surface-variant">Live Preview</h3>
+<div class="flex gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+</div>
+<!-- Mock Device Container -->
+<div class="bg-surface-container-highest rounded-[3rem] p-4 aspect-[9/18] shadow-2xl relative overflow-hidden border-[8px] border-surface-container-low">
+<!-- Glass Content Canvas -->
+<div class="w-full h-full bg-[#111316] rounded-[2.2rem] overflow-y-auto custom-scrollbar relative">
+<!-- Preview Background -->
+<div class="absolute inset-0 bg-gradient-to-b from-[#1a1c1f] to-[#111316] z-0"></div>
+<div class="relative z-10 p-8 flex flex-col items-center">
+<!-- Preview Header -->
+<div class="w-20 h-20 rounded-full overflow-hidden border-2 border-primary-container mb-4 shadow-[0_0_20px_rgba(0,245,255,0.2)]">
+<img alt="Preview Profile" data-alt="close up profile shot of a stylish creator for digital portfolio display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgTzAn3vbIiHsNkvvltH2T3Otp9s1bbbJ_gWnKHe9iXCPyqAag6B3oPhFepW5-eWI-XfedPL2AVEbMe9onM08GVagFMANiiMNc2HECH0lD7l9tZpoCGli0igXHIUfb-XUtsYQMA_TUuZGbIAVU_hai7CtYEvwvAVjHfBtm67wwoThW5zfysRh9lXIJGMalZs4Q-HbVoBoVm8mb4sshkvwdCDLNRKY3HjeHppGagmb0al1b0SyOc-JFxnARu0EkOOyb9RS2UBRny_0"/>
+</div>
+<h4 class="font-headline font-bold text-xl tracking-tighter text-white">Digital Curator</h4>
+<p class="text-xs text-on-surface-variant/80 text-center mt-2 max-w-[200px]">Synthesizing modern aesthetics with functional digital architecture.</p>
+<!-- Preview Links -->
+<div class="w-full space-y-3 mt-10">
+<div class="w-full py-4 px-6 rounded-full luminous-gradient flex items-center justify-between group cursor-pointer transition-transform active:scale-95">
+<span class="text-on-primary font-headline font-bold text-sm tracking-tight">Portfolio 2024</span>
+<span class="material-symbols-outlined text-on-primary text-lg">arrow_outward</span>
+</div>
+<div class="w-full py-4 px-6 rounded-full border border-primary-container/20 bg-surface-container-low flex items-center justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="text-primary font-headline font-bold text-sm tracking-tight">Curated Reading</span>
+<span class="material-symbols-outlined text-primary-container text-lg">menu_book</span>
+</div>
+<div class="w-full py-4 px-6 rounded-full border border-primary-container/20 bg-surface-container-low flex items-center justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="text-primary font-headline font-bold text-sm tracking-tight">Tech Stack</span>
+<span class="material-symbols-outlined text-primary-container text-lg">terminal</span>
+</div>
+<div class="w-full py-4 px-6 rounded-full border border-primary-container/20 bg-surface-container-low flex items-center justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="text-primary font-headline font-bold text-sm tracking-tight">Contact</span>
+<span class="material-symbols-outlined text-primary-container text-lg">mail</span>
+</div>
+</div>
+<!-- Social Preview -->
+<div class="flex gap-4 mt-12">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary-container border border-primary-container/10">
+<span class="material-symbols-outlined text-lg">share</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary-container border border-primary-container/10">
+<span class="material-symbols-outlined text-lg">rss_feed</span>
+</div>
+</div>
+<p class="mt-20 text-[10px] text-on-surface-variant font-headline tracking-[0.3em] font-black opacity-40">LINKDROP</p>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex gap-4 mt-8">
+<button class="flex-1 py-4 bg-surface-container-low border border-outline-variant/30 rounded-xl font-bold text-sm hover:bg-surface-container-highest transition-all">
+                        Reset Changes
+                    </button>
+<button class="flex-1 py-4 luminous-gradient text-on-primary-fixed rounded-xl font-headline font-black text-sm tracking-tighter hover:shadow-[0_0_30px_rgba(0,245,255,0.4)] transition-all">
+                        Publish Live
+                    </button>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#111316]/80 backdrop-blur-2xl rounded-t-[1.5rem] shadow-[0_-12px_32px_rgba(0,0,0,0.4)]">
+<div class="flex justify-around items-center w-full px-4 pb-6 pt-2">
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">link</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Links</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00F5FF] bg-[#00F5FF]/10 rounded-2xl px-4 py-2 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">palette</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Appearance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-800/50 bg-[#111316] mt-20">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-['Inter'] text-sm text-slate-500">© 2024 LinkDrop. Editorial Authority.</p>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-sm text-slate-500 hover:text-white transition-all opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-['Inter'] text-sm text-slate-500 hover:text-white transition-all opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="font-['Inter'] text-sm text-slate-500 hover:text-white transition-all opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="font-['Inter'] text-sm text-slate-500 hover:text-white transition-all opacity-80 hover:opacity-100" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+</body></html>

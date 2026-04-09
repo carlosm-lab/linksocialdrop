@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LinkDrop Admin - Link Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#111316",
+              "on-secondary-container": "#83bfc3",
+              "on-error": "#690005",
+              "on-secondary-fixed": "#002021",
+              "on-primary-fixed": "#002021",
+              "surface-tint": "#00dce5",
+              "surface-dim": "#111316",
+              "secondary": "#95d1d4",
+              "on-primary": "#003739",
+              "on-surface-variant": "#b9caca",
+              "secondary-fixed-dim": "#95d1d4",
+              "surface-container-low": "#1a1c1f",
+              "primary": "#e9feff",
+              "secondary-container": "#044f52",
+              "on-tertiary-fixed-variant": "#544600",
+              "error-container": "#93000a",
+              "surface-container-lowest": "#0c0e11",
+              "on-error-container": "#ffdad6",
+              "inverse-surface": "#e2e2e6",
+              "primary-container": "#00f5ff",
+              "tertiary-fixed-dim": "#e7c427",
+              "on-tertiary-fixed": "#221b00",
+              "primary-fixed": "#63f7ff",
+              "surface-container-highest": "#333538",
+              "tertiary": "#fff9f0",
+              "on-surface": "#e2e2e6",
+              "on-tertiary-container": "#736000",
+              "error": "#ffb4ab",
+              "on-secondary": "#003739",
+              "surface-variant": "#333538",
+              "inverse-primary": "#00696e",
+              "secondary-fixed": "#b0edf1",
+              "outline": "#849495",
+              "surface-container": "#1e2023",
+              "on-primary-fixed-variant": "#004f53",
+              "on-tertiary": "#3a3000",
+              "on-primary-container": "#006c71",
+              "surface-container-high": "#282a2d",
+              "background": "#111316",
+              "primary-fixed-dim": "#00dce5",
+              "tertiary-fixed": "#ffe16c",
+              "surface-bright": "#37393d",
+              "inverse-on-surface": "#2f3034",
+              "tertiary-container": "#ffdb3f",
+              "on-secondary-fixed-variant": "#044f52",
+              "on-background": "#e2e2e6",
+              "outline-variant": "#3a494a"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .luminous-glow {
+        background: linear-gradient(135deg, #63f7ff 0%, #00F5FF 100%);
+      }
+      .editorial-shadow {
+        box-shadow: 0 12px 32px -4px rgba(12, 14, 17, 0.4);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111316]/70 backdrop-blur-xl">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#00F5FF]">grid_view</span>
+<h1 class="text-xl font-black text-[#00F5FF] tracking-tighter font-headline">LinkDrop</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 text-sm font-medium">
+<a class="text-[#00F5FF] transition-colors hover:text-[#63f7ff]" href="#">Links</a>
+<a class="text-slate-400 transition-colors hover:text-[#63f7ff]" href="#">Appearance</a>
+<a class="text-slate-400 transition-colors hover:text-[#63f7ff]" href="#">Analytics</a>
+<a class="text-slate-400 transition-colors hover:text-[#63f7ff]" href="#">Settings</a>
+</nav>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container/20 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional man with clean lighting and a neutral grey studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXTrkXxHOMR9oktgfJCRqftjcZ2tM9yfnwkCIxcoH-dnjnQ1mbtFrYodXBKP1VYa1Vt3PX9cktgaJXlITnzxcGrlqqwfVgTwoogJIqkre3PhY_L2-85VrVL55hM-2NxfnQMzlr9PolM2HvpGHfU6QZ15Q_F6rU9aI8y4rrYSEQY0pP4YCIiKOERUtdxqQtAFpQijrx0kTeDhZ6AWPGkh8Ud6JPrjxUjGuy5BUw3yeuWFv1yaKw5nm5TNdBaA3dD_0iwNMCBBAoIqI"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Preview Section (Top for Mobile, Side for Web) -->
+<section class="lg:col-span-5 order-1 lg:order-2 flex flex-col items-center">
+<div class="sticky top-28 w-full max-w-[320px]">
+<div class="mb-6 flex justify-between items-end">
+<h2 class="font-headline font-bold text-2xl tracking-tight text-white">Live Preview</h2>
+<span class="text-xs uppercase tracking-widest text-primary-container/60 font-semibold">Profile Live</span>
+</div>
+<!-- Phone Frame -->
+<div class="relative w-full aspect-[9/19.5] bg-surface-container-lowest rounded-[3rem] border-[8px] border-surface-container-highest shadow-2xl overflow-hidden ring-1 ring-white/5">
+<!-- Notch -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-surface-container-highest rounded-b-2xl z-20"></div>
+<!-- Profile Content -->
+<div class="relative h-full w-full p-8 flex flex-col items-center pt-16">
+<div class="w-20 h-20 rounded-full mb-4 ring-4 ring-primary-container/20 p-1">
+<img alt="Avatar" class="w-full h-full object-cover rounded-full" data-alt="Minimalist avatar of a person in a studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF6qgJdYu7WRjCa7fcrsv_5U_b5tXGIxUUzCAd1D2tcTMJHulNIvIGKlwPE-ctAwincaAOPV7D11023543UK6DHgtuN8XJdIau2HxArd-VG-Tq1sHvMFBWwpCVRz7kVid48AYVw85vbx2L9DeIEwyL3NRvNWuk47cySiDPkAbDk78LqO7O5Ng_YGM0sfDj2NvJ0k4ZEG8cOrwSqFJ2SExMVFJms-kraIdE0hUq9qmbJ9uyVLw6SXVMqCIKCkdO3Pe2zScYxbp18hA"/>
+</div>
+<h3 class="font-headline font-extrabold text-xl mb-1">Digital Curator</h3>
+<p class="text-xs text-slate-400 mb-8 tracking-wide">@curator_studio</p>
+<div class="w-full space-y-3">
+<div class="w-full py-3 px-4 bg-surface-container-high rounded-xl text-center text-sm font-medium border border-white/5">Portfolio Reel</div>
+<div class="w-full py-3 px-4 bg-surface-container-high rounded-xl text-center text-sm font-medium border border-white/5">Read the Manifesto</div>
+<div class="w-full py-3 px-4 bg-primary-container text-on-primary-container rounded-xl text-center text-sm font-bold shadow-lg shadow-primary-container/20">Book a Consultation</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editor Section -->
+<section class="lg:col-span-7 order-2 lg:order-1">
+<div class="mb-10">
+<h2 class="font-headline text-5xl font-black tracking-tighter text-white mb-2 italic">Your Links</h2>
+<p class="text-slate-400 body-lg max-w-md leading-relaxed">Curate your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.</p>
+</div>
+<!-- Editor List -->
+<div class="space-y-6">
+<!-- Link Item 1 -->
+<div class="group bg-surface-container-low p-6 rounded-xl flex items-center gap-6 transition-all hover:bg-surface-container hover:translate-x-1">
+<div class="cursor-grab text-slate-600 group-hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary-container text-lg">videocam</span>
+<h4 class="font-headline font-bold text-lg">Portfolio Reel</h4>
+</div>
+<p class="text-sm text-slate-500 font-medium">youtube.com/watch?v=curator-2024</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-xs uppercase tracking-widest font-bold text-slate-400 hover:text-white transition-colors">Edit</button>
+<div class="w-12 h-6 bg-primary-container rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-on-primary-container rounded-full ml-auto"></div>
+</div>
+</div>
+</div>
+<!-- Link Item 2 (Active) -->
+<div class="group bg-surface-container-high p-6 rounded-xl flex items-center gap-6 border-l-4 border-primary-container editorial-shadow">
+<div class="cursor-grab text-primary-container">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary-container text-lg">auto_stories</span>
+<h4 class="font-headline font-bold text-lg">Read the Manifesto</h4>
+</div>
+<p class="text-sm text-slate-500 font-medium">curator.studio/manifesto</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-xs uppercase tracking-widest font-bold text-white transition-colors">Edit</button>
+<div class="w-12 h-6 bg-primary-container rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-on-primary-container rounded-full ml-auto"></div>
+</div>
+</div>
+</div>
+<!-- Link Item 3 -->
+<div class="group bg-surface-container-low p-6 rounded-xl flex items-center gap-6 transition-all hover:bg-surface-container">
+<div class="cursor-grab text-slate-600 group-hover:text-primary-container">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary-container text-lg">calendar_today</span>
+<h4 class="font-headline font-bold text-lg">Book a Consultation</h4>
+</div>
+<p class="text-sm text-slate-500 font-medium">calendly.com/digital-curator</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-xs uppercase tracking-widest font-bold text-slate-400 hover:text-white">Edit</button>
+<div class="w-12 h-6 bg-primary-container rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-on-primary-container rounded-full ml-auto"></div>
+</div>
+</div>
+</div>
+<!-- Link Item 4 (Hidden) -->
+<div class="group bg-surface-container-lowest opacity-50 p-6 rounded-xl flex items-center gap-6">
+<div class="cursor-grab text-slate-700">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-slate-500 text-lg">mail</span>
+<h4 class="font-headline font-bold text-lg">Newsletter Signup</h4>
+</div>
+<p class="text-sm text-slate-600 font-medium italic">Hidden from profile</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-xs uppercase tracking-widest font-bold text-slate-400 hover:text-white">Edit</button>
+<div class="w-12 h-6 bg-surface-container-highest rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-slate-600 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State / Suggestion -->
+<div class="mt-12 p-8 border border-dashed border-outline-variant/30 rounded-xl flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-4xl text-slate-700 mb-4">add_link</span>
+<p class="text-slate-500 max-w-xs">Have more to show? Add unlimited links to your profile with our Premium plan.</p>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<div class="fixed bottom-32 right-8 md:bottom-12 md:right-12 z-50">
+<button class="luminous-glow w-16 h-16 rounded-full flex items-center justify-center text-on-primary-fixed shadow-2xl transition-transform hover:scale-105 active:scale-95 group">
+<span class="material-symbols-outlined text-3xl font-bold group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-[1.5rem] bg-[#111316]/80 backdrop-blur-2xl shadow-[0_-12px_32px_rgba(0,0,0,0.4)]">
+<div class="flex justify-around items-center w-full px-4 pb-6 pt-2">
+<a class="flex flex-col items-center justify-center text-[#00F5FF] bg-[#00F5FF]/10 rounded-2xl px-4 py-2 transition-all scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">link</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Links</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">palette</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Appearance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-2 hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-[0.05em] mt-1">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-800/50 bg-[#111316]">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-['Inter'] text-sm text-slate-500">© 2024 LinkDrop. Editorial Authority.</p>
+<div class="flex gap-8">
+<a class="text-slate-500 hover:text-white transition-colors opacity-80 hover:opacity-100 font-['Inter'] text-sm" href="#">Privacy</a>
+<a class="text-slate-500 hover:text-white transition-colors opacity-80 hover:opacity-100 font-['Inter'] text-sm" href="#">Terms</a>
+<a class="text-slate-500 hover:text-white transition-colors opacity-80 hover:opacity-100 font-['Inter'] text-sm" href="#">Support</a>
+<a class="text-[#00F5FF] hover:text-white transition-colors opacity-80 hover:opacity-100 font-['Inter'] text-sm" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+</body></html>
