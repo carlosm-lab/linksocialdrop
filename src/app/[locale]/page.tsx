@@ -72,11 +72,12 @@ function LandingContent() {
                       alt="Avatar"
                       className="h-full w-full rounded-full object-cover"
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDMOLQiO_TAF5LTsMXCcT7uLBn0XehLjwgWs_-YJHZQkmXIO48FhxJh0veE0yoN8zM41T99e2fppB9t6vnUpleEjTSsImQ_5AgqJUO5Gs-CWmu0d6-cP_AbvQ4up7-HXTQoG8ZnxgLWMCJyOZGak3Pht1W-Yh39S6fH_9i6ooxQTvjNzpOV5YD_M0zrxrNeMLZVvlVugdWbMbRWZ4rXlcVC67BedZ5TULE-kRdr5xtfY7MjtMWqAdVwnkgTamFjtlhM65SH1GPmPM"
+                      fetchPriority="high"
                     />
                   </div>
-                  <h3 className="font-headline text-lg font-bold">
+                  <h2 className="font-headline text-lg font-bold">
                     @alexa_curates
-                  </h3>
+                  </h2>
                   <p className="text-primary-container mb-6 text-[10px] tracking-widest uppercase">
                     Digital Strategist
                   </p>
@@ -164,25 +165,25 @@ function LandingContent() {
       {/* Footer */}
       <footer className="w-full border-t border-slate-800/50 bg-[#111316] py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 md:flex-row">
-          <div className="font-body text-sm text-slate-500">
+          <div className="font-body text-sm text-slate-300">
             {tc("copyright")}
           </div>
           <div className="font-body flex gap-8 text-sm">
             <Link
               href="#"
-              className="text-slate-500 transition-colors hover:text-white"
+              className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("privacy")}
             </Link>
             <Link
               href="#"
-              className="text-slate-500 transition-colors hover:text-white"
+              className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("terms")}
             </Link>
             <Link
               href="#"
-              className="text-slate-500 transition-colors hover:text-white"
+              className="text-slate-300 transition-colors hover:text-white"
             >
               {tc("support")}
             </Link>
