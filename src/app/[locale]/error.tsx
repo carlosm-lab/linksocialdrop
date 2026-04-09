@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Error({
   error,
@@ -9,6 +10,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("errors");
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -16,17 +19,16 @@ export default function Error({
   return (
     <div className="bg-background flex h-screen w-full flex-col items-center justify-center p-4 text-center">
       <h2 className="text-destructive mb-2 text-2xl font-bold">
-        ¡Algo salió mal!
+        {t("somethingWentWrong")}
       </h2>
       <p className="text-muted-foreground mb-6 max-w-md">
-        Ha ocurrido un error inesperado. Por favor, intenta de nuevo o vuelve al
-        inicio.
+        {t("unexpectedError")}
       </p>
       <button
         onClick={() => reset()}
         className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-2.5 font-medium transition-colors"
       >
-        Intentar de nuevo
+        {t("tryAgain")}
       </button>
     </div>
   );

@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, Link } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function BottomNavBar() {
   const currentPath = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <nav className="fixed bottom-0 left-0 z-50 w-full rounded-t-[1.5rem] bg-[#111316]/80 shadow-[0_-12px_32px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:hidden">
@@ -14,25 +15,25 @@ export function BottomNavBar() {
         <NavItem
           href="/admin/links"
           icon="link"
-          label="Links"
+          label={t("links")}
           isActive={currentPath === "/admin/links"}
         />
         <NavItem
           href="/admin/appearance"
           icon="palette"
-          label="Appearance"
+          label={t("appearance")}
           isActive={currentPath === "/admin/appearance"}
         />
         <NavItem
           href="/admin/analytics"
           icon="leaderboard"
-          label="Analytics"
+          label={t("analytics")}
           isActive={currentPath === "/admin/analytics"}
         />
         <NavItem
           href="/admin/settings"
           icon="settings"
-          label="Settings"
+          label={t("settings")}
           isActive={currentPath === "/admin/settings"}
         />
       </div>

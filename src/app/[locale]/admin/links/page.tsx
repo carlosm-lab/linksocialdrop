@@ -1,7 +1,10 @@
 import { Icon } from "@/components/ui/icon";
 import { LivePreview } from "@/components/shared/LivePreview";
+import { useTranslations } from "next-intl";
 
 export default function AdminLinksEditorPage() {
+  const t = useTranslations("adminLinks");
+
   return (
     <>
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pt-24 pb-32 lg:grid-cols-12">
@@ -14,15 +17,14 @@ export default function AdminLinksEditorPage() {
         <section className="order-2 lg:order-1 lg:col-span-7">
           <div className="mb-10">
             <h2 className="font-headline mb-2 text-5xl font-black tracking-tighter text-white italic">
-              Your Links
+              {t("title")}
             </h2>
             <p className="max-w-md text-lg leading-relaxed text-slate-400">
-              Curate your digital identity. Drag to reorder, toggle visibility,
-              and keep your gallery fresh.
+              {t("description")}
             </p>
           </div>
 
-          {/* Editor List (Hardcoded State to be Mocked Later) */}
+          {/* Editor List */}
           <div className="space-y-6">
             {/* Link Item 1 */}
             <div className="group bg-surface-container-low hover:bg-surface-container flex items-center gap-6 rounded-xl p-6 transition-all hover:translate-x-1">
@@ -45,9 +47,8 @@ export default function AdminLinksEditorPage() {
               </div>
               <div className="flex items-center gap-4">
                 <button className="text-xs font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-white">
-                  Edit
+                  {t("edit")}
                 </button>
-                {/* Toggle (On) */}
                 <div className="bg-primary-container relative flex h-6 w-12 cursor-pointer items-center rounded-full px-1">
                   <div className="bg-on-primary-container ml-auto h-4 w-4 rounded-full"></div>
                 </div>
@@ -75,9 +76,8 @@ export default function AdminLinksEditorPage() {
               </div>
               <div className="flex items-center gap-4">
                 <button className="text-xs font-bold tracking-widest text-white uppercase transition-colors">
-                  Edit
+                  {t("edit")}
                 </button>
-                {/* Toggle (On) */}
                 <div className="bg-primary-container relative flex h-6 w-12 cursor-pointer items-center rounded-full px-1">
                   <div className="bg-on-primary-container ml-auto h-4 w-4 rounded-full"></div>
                 </div>
@@ -105,9 +105,8 @@ export default function AdminLinksEditorPage() {
               </div>
               <div className="flex items-center gap-4">
                 <button className="text-xs font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-white">
-                  Edit
+                  {t("edit")}
                 </button>
-                {/* Toggle (On) */}
                 <div className="bg-primary-container relative flex h-6 w-12 cursor-pointer items-center rounded-full px-1">
                   <div className="bg-on-primary-container ml-auto h-4 w-4 rounded-full"></div>
                 </div>
@@ -127,14 +126,13 @@ export default function AdminLinksEditorPage() {
                   </h4>
                 </div>
                 <p className="text-sm font-medium text-slate-600 italic">
-                  Hidden from profile
+                  {t("hiddenFromProfile")}
                 </p>
               </div>
               <div className="flex items-center gap-4">
                 <button className="text-xs font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-white">
-                  Edit
+                  {t("edit")}
                 </button>
-                {/* Toggle (Off) */}
                 <div className="bg-surface-container-highest relative flex h-6 w-12 cursor-pointer items-center rounded-full px-1">
                   <div className="h-4 w-4 rounded-full bg-slate-600"></div>
                 </div>
@@ -145,15 +143,12 @@ export default function AdminLinksEditorPage() {
           {/* Empty State / Suggestion */}
           <div className="border-outline-variant/30 mt-12 flex flex-col items-center rounded-xl border border-dashed p-8 text-center">
             <Icon name="add_link" className="mb-4 text-4xl text-slate-700" />
-            <p className="max-w-xs text-slate-500">
-              Have more to show? Add unlimited links to your profile with our
-              Premium plan.
-            </p>
+            <p className="max-w-xs text-slate-500">{t("emptyStateText")}</p>
           </div>
         </section>
       </main>
 
-      {/* Primary FAB for Add Links - Scoped specifically to the Link Editor context */}
+      {/* Primary FAB */}
       <div className="fixed right-8 bottom-32 z-40 md:right-12 md:bottom-12">
         <button className="luminous-glow text-on-primary-fixed group flex h-16 w-16 items-center justify-center rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95">
           <Icon

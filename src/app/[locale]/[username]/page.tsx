@@ -1,13 +1,22 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
-// A dynamic route for public profiles. It would typically fetch user data by params.username
-export default function PublicProfilePage({
+export default async function PublicProfilePage({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string; locale: string }>;
 }) {
+  const { username } = await params;
+
+  return <ProfileContent username={username} />;
+}
+
+function ProfileContent({ username }: { username: string }) {
+  const t = useTranslations("profile");
+  const tc = useTranslations("common");
+
   return (
     <div className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container relative z-0 flex min-h-screen flex-col items-center">
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,_#1e2023_0%,_#111316_70%)] opacity-50"></div>
@@ -24,7 +33,7 @@ export default function PublicProfilePage({
           </div>
           <div className="text-center">
             <h1 className="font-headline text-primary-container mb-2 text-3xl font-black tracking-tighter">
-              @{params.username || "alexandra_flows"}
+              @{username || "alexandra_flows"}
             </h1>
             <p className="text-on-surface-variant font-body mx-auto max-w-xs text-base leading-relaxed">
               Digital Curator &amp; Multimedia Artist. Exploring the
@@ -118,10 +127,10 @@ export default function PublicProfilePage({
             <div className="bg-surface-container-low border-outline-variant/10 relative overflow-hidden rounded-2xl border p-6">
               <div className="luminous-gradient pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-10 blur-3xl"></div>
               <h3 className="font-headline text-primary relative z-10 mb-2 text-lg font-bold tracking-tight">
-                Join the Newsletter
+                {t("joinNewsletter")}
               </h3>
               <p className="text-on-surface-variant relative z-10 mb-4 text-sm">
-                Get curated inspiration every Sunday.
+                {t("newsletterDesc")}
               </p>
               <div className="relative z-10 flex gap-2">
                 <input
@@ -134,7 +143,7 @@ export default function PublicProfilePage({
                   size="pill"
                   className="text-on-primary-fixed font-bold shadow-none"
                 >
-                  Join
+                  {tc("join")}
                 </Button>
               </div>
             </div>
@@ -144,24 +153,24 @@ export default function PublicProfilePage({
         <footer className="mt-auto py-8 text-center">
           <div className="group flex cursor-default items-center justify-center gap-2 text-slate-500">
             <span className="font-label text-[10px] tracking-[0.2em] uppercase transition-colors hover:text-slate-400">
-              made with
+              {t("madeWith")}
             </span>
             <div className="group-hover:text-primary-container flex items-center gap-1 transition-colors">
               <span className="font-headline text-sm font-black tracking-tighter">
-                LinkDrop
+                {tc("brandName")}
               </span>
               <Icon name="water_drop" className="text-[14px]" />
             </div>
           </div>
           <div className="font-label mt-4 flex justify-center gap-6 text-[10px] tracking-[0.1em] text-slate-600 uppercase">
             <Link href="#" className="hover:text-on-surface transition-colors">
-              Privacy
+              {t("privacy")}
             </Link>
             <Link href="#" className="hover:text-on-surface transition-colors">
-              Terms
+              {t("terms")}
             </Link>
             <Link href="#" className="hover:text-on-surface transition-colors">
-              Report
+              {t("report")}
             </Link>
           </div>
         </footer>

@@ -27,3 +27,20 @@ import { ComponentName } from "@/components/ComponentName";
 ## Registered Components
 
 _(Add new components below this line)_
+
+### `<LanguageSwitcher />`
+
+**Path:** `src/components/shared/LanguageSwitcher.tsx`
+**Description:** Client component that renders a pill-style ES/EN toggle for switching the active locale. The active locale button gets a highlighted accent background. Uses `next-intl` navigation to swap the locale while preserving the current path.
+
+**Props:** None
+
+**Example Usage:**
+
+```tsx
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+
+<LanguageSwitcher />;
+```
+
+**Used in:** `TopAppBar`

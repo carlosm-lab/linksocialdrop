@@ -1,12 +1,22 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { useTranslations } from "next-intl";
+import { signOut } from "@/actions/auth";
 
 interface TopAppBarProps {
   isAuthenticated?: boolean;
+  avatarUrl?: string;
 }
 
-export function TopAppBar({ isAuthenticated = false }: TopAppBarProps) {
+export function TopAppBar({
+  isAuthenticated = false,
+  avatarUrl,
+}: TopAppBarProps) {
+  const t = useTranslations("nav");
+  const tc = useTranslations("common");
+
   return (
     <header className="fixed top-0 z-50 w-full bg-[#111316]/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -16,7 +26,7 @@ export function TopAppBar({ isAuthenticated = false }: TopAppBarProps) {
             href="/"
             className="font-headline text-xl font-black tracking-tighter text-[#00F5FF]"
           >
-            LinkDrop
+            LinkSocialDrop
           </Link>
         </div>
         <div className="flex items-center gap-6">
@@ -25,35 +35,60 @@ export function TopAppBar({ isAuthenticated = false }: TopAppBarProps) {
               href="/admin/links"
               className="text-slate-400 transition-colors hover:text-[#63f7ff]"
             >
-              Links
+              {t("links")}
             </Link>
             <Link
               href="/admin/appearance"
               className="text-slate-400 transition-colors hover:text-[#63f7ff]"
             >
-              Appearance
+              {t("appearance")}
             </Link>
             <Link
               href="/admin/analytics"
               className="text-slate-400 transition-colors hover:text-[#63f7ff]"
             >
-              Analytics
+              {t("analytics")}
             </Link>
+
+            <LanguageSwitcher />
+
             {isAuthenticated ? (
-              <div className="border-primary-container/20 ml-4 h-10 w-10 overflow-hidden rounded-full border-2">
-                <img
-                  alt="User Profile"
-                  className="h-full w-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXTrkXxHOMR9oktgfJCRqftjcZ2tM9yfnwkCIxcoH-dnjnQ1mbtFrYodXBKP1VYa1Vt3PX9cktgaJXlITnzxcGrlqqwfVgTwoogJIqkre3PhY_L2-85VrVL55hM-2NxfnQMzlr9PolM2HvpGHfU6QZ15Q_F6rU9aI8y4rrYSEQY0pP4YCIiKOERUtdxqQtAFpQijrx0kTeDhZ6AWPGkh8Ud6JPrjxUjGuy5BUw3yeuWFv1yaKw5nm5TNdBaA3dD_0iwNMCBBAoIqI"
-                />
+              <div className="flex items-center gap-3">
+                <div className="border-primary-container/20 ml-4 h-10 w-10 overflow-hidden rounded-full border-2">
+                  {avatarUrl ? (
+                    <img
+                      alt="User Profile"
+                      className="h-full w-full object-cover"
+                      src={avatarUrl}
+                    />
+                  ) : (
+                    <div className="bg-primary-container/20 flex h-full w-full items-center justify-center">
+                      <Icon
+                        name="person"
+                        className="text-primary-container text-lg"
+                      />
+                    </div>
+                  )}
+                </div>
+                <form action={signOut}>
+                  <button
+                    type="submit"
+                    className="text-slate-400 transition-colors hover:text-red-400"
+                    title="Sign out"
+                  >
+                    <Icon name="logout" className="text-xl" />
+                  </button>
+                </form>
               </div>
             ) : (
-              <Button
-                variant="luminous"
-                className="ml-4 rounded-full px-6 py-2.5 transition-transform hover:scale-[0.98]"
-              >
-                Get Started
-              </Button>
+              <Link href="/login">
+                <Button
+                  variant="luminous"
+                  className="ml-4 rounded-full px-6 py-2.5 transition-transform hover:scale-[0.98]"
+                >
+                  {tc("getStarted")}
+                </Button>
+              </Link>
             )}
           </nav>
 

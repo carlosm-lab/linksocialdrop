@@ -1,0 +1,106 @@
+{
+  "common": {
+    "brandName": "LinkSocialDrop",
+    "startForFree": "Comenzar Gratis",
+    "getStarted": "Comenzar",
+    "copyright": "© 2025 LinkSocialDrop. Todos los derechos reservados.",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "support": "Soporte",
+    "loading": "Cargando...",
+    "learnMore": "Saber más",
+    "join": "Unirse"
+  },
+  "nav": {
+    "links": "Links",
+    "appearance": "Apariencia",
+    "analytics": "Analíticas",
+    "settings": "Ajustes"
+  },
+  "landing": {
+    "badge": "Ahora en Beta Pública",
+    "heroTitle1": "Tus links,",
+    "heroTitle2": "tu identidad.",
+    "heroDescription": "La mejor alternativa a Linktree. Crea tu página de links personalizada y gratuita en segundos. Diseñada para creadores y profesionales.",
+    "viewShowcase": "Ver Ejemplos",
+    "featuresTitle": "Tu página de links, tu ventaja.",
+    "featuresSubtitle": "Hemos eliminado el ruido para darle a tus links el espacio que merecen. La alternativa gratuita a Linktree que necesitas.",
+    "featureFastTitle": "Rápida",
+    "featureFastDesc": "Tiempos de carga ultrarrápidos. Optimizada para mobile-first porque tu audiencia no espera.",
+    "featurePrivateTitle": "Privada",
+    "featurePrivateDesc": "Sin rastreo invasivo ni minería de datos. Tus links y tus datos son tuyos, protegidos por diseño.",
+    "featureCustomTitle": "Personalizable",
+    "featureCustomDesc": "Más que plantillas. Ajusta cada margen, color y fuente para que coincida con tu identidad de marca única.",
+    "ctaTitle": "¿Listo para crear tu link in bio?",
+    "ctaSubtitle": "Únete a más de 12,000 creadores que eligen LinkSocialDrop como su alternativa a Linktree."
+  },
+  "login": {
+    "tagline": "Tu Página de Links",
+    "welcomeBack": "Bienvenido de nuevo",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "passwordLabel": "Contraseña",
+    "signIn": "Iniciar Sesión",
+    "createAccount": "Crear Cuenta",
+    "orContinueWith": "o continúa con",
+    "noAccount": "¿No tienes una cuenta?",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "signUp": "Regístrate",
+    "needHelp": "¿Necesitas ayuda?"
+  },
+  "adminLinks": {
+    "title": "Tus Links",
+    "description": "Cura tu identidad digital. Arrastra para reordenar, activa/desactiva la visibilidad y mantén tu galería fresca.",
+    "edit": "Editar",
+    "hiddenFromProfile": "Oculto del perfil",
+    "emptyStateText": "¿Tienes más para mostrar? Añade links ilimitados a tu perfil con nuestro plan Premium."
+  },
+  "adminAnalytics": {
+    "title": "Motor de Insights",
+    "description": "Métricas de precisión para tu portafolio digital. Monitorea el pulso de tu audiencia en cada punto de contacto.",
+    "totalVisits": "Visitas Totales",
+    "uniqueClicks": "Clics Únicos",
+    "ctrAvg": "CTR Promedio",
+    "trafficVelocity": "Velocidad de Tráfico",
+    "last30Days": "Interacción últimos 30 días",
+    "export": "Exportar",
+    "performanceLeaderboard": "Ranking de Rendimiento",
+    "viewDetailedAudit": "Ver Auditoría Detallada"
+  },
+  "adminAppearance": {
+    "title": "Apariencia",
+    "description": "Cura la firma visual de tu galería digital.",
+    "profileIdentity": "Identidad de Perfil",
+    "updateAvatarBio": "Actualiza tu avatar y bio.",
+    "pickImage": "Elegir Imagen",
+    "profileTitle": "Título del Perfil",
+    "bioDescription": "Descripción de Bio",
+    "accentColor": "Color de Acento",
+    "typography": "Tipografía",
+    "buttonArchitecture": "Estilo de Botones",
+    "pill": "Píldora",
+    "rounded": "Redondeado",
+    "square": "Cuadrado",
+    "resetChanges": "Restablecer Cambios",
+    "publishLive": "Publicar en Vivo"
+  },
+  "profile": {
+    "madeWith": "hecho con",
+    "joinNewsletter": "Únete al Newsletter",
+    "newsletterDesc": "Recibe inspiración curada cada domingo.",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "report": "Reportar"
+  },
+  "livePreview": {
+    "title": "Vista Previa",
+    "status": "Perfil en Vivo"
+  },
+  "errors": {
+    "somethingWentWrong": "¡Algo salió mal!",
+    "unexpectedError": "Ha ocurrido un error inesperado. Por favor, intenta de nuevo o vuelve al inicio.",
+    "tryAgain": "Intentar de nuevo",
+    "notFound": "Página no encontrada.",
+    "goHome": "Volver al inicio"
+  }
+}

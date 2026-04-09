@@ -35,7 +35,7 @@ export default function SandboxPage() {
 
         <section>
           <h2 className="mb-4 text-2xl font-bold text-white">
-            2. Buttons & Variants
+            2. Buttons &amp; Variants
           </h2>
           <div className="bg-surface-container flex flex-wrap gap-4 rounded-xl p-8">
             <Button>Default Shadcn</Button>

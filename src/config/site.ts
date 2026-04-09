@@ -1,12 +1,12 @@
 export const siteConfig = {
-  name: "Plantilla Next.js AI",
+  name: "LinkSocialDrop",
   description:
-    "Una plantilla profesional de Next.js top-tier optimizada para desarrollo asistido por IA.",
-  url: "https://tudominio.com",
-  ogImage: "https://tudominio.com/og.jpg",
+    "La alternativa gratuita a Linktree. Crea tu página de links personalizada en segundos.",
+  url: "https://linksocialdrop.vercel.app",
+  ogImage: "https://linksocialdrop.vercel.app/og.jpg",
   links: {
-    twitter: "https://twitter.com/tuusuario",
-    github: "https://github.com/tuusuario/tu-repo",
+    twitter: "https://twitter.com/linksocialdrop",
+    github: "https://github.com/carlosm-lab/linksocialdrop",
   },
 };
 

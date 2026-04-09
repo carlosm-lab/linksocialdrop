@@ -1,14 +1,17 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 
 export function LivePreview() {
+  const t = useTranslations("livePreview");
+
   return (
     <div className="sticky top-28 mx-auto w-full max-w-[320px] md:mx-0">
       <div className="mb-6 flex items-end justify-between">
         <h2 className="font-headline text-2xl font-bold tracking-tight text-white">
-          Live Preview
+          {t("title")}
         </h2>
         <span className="text-xs font-semibold tracking-widest text-[#00F5FF]/60 uppercase">
-          Profile Live
+          {t("status")}
         </span>
       </div>
 

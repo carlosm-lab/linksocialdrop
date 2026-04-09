@@ -1,8 +1,58 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { useTranslations } from "next-intl";
+import { login, signup, signInWithGoogle } from "@/actions/auth";
 
 export default function LoginPage() {
+  const t = useTranslations("login");
+  const tc = useTranslations("common");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(formData: FormData) {
+    setError(null);
+    setLoading(true);
+
+    try {
+      const action = isSignUp ? signup : login;
+      const result = await action(formData);
+
+      if (result?.error) {
+        if ("general" in result.error) {
+          setError(
+            (result.error as { general: string[] }).general[0] ||
+              "An error occurred"
+          );
+        } else {
+          const fieldErrors = Object.values(result.error).flat();
+          setError(fieldErrors[0] as string);
+        }
+      }
+    } catch {
+      // redirect throws an error in Server Actions — that's expected behavior
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogleLogin() {
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+    } catch {
+      // redirect throws
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="bg-surface text-on-surface font-body selection:bg-primary-container/30 relative min-h-screen">
       {/* Background Texture */}
@@ -19,10 +69,10 @@ export default function LoginPage() {
             <Icon name="link" className="text-primary-container text-4xl" />
           </div>
           <h1 className="font-headline text-primary-container mb-2 text-5xl font-black tracking-tighter">
-            LinkDrop
+            {tc("brandName")}
           </h1>
           <p className="font-label text-outline text-sm tracking-[0.2em] uppercase opacity-80">
-            Editorial Authority
+            {t("tagline")}
           </p>
         </header>
 
@@ -34,17 +84,23 @@ export default function LoginPage() {
 
             <div className="relative z-10">
               <h2 className="font-headline mb-8 text-2xl font-bold tracking-tight text-white">
-                Welcome back
+                {isSignUp ? t("createAccount") : t("welcomeBack")}
               </h2>
 
-              {/* Form Fields - Simulating Form setup for server action wiring later */}
-              <form className="space-y-6">
+              {/* Error Display */}
+              {error && (
+                <div className="bg-error/10 border-error/20 text-error mb-6 rounded-lg border p-3 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <form action={handleSubmit} className="space-y-6">
                 <div className="space-y-1.5">
                   <label
                     className="font-label text-outline ml-1 text-xs font-semibold tracking-wider uppercase"
                     htmlFor="email"
                   >
-                    Email Address
+                    {t("emailLabel")}
                   </label>
                   <div className="relative">
                     <Icon
@@ -55,8 +111,10 @@ export default function LoginPage() {
                       className="bg-surface-container-high text-on-surface placeholder:text-outline/40 focus:ring-primary-container/40 w-full rounded-lg border-none py-4 pr-4 pl-12 transition-all outline-none focus:ring-1"
                       id="email"
                       name="email"
-                      placeholder="curator@linkdrop.com"
+                      placeholder={t("emailPlaceholder")}
                       type="email"
+                      required
+                      disabled={loading}
                     />
                   </div>
                 </div>
@@ -66,7 +124,7 @@ export default function LoginPage() {
                     className="font-label text-outline ml-1 text-xs font-semibold tracking-wider uppercase"
                     htmlFor="password"
                   >
-                    Password
+                    {t("passwordLabel")}
                   </label>
                   <div className="relative">
                     <Icon
@@ -78,25 +136,32 @@ export default function LoginPage() {
                       id="password"
                       name="password"
                       placeholder="••••••••"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
+                      required
+                      minLength={6}
+                      disabled={loading}
                     />
                     <button
                       className="text-outline hover:text-primary-container absolute top-1/2 right-4 -translate-y-1/2 transition-colors"
                       type="button"
+                      onClick={() => setShowPassword(!showPassword)}
                     >
-                      <Icon name="visibility" className="text-xl" />
+                      <Icon
+                        name={showPassword ? "visibility_off" : "visibility"}
+                        className="text-xl"
+                      />
                     </button>
                   </div>
                 </div>
 
-                {/* Using unified Button component */}
                 <Button
                   type="submit"
                   variant="luminous"
                   size="pill"
-                  className="text-on-primary-fixed font-headline shadow-primary-container/20 mt-4 w-full py-4 font-bold shadow-lg"
+                  className="text-on-primary-fixed font-headline shadow-primary-container/20 mt-4 w-full py-4 font-bold shadow-lg disabled:opacity-50"
+                  disabled={loading}
                 >
-                  Sign In
+                  {loading ? "..." : isSignUp ? t("signUp") : t("signIn")}
                 </Button>
               </form>
 
@@ -104,14 +169,18 @@ export default function LoginPage() {
               <div className="relative my-10 flex items-center">
                 <div className="border-outline-variant/20 flex-grow border-t"></div>
                 <span className="font-label text-outline mx-4 text-xs tracking-widest uppercase">
-                  or continue with
+                  {t("orContinueWith")}
                 </span>
                 <div className="border-outline-variant/20 flex-grow border-t"></div>
               </div>
 
               {/* OAuth Buttons */}
               <div className="grid grid-cols-2 gap-4">
-                <button className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all">
+                <button
+                  onClick={handleGoogleLogin}
+                  disabled={loading}
+                  className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all disabled:opacity-50"
+                >
                   <img
                     alt="Google"
                     className="h-5 w-5"
@@ -119,7 +188,10 @@ export default function LoginPage() {
                   />
                   <span className="text-sm font-medium">Google</span>
                 </button>
-                <button className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all">
+                <button
+                  disabled={loading}
+                  className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all disabled:opacity-50"
+                >
                   <Icon name="terminal" className="text-xl" />
                   <span className="text-sm font-medium">GitHub</span>
                 </button>
@@ -128,13 +200,17 @@ export default function LoginPage() {
               {/* Toggle Footer */}
               <div className="mt-10 text-center">
                 <p className="text-outline text-sm">
-                  Don&apos;t have an account?
-                  <Link
-                    href="#"
+                  {isSignUp ? t("hasAccount") : t("noAccount")}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSignUp(!isSignUp);
+                      setError(null);
+                    }}
                     className="text-primary-container decoration-primary-container/30 ml-1 font-semibold underline-offset-4 hover:underline"
                   >
-                    Sign up
-                  </Link>
+                    {isSignUp ? t("signIn") : t("signUp")}
+                  </button>
                 </p>
               </div>
             </div>
@@ -148,7 +224,7 @@ export default function LoginPage() {
             className="font-label text-outline flex items-center gap-2 text-xs tracking-[0.2em] uppercase transition-colors hover:text-white"
           >
             <Icon name="help_outline" className="text-sm" />
-            Need help?
+            {t("needHelp")}
           </Link>
         </footer>
       </main>

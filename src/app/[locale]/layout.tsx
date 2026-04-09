@@ -1,5 +1,11 @@
 import { Inter, Epilogue } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import { notFound } from "next/navigation";
+import { siteConfig } from "@/config/site";
+import { Providers } from "@/providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,7 +19,9 @@ const epilogue = Epilogue({
   display: "swap",
 });
 
-import { siteConfig } from "@/config/site";
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export const metadata = {
   title: {
@@ -42,7 +50,7 @@ export const metadata = {
       index: true,
       follow: true,
       "max-video-preview": -1,
-      "max-image-preview": "large",
+      "max-image-preview": "large" as const,
       "max-snippet": -1,
     },
   },
@@ -53,33 +61,32 @@ export const viewport = {
   initialScale: 1,
 };
 
-import { Providers } from "@/providers";
-
-export default function RootLayout({
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
+  if (!routing.locales.includes(locale as "es" | "en")) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+  const messages = await getMessages();
+
   return (
     <html
-      lang="es"
+      lang={locale}
       className={`${inter.variable} ${epilogue.variable} dark`}
       suppressHydrationWarning
     >
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-        <style>{`
-          .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-          }
-        `}</style>
-      </head>
       <body className="min-h-screen antialiased">
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

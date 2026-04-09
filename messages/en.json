@@ -1,0 +1,106 @@
+{
+  "common": {
+    "brandName": "LinkSocialDrop",
+    "startForFree": "Start for Free",
+    "getStarted": "Get Started",
+    "copyright": "© 2025 LinkSocialDrop. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "support": "Support",
+    "loading": "Loading...",
+    "learnMore": "Learn more",
+    "join": "Join"
+  },
+  "nav": {
+    "links": "Links",
+    "appearance": "Appearance",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "landing": {
+    "badge": "Now in Public Beta",
+    "heroTitle1": "Your links,",
+    "heroTitle2": "your identity.",
+    "heroDescription": "The best Linktree alternative. Create your customized and free link in bio page in seconds. Designed for creators and professionals.",
+    "viewShowcase": "View Showcase",
+    "featuresTitle": "Your link in bio page, your edge.",
+    "featuresSubtitle": "We've stripped away the noise to give your links the breathing room they deserve. The free Linktree alternative you need.",
+    "featureFastTitle": "Fast",
+    "featureFastDesc": "Lightning-fast load times. Optimized for mobile-first scrolling because your audience doesn't wait.",
+    "featurePrivateTitle": "Private",
+    "featurePrivateDesc": "No invasive tracking or data mining. Your links and your data remain yours, protected by design.",
+    "featureCustomTitle": "Customizable",
+    "featureCustomDesc": "Beyond templates. Fine-tune every margin, color, and font to match your unique brand identity.",
+    "ctaTitle": "Ready to create your link in bio?",
+    "ctaSubtitle": "Join 12,000+ creators who choose LinkSocialDrop as their Linktree alternative."
+  },
+  "login": {
+    "tagline": "Your Link in Bio Page",
+    "welcomeBack": "Welcome back",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "orContinueWith": "or continue with",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signUp": "Sign up",
+    "needHelp": "Need help?"
+  },
+  "adminLinks": {
+    "title": "Your Links",
+    "description": "Curate your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.",
+    "edit": "Edit",
+    "hiddenFromProfile": "Hidden from profile",
+    "emptyStateText": "Have more to show? Add unlimited links to your profile with our Premium plan."
+  },
+  "adminAnalytics": {
+    "title": "Insight Engine",
+    "description": "Precision metrics for your digital portfolio. Monitor the pulse of your audience across every touchpoint.",
+    "totalVisits": "Total Visits",
+    "uniqueClicks": "Unique Clicks",
+    "ctrAvg": "CTR Avg.",
+    "trafficVelocity": "Traffic Velocity",
+    "last30Days": "Last 30 Days Engagement",
+    "export": "Export",
+    "performanceLeaderboard": "Performance Leaderboard",
+    "viewDetailedAudit": "View Detailed Audit"
+  },
+  "adminAppearance": {
+    "title": "Appearance",
+    "description": "Curate your digital gallery's visual signature.",
+    "profileIdentity": "Profile Identity",
+    "updateAvatarBio": "Update your avatar and bio display.",
+    "pickImage": "Pick Image",
+    "profileTitle": "Profile Title",
+    "bioDescription": "Bio Description",
+    "accentColor": "Accent Color",
+    "typography": "Typography",
+    "buttonArchitecture": "Button Architecture",
+    "pill": "Pill",
+    "rounded": "Rounded",
+    "square": "Square",
+    "resetChanges": "Reset Changes",
+    "publishLive": "Publish Live"
+  },
+  "profile": {
+    "madeWith": "made with",
+    "joinNewsletter": "Join the Newsletter",
+    "newsletterDesc": "Get curated inspiration every Sunday.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "report": "Report"
+  },
+  "livePreview": {
+    "title": "Live Preview",
+    "status": "Profile Live"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong!",
+    "unexpectedError": "An unexpected error occurred. Please try again or go back to the home page.",
+    "tryAgain": "Try again",
+    "notFound": "Page not found.",
+    "goHome": "Go back home"
+  }
+}

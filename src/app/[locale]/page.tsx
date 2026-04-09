@@ -1,9 +1,22 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { TopAppBar } from "@/components/layout/TopAppBar";
+import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 
-export default function LandingPage() {
+export default function LandingPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  return <LandingContent />;
+}
+
+function LandingContent() {
+  const t = useTranslations("landing");
+  const tc = useTranslations("common");
+
   return (
     <div className="bg-surface text-on-surface font-body selection:bg-primary-container/30">
       <TopAppBar isAuthenticated={false} />
@@ -17,19 +30,17 @@ export default function LandingPage() {
               <div className="bg-surface-container-high border-outline-variant/15 inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
                 <span className="bg-primary-container h-2 w-2 rounded-full"></span>
                 <span className="font-label text-primary-container text-xs tracking-widest uppercase">
-                  Now in Public Beta
+                  {t("badge")}
                 </span>
               </div>
               <h1 className="font-headline text-on-surface text-6xl leading-[0.9] font-black tracking-tight md:text-8xl">
-                Your links, <br />
+                {t("heroTitle1")} <br />
                 <span className="luminous-gradient bg-clip-text text-transparent">
-                  your identity.
+                  {t("heroTitle2")}
                 </span>
               </h1>
               <p className="text-on-surface-variant max-w-lg text-lg leading-relaxed md:text-xl">
-                The Digital Curator&apos;s platform. Elevate your online
-                presence with a premium, editorial-style bio page designed for
-                creative professionals.
+                {t("heroDescription")}
               </p>
               <div className="flex flex-col gap-4 pt-4 sm:flex-row">
                 <Link href="/login">
@@ -38,7 +49,7 @@ export default function LandingPage() {
                     size="pill"
                     className="text-on-primary-fixed w-full shadow-[0_12px_32px_rgba(0,245,255,0.2)] sm:w-auto"
                   >
-                    Start for Free
+                    {tc("startForFree")}
                   </Button>
                 </Link>
                 <Button
@@ -46,7 +57,7 @@ export default function LandingPage() {
                   size="pill"
                   className="text-primary w-full sm:w-auto"
                 >
-                  View Showcase
+                  {t("viewShowcase")}
                 </Button>
               </div>
             </div>
@@ -99,29 +110,31 @@ export default function LandingPage() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-16 space-y-4 md:mb-24">
               <h2 className="font-headline text-4xl font-black tracking-tight text-white md:text-6xl">
-                The editorial edge.
+                {t("featuresTitle")}
               </h2>
               <p className="text-on-surface-variant max-w-xl text-lg">
-                We&apos;ve stripped away the noise to give your links the
-                breathing room they deserve.
+                {t("featuresSubtitle")}
               </p>
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               <FeatureCard
                 icon="bolt"
-                title="Fast"
-                desc="Lightning-fast load times. Optimized for mobile-first scrolling because your audience doesn't wait."
+                title={t("featureFastTitle")}
+                desc={t("featureFastDesc")}
+                learnMore={tc("learnMore")}
               />
               <FeatureCard
                 icon="lock"
-                title="Private"
-                desc="No invasive tracking or data mining. Your links and your data remain yours, protected by design."
+                title={t("featurePrivateTitle")}
+                desc={t("featurePrivateDesc")}
+                learnMore={tc("learnMore")}
               />
               <FeatureCard
                 icon="palette"
-                title="Customizable"
-                desc="Beyond templates. Fine-tune every margin, color, and font to match your unique brand identity."
+                title={t("featureCustomTitle")}
+                desc={t("featureCustomDesc")}
+                learnMore={tc("learnMore")}
               />
             </div>
           </div>
@@ -132,7 +145,7 @@ export default function LandingPage() {
           <div className="bg-surface-container-highest relative mx-auto flex max-w-5xl flex-col items-center overflow-hidden rounded-3xl p-12 text-center md:p-24">
             <div className="bg-primary-container/10 absolute top-0 right-0 h-64 w-64 rounded-full blur-[80px]"></div>
             <h2 className="font-headline mb-8 text-4xl leading-tight font-black text-white md:text-7xl">
-              Ready to curate your world?
+              {t("ctaTitle")}
             </h2>
             <Link href="/login">
               <Button
@@ -140,12 +153,10 @@ export default function LandingPage() {
                 size="pill"
                 className="text-on-primary-fixed px-12 py-5 text-xl font-black shadow-[0_20px_40px_rgba(0,245,255,0.15)] hover:scale-[1.02]"
               >
-                Start for Free
+                {tc("startForFree")}
               </Button>
             </Link>
-            <p className="text-on-surface-variant mt-8">
-              Join 12,000+ creators who demand authority.
-            </p>
+            <p className="text-on-surface-variant mt-8">{t("ctaSubtitle")}</p>
           </div>
         </section>
       </main>
@@ -154,32 +165,26 @@ export default function LandingPage() {
       <footer className="w-full border-t border-slate-800/50 bg-[#111316] py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 md:flex-row">
           <div className="font-body text-sm text-slate-500">
-            © 2024 LinkDrop. Editorial Authority.
+            {tc("copyright")}
           </div>
           <div className="font-body flex gap-8 text-sm">
             <Link
               href="#"
               className="text-slate-500 transition-colors hover:text-white"
             >
-              Privacy
+              {tc("privacy")}
             </Link>
             <Link
               href="#"
               className="text-slate-500 transition-colors hover:text-white"
             >
-              Terms
+              {tc("terms")}
             </Link>
             <Link
               href="#"
               className="text-slate-500 transition-colors hover:text-white"
             >
-              Support
-            </Link>
-            <Link
-              href="#"
-              className="text-slate-500 transition-colors hover:text-white"
-            >
-              Twitter
+              {tc("support")}
             </Link>
           </div>
           <div className="flex gap-4">
@@ -197,14 +202,15 @@ function FeatureCard({
   icon,
   title,
   desc,
+  learnMore,
 }: {
   icon: string;
   title: string;
   desc: string;
+  learnMore: string;
 }) {
   return (
     <div className="bg-surface-container-high group hover:bg-surface-container-highest relative space-y-6 overflow-hidden rounded-xl p-8 transition-colors duration-300">
-      {/* Spotlight Effect approximation */}
       <div className="pointer-events-none absolute top-0 right-0 h-[150px] w-[150px] bg-[radial-gradient(circle,rgba(0,245,255,0.05)_0%,transparent_70%)]"></div>
 
       <div className="bg-primary-container/10 text-primary-container flex h-12 w-12 items-center justify-center rounded-lg">
@@ -214,7 +220,7 @@ function FeatureCard({
       <p className="text-on-surface-variant leading-relaxed">{desc}</p>
       <div className="pt-4">
         <span className="text-primary-container flex cursor-pointer items-center gap-2 text-sm font-bold transition-all group-hover:gap-4">
-          Learn more <Icon name="arrow_forward" className="text-sm" />
+          {learnMore} <Icon name="arrow_forward" className="text-sm" />
         </span>
       </div>
     </div>
