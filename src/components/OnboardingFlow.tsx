@@ -133,9 +133,9 @@ export function OnboardingFlow() {
                     {result.serverError}
                   </p>
                 )}
-                {result?.validationErrors?.username && (
+                {result?.validationErrors?.username?._errors && (
                   <p className="text-error mt-1 text-sm">
-                    {result.validationErrors.username[0]}
+                    {result.validationErrors.username._errors[0]}
                   </p>
                 )}
               </div>
