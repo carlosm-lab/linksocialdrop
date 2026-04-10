@@ -110,6 +110,23 @@ export function AppearanceClient({
     });
   };
 
+  const colorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleColorChange = (value: string) => {
+    setProfile((prev) => ({
+      ...prev,
+      accent_color: value,
+    }));
+
+    if (colorTimeoutRef.current) clearTimeout(colorTimeoutRef.current);
+
+    colorTimeoutRef.current = setTimeout(() => {
+      startTransition(async () => {
+        await updateProfile({ accent_color: value });
+      });
+    }, 500);
+  };
+
   const handleAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -385,7 +402,7 @@ export function AppearanceClient({
                 type="color"
                 className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                 value={profile.accent_color || "#00F5FF"}
-                onChange={(e) => handleUpdate("accent_color", e.target.value)}
+                onChange={(e) => handleColorChange(e.target.value)}
               />
               <Icon name="color_lens" className="text-xs" />
             </label>

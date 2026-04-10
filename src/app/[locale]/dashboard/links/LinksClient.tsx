@@ -77,7 +77,7 @@ function SortableItem({
     >
       <div className="flex w-full min-w-0 flex-grow items-center gap-4 sm:gap-6">
         <div
-          className="flex shrink-0 cursor-grab p-2 text-slate-500 hover:text-white active:cursor-grabbing"
+          className="flex shrink-0 cursor-grab touch-none p-2 text-slate-500 hover:text-white active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
