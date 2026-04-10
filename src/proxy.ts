@@ -5,7 +5,7 @@ import { updateSession } from "@/lib/supabase/proxy";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // 1. Run Supabase session refresh + route protection first
   const supabaseResponse = await updateSession(request);
 

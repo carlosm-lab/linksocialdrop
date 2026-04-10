@@ -18,7 +18,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 // Creamos un cliente público sin cookies para permitir caching estático e ISR
 const supabasePublic = createSupabaseClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 );
 
 export async function generateMetadata(
