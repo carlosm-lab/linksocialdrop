@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { getContrastColor } from "@/lib/colors";
+import { Icon } from "@/components/ui/icon";
 
 interface LivePreviewProps {
   profile?: any;
@@ -60,9 +61,19 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
         <h2 className="font-headline text-2xl font-bold tracking-tight text-white">
           {t("title")}
         </h2>
-        <span className="text-xs font-semibold tracking-widest text-[#00F5FF]/60 uppercase">
-          {t("status")}
-        </span>
+        {username ? (
+          <a
+            href={`/${username}`}
+            target="_blank"
+            className="text-primary-container bg-primary-container/10 hover:bg-primary-container/20 flex cursor-pointer items-center gap-1 rounded-full px-3 py-1.5 text-[10px] font-bold tracking-widest uppercase transition-colors"
+          >
+            {t("status")} <Icon name="external_link" className="text-xs" />
+          </a>
+        ) : (
+          <span className="text-xs font-semibold tracking-widest text-[#00F5FF]/60 uppercase">
+            {t("status")}
+          </span>
+        )}
       </div>
 
       {/* Phone Frame */}
@@ -71,7 +82,9 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
         <div className="absolute top-0 left-1/2 z-20 h-6 w-32 -translate-x-1/2 rounded-b-2xl bg-[#333538]"></div>
 
         {/* Profile Content inside Preview */}
-        <div className="relative flex h-full w-full flex-col items-center p-8 pt-16">
+        <div
+          className={`relative flex h-full w-full flex-col items-center p-8 pt-16 ${fontClass}`}
+        >
           <div className="mb-4 h-20 w-20 rounded-full p-1 ring-4 ring-[#00F5FF]/20">
             <Image
               alt="Avatar"
@@ -82,7 +95,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
               sizes="80px"
             />
           </div>
-          <h3 className={`mb-1 text-xl font-extrabold text-white ${fontClass}`}>
+          <h3 className="mb-1 text-xl font-extrabold text-white">
             {displayName}
           </h3>
           <p className="mb-2 text-xs tracking-wide text-slate-400">

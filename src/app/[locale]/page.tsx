@@ -67,22 +67,24 @@ function LandingContent() {
                     {tc("startForFree")}
                   </Button>
                 </Link>
-                <Button
-                  variant="surface"
-                  size="pill"
-                  className="text-primary w-full sm:w-auto"
-                >
-                  {t("viewShowcase")}
-                </Button>
+                <Link href="/sandbox">
+                  <Button
+                    variant="surface"
+                    size="pill"
+                    className="text-primary w-full sm:w-auto"
+                  >
+                    {t("viewShowcase")}
+                  </Button>
+                </Link>
               </div>
             </div>
 
             {/* Floating Mockup */}
             <div className="relative flex w-full items-center justify-center md:w-1/2">
-              <div className="bg-surface-container-lowest border-surface-container-highest relative h-[580px] w-72 rotate-[-2deg] overflow-hidden rounded-[3rem] border-[8px] shadow-2xl transition-transform duration-500 hover:rotate-0">
+              <div className="bg-surface-container-lowest border-surface-container-highest relative h-[480px] w-[260px] max-w-[90vw] rotate-[-2deg] overflow-hidden rounded-[2.5rem] border-[6px] shadow-2xl transition-transform duration-500 hover:rotate-0 sm:h-[580px] sm:w-72 sm:rounded-[3rem] sm:border-[8px]">
                 <div className="from-primary-container/20 absolute top-0 h-40 w-full bg-gradient-to-b to-transparent"></div>
-                <div className="flex flex-col items-center px-6 pt-12">
-                  <div className="bg-surface-container-high border-primary-container mb-4 h-20 w-20 rounded-full border-2 p-1">
+                <div className="flex flex-col items-center px-4 pt-8 sm:px-6 sm:pt-12">
+                  <div className="bg-surface-container-high border-primary-container mb-4 h-16 w-16 rounded-full border-2 p-1 sm:h-20 sm:w-20">
                     <Image
                       alt="Avatar"
                       className="h-full w-full rounded-full object-cover"
@@ -94,23 +96,23 @@ function LandingContent() {
                       priority
                     />
                   </div>
-                  <div className="font-headline text-lg font-bold">
+                  <div className="font-headline text-base font-bold sm:text-lg">
                     @alexa_gestiona
                   </div>
-                  <p className="text-primary-container mb-6 text-[10px] tracking-widest uppercase">
+                  <p className="text-primary-container mb-6 text-[9px] tracking-widest uppercase sm:text-[10px]">
                     Digital Strategist
                   </p>
 
                   <div className="w-full space-y-3">
-                    <div className="bg-surface-container-high border-outline-variant/10 flex h-12 w-full items-center gap-3 rounded-xl border px-4">
+                    <div className="bg-surface-container-high border-outline-variant/10 flex h-10 w-full items-center gap-3 rounded-xl border px-4 sm:h-12">
                       <Icon name="brush" className="text-primary-container" />
                       <div className="bg-on-surface-variant/20 h-2 w-24 rounded"></div>
                     </div>
-                    <div className="bg-surface-container-high border-outline-variant/10 flex h-12 w-full items-center gap-3 rounded-xl border px-4">
+                    <div className="bg-surface-container-high border-outline-variant/10 flex h-10 w-full items-center gap-3 rounded-xl border px-4 sm:h-12">
                       <Icon name="camera" className="text-primary-container" />
                       <div className="bg-on-surface-variant/20 h-2 w-32 rounded"></div>
                     </div>
-                    <div className="bg-surface-container-high border-outline-variant/10 flex h-12 w-full items-center gap-3 rounded-xl border px-4">
+                    <div className="bg-surface-container-high border-outline-variant/10 flex h-10 w-full items-center gap-3 rounded-xl border px-4 sm:h-12">
                       <Icon
                         name="shopping_bag"
                         className="text-primary-container"
@@ -126,7 +128,10 @@ function LandingContent() {
         </section>
 
         {/* Features Section */}
-        <section className="bg-surface-container-low px-6 py-24">
+        <section
+          id="features"
+          className="bg-surface-container-low scroll-mt-20 px-6 py-24"
+        >
           <div className="mx-auto max-w-7xl">
             <div className="mb-16 space-y-4 md:mb-24">
               <h2 className="font-headline text-4xl font-black tracking-tight text-white md:text-6xl">
@@ -237,9 +242,12 @@ function FeatureCard({
       <h3 className="font-headline text-2xl font-bold text-white">{title}</h3>
       <p className="text-on-surface-variant leading-relaxed">{desc}</p>
       <div className="pt-4">
-        <span className="text-primary-container flex cursor-pointer items-center gap-2 text-sm font-bold transition-all group-hover:gap-4">
+        <Link
+          href="#features"
+          className="text-primary-container inline-flex cursor-pointer items-center gap-2 text-sm font-bold transition-all group-hover:gap-4"
+        >
           {learnMore} <Icon name="arrow_forward" className="text-sm" />
-        </span>
+        </Link>
       </div>
     </div>
   );

@@ -380,9 +380,15 @@ export function AppearanceClient({
                 />
               );
             })}
-            <button className="bg-surface-container-highest border-outline-variant hover:bg-surface-container flex aspect-square w-full items-center justify-center rounded-full border transition-colors">
-              <Icon name="add" className="text-xs" />
-            </button>
+            <label className="bg-surface-container-highest border-outline-variant hover:bg-surface-container relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-full border transition-colors">
+              <input
+                type="color"
+                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                value={profile.accent_color || "#00F5FF"}
+                onChange={(e) => handleUpdate("accent_color", e.target.value)}
+              />
+              <Icon name="color_lens" className="text-xs" />
+            </label>
           </div>
         </section>
 
