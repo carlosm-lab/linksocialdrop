@@ -8,14 +8,17 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
-  const next = searchParams.get("next") ?? "/es/admin/links";
 
-  // Create redirect link without the secret token
-  const redirectTo = request.nextUrl.clone();
-  redirectTo.pathname = next;
-  redirectTo.searchParams.delete("token_hash");
-  redirectTo.searchParams.delete("type");
-  redirectTo.searchParams.delete("next");
+  // Detect locale from Accept-Language header, default to 'es'
+  const acceptLang = request.headers.get("accept-language") || "";
+  const preferredLocale = acceptLang.toLowerCase().startsWith("en")
+    ? "en"
+    : "es";
+
+  const next = searchParams.get("next") ?? `/${preferredLocale}/admin/links`;
+
+  // Build redirect URL using production URL if available
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
 
   if (token_hash && type) {
     const supabase = await createClient();
@@ -26,11 +29,14 @@ export async function GET(request: NextRequest) {
     });
 
     if (!error) {
-      return NextResponse.redirect(redirectTo);
+      return NextResponse.redirect(`${baseUrl}${next}`);
     }
   }
 
-  // Return the user to an error page with instructions
-  redirectTo.pathname = "/es/login";
-  return NextResponse.redirect(redirectTo);
+  // Extract locale from the next param or fallback to detected locale
+  const localeMatch = next.match(/^\/(es|en)\//);
+  const locale = localeMatch ? localeMatch[1] : preferredLocale;
+  return NextResponse.redirect(
+    `${baseUrl}/${locale}/login?error=auth_confirm_error`
+  );
 }

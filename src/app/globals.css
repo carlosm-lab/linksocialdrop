@@ -176,6 +176,18 @@
   html {
     @apply font-sans;
   }
+
+  /* A11Y-005: Reducir motion si el usuario lo prefiere */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @utility luminous-gradient {
@@ -204,5 +216,17 @@
   &::-webkit-scrollbar-thumb {
     background: #333538;
     border-radius: 10px;
+  }
+}
+
+/* A11Y-014: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

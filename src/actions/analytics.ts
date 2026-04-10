@@ -15,6 +15,17 @@ export const recordPageView = actionClient
   .action(async ({ parsedInput }) => {
     // Para registrar visitas no necesitamos estar autenticados,
     // de hecho, el RLS de page_views debe permitir inserts anónimos.
+
+    // Cookie-based Rate Limiting (SCALE-003): Prevent DB spam from reloads
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const rateLimitCookieName = `pv_${parsedInput.profile_id}`;
+
+    if (cookieStore.has(rateLimitCookieName)) {
+      // Ya registramos una visita a este perfil recientemente (mismo dispositivo)
+      return { success: true };
+    }
+
     const supabase = await createClient();
 
     const headersList = await headers();
@@ -51,12 +62,24 @@ export const recordPageView = actionClient
       return { success: false };
     }
 
+    // Set cookie to expire in 1 hour (3600 seconds)
+    cookieStore.set(rateLimitCookieName, "1", { maxAge: 3600, httpOnly: true });
+
     return { success: true };
   });
 
 export const recordLinkClick = actionClient
   .schema(recordLinkClickSchema)
   .action(async ({ parsedInput }) => {
+    // Cookie-based Rate Limiting (SCALE-003): Prevent DB spam from reloads
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const rateLimitCookieName = `click_${parsedInput.link_id}`;
+
+    if (cookieStore.has(rateLimitCookieName)) {
+      return { success: true };
+    }
+
     const supabase = await createClient();
 
     const headersList = await headers();
@@ -92,6 +115,9 @@ export const recordLinkClick = actionClient
       return { success: false };
     }
 
+    // Set cookie to expire in 1 hour (3600 seconds)
+    cookieStore.set(rateLimitCookieName, "1", { maxAge: 3600, httpOnly: true });
+
     return { success: true };
   });
 
@@ -120,34 +146,17 @@ export async function getAnalyticsDashboard() {
     throw new Error("Error obteniendo analíticas");
   }
 
-  // Traer clicks por link para el leaderboard
-  // En Supabase/Postgres puro esto sería un GROUP BY,
-  // via JS SDK a veces es más fácil un fetch y agrupar o un RPC.
-  // Como no hay RPC, traemos todos (o los más recientes) y agrupamos en memoria
-  // (Ojo: performance para arrays súper grandes, pero para el MVP servirá)
+  // Traer clicks por link para el leaderboard usando RPC optimizado
+  const { data: leaderboardData, error: leaderboardError } = await supabase.rpc(
+    "get_user_link_leaderboard",
+    { p_user_id: user.id }
+  );
 
-  const { data: allClicks } = await supabase
-    .from("link_clicks")
-    .select("link_id")
-    .eq("user_id", user.id);
+  if (leaderboardError) {
+    console.error("Error fetching leaderboard:", leaderboardError);
+  }
 
-  const clicksByLink: Record<string, number> = {};
-  allClicks?.forEach((c) => {
-    clicksByLink[c.link_id] = (clicksByLink[c.link_id] || 0) + 1;
-  });
-
-  // Solo para obtener info de los links en leaderboard
-  const { data: currentLinks } = await supabase
-    .from("links")
-    .select("id, title, url")
-    .eq("user_id", user.id);
-
-  const leaderboard = (currentLinks || [])
-    .map((l) => ({
-      ...l,
-      clicks: clicksByLink[l.id] || 0,
-    }))
-    .sort((a, b) => b.clicks - a.clicks);
+  const leaderboard = leaderboardData || [];
 
   return {
     views: viewsCount || 0,

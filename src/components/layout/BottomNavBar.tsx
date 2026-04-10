@@ -30,12 +30,6 @@ export function BottomNavBar() {
           label={t("analytics")}
           isActive={currentPath === "/admin/analytics"}
         />
-        <NavItem
-          href="/admin/settings"
-          icon="settings"
-          label={t("settings")}
-          isActive={currentPath === "/admin/settings"}
-        />
       </div>
     </nav>
   );
@@ -55,6 +49,7 @@ function NavItem({
   return (
     <Link
       href={href}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
         "flex flex-col items-center justify-center rounded-2xl px-4 py-2 transition-all duration-200",
         isActive

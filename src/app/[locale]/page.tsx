@@ -5,6 +5,7 @@ import { TopAppBar } from "@/components/layout/TopAppBar";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import Image from "next/image";
+import { siteConfig } from "@/config/site";
 
 export default function LandingPage({
   params,
@@ -20,9 +21,21 @@ function LandingContent() {
 
   return (
     <div className="bg-surface text-on-surface font-body selection:bg-primary-container/30">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: siteConfig.name,
+            url: siteConfig.url,
+            description: siteConfig.description,
+          }),
+        }}
+      />
       <TopAppBar isAuthenticated={false} />
 
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="relative overflow-hidden px-6 pt-32 pb-20 md:pt-48 md:pb-32">
           <div className="bg-primary-container/10 absolute top-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full blur-[120px]"></div>
@@ -75,13 +88,14 @@ function LandingContent() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDMOLQiO_TAF5LTsMXCcT7uLBn0XehLjwgWs_-YJHZQkmXIO48FhxJh0veE0yoN8zM41T99e2fppB9t6vnUpleEjTSsImQ_5AgqJUO5Gs-CWmu0d6-cP_AbvQ4up7-HXTQoG8ZnxgLWMCJyOZGak3Pht1W-Yh39S6fH_9i6ooxQTvjNzpOV5YD_M0zrxrNeMLZVvlVugdWbMbRWZ4rXlcVC67BedZ5TULE-kRdr5xtfY7MjtMWqAdVwnkgTamFjtlhM65SH1GPmPM"
                       width={119}
                       height={119}
+                      sizes="119px"
                       quality={75}
                       priority
                     />
                   </div>
-                  <h2 className="font-headline text-lg font-bold">
+                  <div className="font-headline text-lg font-bold">
                     @alexa_curates
-                  </h2>
+                  </div>
                   <p className="text-primary-container mb-6 text-[10px] tracking-widest uppercase">
                     Digital Strategist
                   </p>
@@ -170,7 +184,7 @@ function LandingContent() {
       <footer className="w-full border-t border-slate-800/50 bg-[#111316] py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 md:flex-row">
           <div className="font-body text-sm text-slate-300">
-            {tc("copyright")}
+            {tc("copyright", { year: new Date().getFullYear() })}
           </div>
           <div className="font-body flex gap-8 text-sm">
             <Link

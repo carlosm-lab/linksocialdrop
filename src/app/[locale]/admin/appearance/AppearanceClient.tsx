@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { updateProfile, updateAvatar } from "@/actions/profile";
 import { Database } from "@/types/database";
+import Image from "next/image";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -40,8 +41,8 @@ export function AppearanceClient({
     formData.append("file", file);
 
     const res = await updateAvatar(formData);
-    if (res.success && res.avatar_url) {
-      setProfile((prev) => ({ ...prev, avatar_url: res.avatar_url }));
+    if (res?.data?.success && res.data.avatar_url) {
+      setProfile((prev) => ({ ...prev, avatar_url: res.data!.avatar_url }));
     }
     setIsUploading(false);
   };
@@ -55,6 +56,16 @@ export function AppearanceClient({
     "#FF8C42",
     "#FFFFFF",
   ];
+
+  const COLOR_NAMES: Record<string, string> = {
+    "#00F5FF": "Cyan",
+    "#FFD700": "Gold",
+    "#FF6B6B": "Coral",
+    "#A061FF": "Purple",
+    "#4ECDC4": "Teal",
+    "#FF8C42": "Orange",
+    "#FFFFFF": "White",
+  };
 
   const TYPOGRAPHY_OPTIONS = [
     { value: "Epilogue", class: "font-headline font-bold" },
@@ -108,10 +119,13 @@ export function AppearanceClient({
           <div className="group relative">
             <div className="bg-surface-container-highest border-primary-container/20 flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border-2">
               {profile.avatar_url ? (
-                <img
+                <Image
                   alt="Preview Avatar"
                   className="h-full w-full object-cover"
                   src={profile.avatar_url}
+                  width={96}
+                  height={96}
+                  sizes="96px"
                 />
               ) : (
                 <Icon
@@ -201,7 +215,7 @@ export function AppearanceClient({
                       "--tw-ring-color": color,
                     } as React.CSSProperties
                   }
-                  aria-label={`Color ${color}`}
+                  aria-label={`Color ${COLOR_NAMES[color] || color}`}
                 />
               );
             })}

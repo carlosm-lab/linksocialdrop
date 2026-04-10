@@ -1,12 +1,10 @@
 import { Icon } from "@/components/ui/icon";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { getAnalyticsDashboard } from "@/actions/analytics";
 import { redirect } from "next/navigation";
 
 export default async function AdminAnalyticsPage() {
-  const t = await import(`../../../../../messages/es.json`).then(
-    (m) => m.adminAnalytics
-  );
+  const t = await getTranslations("adminAnalytics");
 
   let stats;
   try {
@@ -23,10 +21,10 @@ export default async function AdminAnalyticsPage() {
     <main className="mx-auto max-w-7xl px-6 pt-24 pb-32">
       <section className="mb-12">
         <h2 className="font-headline text-on-surface mb-2 text-6xl font-black tracking-tighter">
-          {t.title}
+          {t("title")}
         </h2>
         <p className="max-w-lg leading-relaxed text-slate-400">
-          {t.description}
+          {t("description")}
         </p>
       </section>
 
@@ -39,7 +37,7 @@ export default async function AdminAnalyticsPage() {
               </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t.totalVisits}
+              {t("totalVisits")}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
               {views}
@@ -58,7 +56,7 @@ export default async function AdminAnalyticsPage() {
               </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t.uniqueClicks}
+              {t("uniqueClicks")}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
               {clicks}
@@ -77,7 +75,7 @@ export default async function AdminAnalyticsPage() {
               </span>
             </div>
             <h3 className="font-label mb-1 text-sm tracking-widest text-slate-400 uppercase">
-              {t.ctrAvg}
+              {t("ctrAvg")}
             </h3>
             <p className="font-headline text-on-surface text-4xl font-black">
               {ctr}%
@@ -97,13 +95,13 @@ export default async function AdminAnalyticsPage() {
           <div className="mb-12 flex items-end justify-between">
             <div>
               <h4 className="font-headline text-on-surface text-2xl font-bold">
-                {t.trafficVelocity}
+                {t("trafficVelocity")}
               </h4>
-              <p className="text-sm text-slate-500">{t.last30Days}</p>
+              <p className="text-sm text-slate-500">{t("last30Days")}</p>
             </div>
             <div className="flex gap-2">
               <button className="bg-surface-container-highest text-primary-container font-label hover:bg-surface-container-highest/80 rounded-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors">
-                {t.export}
+                {t("export")}
               </button>
             </div>
           </div>
@@ -137,49 +135,56 @@ export default async function AdminAnalyticsPage() {
 
         <div className="bg-surface-container-low rounded-xl p-8">
           <h4 className="font-headline text-on-surface mb-8 text-lg font-bold">
-            {t.performanceLeaderboard}
+            {t("performanceLeaderboard")}
           </h4>
           <div className="space-y-8">
             {leaderboard.length === 0 ? (
               <p className="text-sm text-slate-500 italic">No activity yet</p>
             ) : (
-              leaderboard.slice(0, 5).map((item, index) => {
-                const rank = String(index + 1).padStart(2, "0");
-                const maxClicks = leaderboard[0].clicks || 1;
-                const widthPercent = Math.max(
-                  (item.clicks / maxClicks) * 100,
-                  5
-                );
+              leaderboard
+                .slice(0, 5)
+                .map(
+                  (
+                    item: { id: string; title: string; clicks: number },
+                    index: number
+                  ) => {
+                    const rank = String(index + 1).padStart(2, "0");
+                    const maxClicks = leaderboard[0].clicks || 1;
+                    const widthPercent = Math.max(
+                      (item.clicks / maxClicks) * 100,
+                      5
+                    );
 
-                return (
-                  <div key={item.id} className="group">
-                    <div className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="font-headline text-xs font-black text-slate-700">
-                          {rank}
-                        </span>
-                        <span className="text-on-surface block max-w-[150px] truncate text-sm font-bold">
-                          {item.title}
-                        </span>
+                    return (
+                      <div key={item.id} className="group">
+                        <div className="mb-2 flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className="font-headline text-xs font-black text-slate-700">
+                              {rank}
+                            </span>
+                            <span className="text-on-surface block max-w-[150px] truncate text-sm font-bold">
+                              {item.title}
+                            </span>
+                          </div>
+                          <span className="text-primary-container text-xs font-bold">
+                            {item.clicks}
+                          </span>
+                        </div>
+                        <div className="bg-surface-container-highest h-1.5 w-full overflow-hidden rounded-full">
+                          <div
+                            className="luminous-glow h-full transition-opacity group-hover:opacity-80"
+                            style={{ width: `${widthPercent}%` }}
+                          ></div>
+                        </div>
                       </div>
-                      <span className="text-primary-container text-xs font-bold">
-                        {item.clicks}
-                      </span>
-                    </div>
-                    <div className="bg-surface-container-highest h-1.5 w-full overflow-hidden rounded-full">
-                      <div
-                        className="luminous-glow h-full transition-opacity group-hover:opacity-80"
-                        style={{ width: `${widthPercent}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                );
-              })
+                    );
+                  }
+                )
             )}
           </div>
 
           <button className="font-label mt-10 w-full border-t border-slate-800/50 py-4 pt-8 text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase transition-colors hover:text-white">
-            {t.viewDetailedAudit}
+            {t("viewDetailedAudit")}
           </button>
         </div>
       </div>

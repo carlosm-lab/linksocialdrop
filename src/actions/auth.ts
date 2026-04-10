@@ -5,64 +5,58 @@ import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { loginSchema, signupSchema } from "@/schemas/auth";
+import { actionClient } from "@/lib/safe-action";
 
-export async function login(formData: FormData) {
-  const supabase = await createClient();
+export const login = actionClient
+  .schema(loginSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createClient();
 
-  const parsed = loginSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
+    const { error } = await supabase.auth.signInWithPassword({
+      email: parsedInput.email,
+      password: parsedInput.password,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    revalidatePath("/", "layout");
+    return { success: true };
   });
 
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
-  }
+export const signup = actionClient
+  .schema(signupSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createClient();
+    const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-  const { error } = await supabase.auth.signInWithPassword(parsed.data);
+    const { error } = await supabase.auth.signUp({
+      email: parsedInput.email,
+      password: parsedInput.password,
+      options: {
+        emailRedirectTo: `${siteUrl}/auth/callback`,
+      },
+    });
 
-  if (error) {
-    return { error: { general: [error.message] } };
-  }
+    if (error) {
+      throw new Error(error.message);
+    }
 
-  revalidatePath("/", "layout");
-  return { success: true };
-}
-
-export async function signup(formData: FormData) {
-  const supabase = await createClient();
-
-  const parsed = signupSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
+    revalidatePath("/", "layout");
+    return { success: true };
   });
-
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
-  }
-
-  const { error } = await supabase.auth.signUp({
-    email: parsed.data.email,
-    password: parsed.data.password,
-    options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/auth/callback`,
-    },
-  });
-
-  if (error) {
-    return { error: { general: [error.message] } };
-  }
-
-  revalidatePath("/", "layout");
-  return { success: true };
-}
 
 export async function signInWithGoogle() {
   const supabase = await createClient();
+  const locale = await getLocale();
+
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/auth/callback`,
+      redirectTo: `${siteUrl}/auth/callback?next=/${locale}/admin/links`,
     },
   });
 

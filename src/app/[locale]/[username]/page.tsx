@@ -1,11 +1,88 @@
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { createClient } from "@/lib/supabase/server";
+
 import { notFound } from "next/navigation";
 import { PageViewTracker } from "./PageViewTracker";
 import { PublicLinkItem } from "./PublicLinkItem";
+import type { Metadata, ResolvingMetadata } from "next";
+import { siteConfig } from "@/config/site";
+import { getContrastColor } from "@/lib/colors";
+
+export const revalidate = 60; // Regenerar la caché en background cada 60 segundos (ISR)
+
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+
+// Creamos un cliente público sin cookies para permitir caching estático e ISR
+const supabasePublic = createSupabaseClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ username: string; locale: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { username, locale } = await params;
+
+  // Obtener Perfil
+  const { data: profile } = await supabasePublic
+    .from("profiles")
+    .select("username, full_name, bio, avatar_url")
+    .eq("username", username)
+    .single();
+
+  if (!profile) {
+    return {
+      title: "Not Found",
+      description: "Profile not found",
+    };
+  }
+
+  const displayName = profile.full_name || profile.username;
+  const title = `${displayName} (@${profile.username}) | ${siteConfig.name}`;
+  const description =
+    profile.bio ||
+    `Visita el perfil de ${displayName} en ${siteConfig.name} para descubrir todos sus enlaces importantes en un solo lugar.`;
+  const url = `${siteConfig.url}/${locale}/${profile.username}`;
+  const imageUrl = profile.avatar_url || siteConfig.ogImage;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: siteConfig.name,
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 800,
+          alt: `Avatar de ${displayName}`,
+        },
+      ],
+      locale,
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${siteConfig.url}/en/${profile.username}`,
+        es: `${siteConfig.url}/es/${profile.username}`,
+      },
+    },
+  };
+}
 
 export default async function PublicProfilePage({
   params,
@@ -13,12 +90,11 @@ export default async function PublicProfilePage({
   params: Promise<{ username: string; locale: string }>;
 }) {
   const { username } = await params;
-  const supabase = await createClient();
 
-  // Obtener Perfil
-  const { data: profile } = await supabase
+  // PERF-003: Single query with embedded links join (replaces 2 sequential queries)
+  const { data: profile } = await supabasePublic
     .from("profiles")
-    .select("*")
+    .select("*, links(*)")
     .eq("username", username)
     .single();
 
@@ -26,15 +102,31 @@ export default async function PublicProfilePage({
     notFound();
   }
 
-  // Obtener Links (solo visibles, ordenados)
-  const { data: links } = await supabase
-    .from("links")
-    .select("*")
-    .eq("user_id", profile.id)
-    .eq("visible", true)
-    .order("position", { ascending: true });
+  // Filter visible links and sort by position
+  const links = (profile.links || [])
+    .filter((l: any) => l.visible)
+    .sort((a: any, b: any) => a.position - b.position);
 
-  return <ProfileContent profile={profile} links={links || []} />;
+  // SEO-003: JSON-LD structured data for Person
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.full_name || username,
+    url: `${siteConfig.url}/${username}`,
+    ...(profile.bio && { description: profile.bio }),
+    ...(profile.avatar_url && { image: profile.avatar_url }),
+    sameAs: links.filter((l: any) => l.url).map((l: any) => l.url),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProfileContent profile={profile} links={links} />
+    </>
+  );
 }
 
 function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
@@ -50,9 +142,6 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
   const customAccentStyle = profile.accent_color
     ? { color: profile.accent_color }
     : {};
-  const customBgStyle = profile.accent_color
-    ? { backgroundColor: profile.accent_color }
-    : {};
 
   // Base text color when hover/bg overrides happen
   const textColorClass = profile.accent_color ? "" : "text-primary-container";
@@ -62,21 +151,44 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
     <div
       className={`bg-surface text-on-surface ${fontClass} selection:bg-primary-container selection:text-on-primary-container relative z-0 flex min-h-screen flex-col items-center`}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            mainEntity: {
+              "@type": "Person",
+              name: profile.full_name || profile.username,
+              alternateName: profile.username,
+              description: profile.bio || "",
+              image: profile.avatar_url || siteConfig.ogImage,
+            },
+          }),
+        }}
+      />
       <PageViewTracker profileId={profile.id} />
 
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,_#1e2023_0%,_#111316_70%)] opacity-50"></div>
 
-      <main className="relative z-10 flex w-full max-w-md flex-col items-center px-6 py-12">
+      <main
+        id="main-content"
+        className="relative z-10 flex w-full max-w-md flex-col items-center px-6 py-12"
+      >
         <header className="mb-12 flex w-full flex-col items-center">
           <div className="relative mb-6">
             <div className="luminous-gradient pointer-events-none absolute inset-0 scale-110 rounded-full opacity-20 blur-2xl"></div>
-            <img
+            <Image
               alt={`Portrait of ${profile.full_name || profile.username}`}
               className="border-surface-container-high relative z-10 h-32 w-32 rounded-full border-4 object-cover"
               src={
                 profile.avatar_url ||
                 "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
               }
+              width={128}
+              height={128}
+              sizes="128px"
+              priority
             />
           </div>
           <div className="text-center">
@@ -103,6 +215,7 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
                 key={link.id}
                 link={link}
                 buttonStyle={profile.button_style}
+                accentColor={profile.accent_color}
                 textColorClass={textColorClass}
                 bgColorClass={bgColorClass}
               />
@@ -123,7 +236,8 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
               </p>
               <div className="relative z-10 flex gap-2">
                 <input
-                  className="bg-surface-container-highest text-on-surface focus:ring-primary-container/40 flex-1 rounded-lg border-none px-3 text-sm outline-none placeholder:text-slate-500 focus:ring-1"
+                  aria-label={t("joinNewsletter")}
+                  className="bg-surface-container-highest text-on-surface focus-visible:ring-primary-container focus-visible:ring-offset-background flex-1 rounded-lg border-none px-3 text-sm outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-offset-2"
                   placeholder="email@example.com"
                   type="email"
                 />
@@ -132,7 +246,10 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
                   className="text-on-primary-fixed font-bold shadow-none"
                   style={
                     profile.accent_color
-                      ? { backgroundColor: profile.accent_color }
+                      ? {
+                          backgroundColor: profile.accent_color,
+                          color: getContrastColor(profile.accent_color),
+                        }
                       : {}
                   }
                 >

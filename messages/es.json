@@ -3,13 +3,15 @@
     "brandName": "LinkSocialDrop",
     "startForFree": "Comenzar Gratis",
     "getStarted": "Comenzar",
-    "copyright": "© 2025 LinkSocialDrop. Todos los derechos reservados.",
+    "copyright": "© {year} LinkSocialDrop. Todos los derechos reservados.",
     "privacy": "Privacidad",
     "terms": "Términos",
     "support": "Soporte",
     "loading": "Cargando...",
     "learnMore": "Saber más",
-    "join": "Unirse"
+    "join": "Unirse",
+    "account": "Cuenta",
+    "signOut": "Salir"
   },
   "nav": {
     "links": "Links",
@@ -102,5 +104,19 @@
     "tryAgain": "Intentar de nuevo",
     "notFound": "Página no encontrada.",
     "goHome": "Volver al inicio"
+  },
+  "legal": {
+    "privacyTitle": "Política de Privacidad",
+    "privacyLastUpdated": "Última actualización: Abril 2025",
+    "privacyContent1": "En LinkSocialDrop, nos tomamos su privacidad muy en serio. Esta política describe qué información personal recopilamos y cómo la utilizamos.",
+    "privacyContent2": "Sus datos personales están protegidos y nunca se venden a terceros.",
+    "termsTitle": "Términos de Servicio",
+    "termsLastUpdated": "Última actualización: Abril 2025",
+    "termsContent1": "Al utilizar LinkSocialDrop, usted acepta estos Términos de Servicio. Por favor léalos cuidadosamente.",
+    "termsContent2": "Usted es responsable del contenido que publica y no debe violar ninguna ley o regulación."
+  },
+  "metadata": {
+    "title": "LinkSocialDrop",
+    "description": "La mejor alternativa a Linktree gratuita. Crea tu página de links personalizada en segundos."
   }
 }

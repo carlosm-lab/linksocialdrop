@@ -8,7 +8,10 @@ export const createLinkSchema = z.object({
   url: z
     .string()
     .url({ message: "Debe ser una URL válida" })
-    .max(500, { message: "La URL es muy larga" }),
+    .max(500, { message: "La URL es muy larga" })
+    .refine((url) => url.startsWith("https://") || url.startsWith("http://"), {
+      message: "Solo URLs HTTP/HTTPS permitidas",
+    }),
   icon: z.string().optional(),
 });
 

@@ -162,17 +162,15 @@ export const reorderLinks = actionClient
 
     if (!user) throw new Error("No estás autenticado");
 
-    // Supabase JS doesn't have a bulk update by default that works cleanly,
-    // so we'll do it sequentially or via an upsert approach. Sequential is fine given small N.
-    const promises = parsedInput.links.map((link) =>
-      supabase
-        .from("links")
-        .update({ position: link.position })
-        .eq("id", link.id)
-        .eq("user_id", user.id)
-    );
+    const { error } = await supabase.rpc("reorder_links", {
+      p_user_id: user.id,
+      p_links: parsedInput.links,
+    });
 
-    await Promise.all(promises);
+    if (error) {
+      console.error("Error bulk reordering links:", error);
+      throw new Error("Error reordering links");
+    }
 
     revalidatePath("/[locale]/admin/links", "page");
     revalidatePath("/[locale]/[username]", "page");

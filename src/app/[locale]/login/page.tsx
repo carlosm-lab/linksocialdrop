@@ -24,17 +24,12 @@ export default function LoginPage() {
       const action = isSignUp ? signup : login;
       const result = await action(formData);
 
-      if (result?.error) {
-        if ("general" in result.error) {
-          setError(
-            (result.error as { general: string[] }).general[0] ||
-              "An error occurred"
-          );
-        } else {
-          const fieldErrors = Object.values(result.error).flat();
-          setError(fieldErrors[0] as string);
-        }
-      } else if (result?.success) {
+      if (result?.serverError) {
+        setError(result.serverError);
+      } else if (result?.validationErrors) {
+        const fieldErrors = Object.values(result.validationErrors).flat();
+        setError((fieldErrors[0] as string) || "Invalid input");
+      } else if (result?.data?.success) {
         router.push("/admin/links");
       }
     } catch {
@@ -150,6 +145,8 @@ export default function LoginPage() {
                     <button
                       className="text-outline hover:text-primary-container absolute top-1/2 right-4 -translate-y-1/2 transition-colors"
                       type="button"
+                      aria-pressed={showPassword}
+                      aria-label="Toggle password visibility"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       <Icon
@@ -190,7 +187,7 @@ export default function LoginPage() {
                   <img
                     alt="Google"
                     className="h-5 w-5"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqun8tMiSkqxxt8FN8RrRla4zfV3BY3iCDlla7rZnLPVaiPezHDUYdr0bYLx46sQ-matxsFlzDgBMfz9ozz6d9rNHHIIluFdKHSm0_x5nvPBZrzcBW4DkGWLXRK9jUh-c4PTC6XoEiU_h5k-J4CbWdVcEfapRwbvbeDGZrol5snkPbnyM5pkGddPt-P4Hel0gh8D8LPteLHVJG7p823nbcphgBEVcM9uuVFTOd6PdKd82dEiLehCVQd64KRucCru2pI7nKAg2n2Hs"
+                    src="/icons/google.svg"
                   />
                   <span className="text-sm font-medium">Google</span>
                 </button>
