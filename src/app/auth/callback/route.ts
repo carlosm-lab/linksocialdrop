@@ -5,17 +5,20 @@ import { type NextRequest } from "next/server";
 // Handler for GET requests to /auth/callback
 // Exchanges an OAuth code for a session
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = request.nextUrl;
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/es/admin/links";
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || origin;
+  // Use NEXT_PUBLIC_APP_URL for production, fallback to request origin
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${baseUrl}${next}`);
+      // Ensure the redirect path starts with /
+      const redirectPath = next.startsWith("/") ? next : `/${next}`;
+      return NextResponse.redirect(`${baseUrl}${redirectPath}`);
     }
   }
 

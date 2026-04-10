@@ -6,6 +6,14 @@ import { updateSession } from "@/lib/supabase/proxy";
 const intlMiddleware = createIntlMiddleware(routing);
 
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Skip intl middleware entirely for auth routes — these are raw API routes
+  // that must NOT be locale-prefixed (e.g. /auth/callback, /auth/confirm)
+  if (pathname.startsWith("/auth")) {
+    return await updateSession(request);
+  }
+
   // 1. Run Supabase session refresh + route protection first
   const supabaseResponse = await updateSession(request);
 

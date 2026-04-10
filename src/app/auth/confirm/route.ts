@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 // Handler for GET requests to /auth/confirm
 // Exchanges a token_hash (from email confirmation) for a session
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams } = request.nextUrl;
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
 
@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
     });
 
     if (!error) {
-      return NextResponse.redirect(`${baseUrl}${next}`);
+      const redirectPath = next.startsWith("/") ? next : `/${next}`;
+      return NextResponse.redirect(`${baseUrl}${redirectPath}`);
     }
   }
 
