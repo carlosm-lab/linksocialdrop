@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageViewTracker } from "./PageViewTracker";
 import { PublicLinkItem } from "./PublicLinkItem";
 import type { Metadata, ResolvingMetadata } from "next";
@@ -12,6 +13,7 @@ import { siteConfig } from "@/config/site";
 import { getContrastColor } from "@/lib/colors";
 
 export const revalidate = 60; // Regenerar la caché en background cada 60 segundos (ISR)
+export const experimental_ppr = true; // Activar Partial Prerendering
 
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
@@ -84,6 +86,23 @@ export async function generateMetadata(
   };
 }
 
+export async function generateStaticParams() {
+  // Pre-render the public profiles for the first 100 users, others via ISR fallback
+  const { data: profiles } = await supabasePublic
+    .from("profiles")
+    .select("username")
+    .limit(100);
+
+  if (!profiles) return [];
+
+  // Los parámetros generados se combinan con el array de locales de layout.tsx
+  return profiles
+    .filter((p) => p.username)
+    .map((p) => ({
+      username: p.username,
+    }));
+}
+
 export default async function PublicProfilePage({
   params,
 }: {
@@ -147,6 +166,8 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
   const textColorClass = profile.accent_color ? "" : "text-primary-container";
   const bgColorClass = "bg-surface-container-highest";
 
+  const isBento = profile.layout_mode === "bento";
+
   return (
     <div
       className={`bg-surface text-on-surface ${fontClass} selection:bg-primary-container selection:text-on-primary-container relative z-0 flex min-h-screen flex-col items-center`}
@@ -167,7 +188,9 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
           }),
         }}
       />
-      <PageViewTracker profileId={profile.id} />
+      <Suspense fallback={null}>
+        <PageViewTracker profileId={profile.id} />
+      </Suspense>
 
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,_#1e2023_0%,_#111316_70%)] opacity-50"></div>
 
@@ -204,25 +227,39 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
           </div>
         </header>
 
-        <div className="mb-16 w-full space-y-4">
+        <div
+          className={`mb-16 w-full ${isBento ? "grid auto-rows-auto grid-cols-2 gap-4" : "space-y-4"}`}
+        >
           {links.length === 0 ? (
-            <p className="text-center text-slate-500 italic">
+            <p
+              className={`text-center text-slate-500 italic ${isBento ? "col-span-2" : ""}`}
+            >
               No links added yet.
             </p>
           ) : (
-            links.map((link) => (
-              <PublicLinkItem
+            links.map((link, index) => (
+              <div
                 key={link.id}
-                link={link}
-                buttonStyle={profile.button_style}
-                accentColor={profile.accent_color}
-                textColorClass={textColorClass}
-                bgColorClass={bgColorClass}
-              />
+                className={
+                  isBento && index === 0
+                    ? "col-span-2 row-span-1"
+                    : "col-span-1"
+                }
+              >
+                <PublicLinkItem
+                  link={link}
+                  buttonStyle={profile.button_style}
+                  accentColor={profile.accent_color}
+                  textColorClass={textColorClass}
+                  bgColorClass={bgColorClass}
+                  layoutMode={profile.layout_mode}
+                  index={index}
+                />
+              </div>
             ))
           )}
 
-          <div className="w-full pt-8">
+          <div className={`w-full pt-8 ${isBento ? "col-span-2" : ""}`}>
             <div className="bg-surface-container-low border-outline-variant/10 relative overflow-hidden rounded-2xl border p-6">
               <div className="luminous-gradient pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-10 blur-3xl"></div>
               <h3

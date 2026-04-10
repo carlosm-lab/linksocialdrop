@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -283,10 +284,12 @@ export default function LoginPage() {
                       disabled={loading}
                       className="bg-surface-container-highest hover:bg-surface-bright text-on-surface border-outline-variant/5 flex items-center justify-center gap-3 rounded-lg border py-3.5 transition-all disabled:opacity-50"
                     >
-                      <img
+                      <Image
                         alt="Google"
                         className="h-5 w-5"
                         src="/icons/google.svg"
+                        width={20}
+                        height={20}
                       />
                       <span className="text-sm font-medium">Google</span>
                     </button>

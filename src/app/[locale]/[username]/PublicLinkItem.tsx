@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { recordLinkClick } from "@/actions/analytics";
 import { Database } from "@/types/database";
 import { getContrastColor } from "@/lib/colors";
+import { motion } from "framer-motion";
 
 type LinkRow = Database["public"]["Tables"]["links"]["Row"];
 
@@ -13,6 +14,8 @@ interface PublicLinkItemProps {
   accentColor?: string | null;
   textColorClass?: string;
   bgColorClass?: string;
+  layoutMode?: "list" | "bento" | string | null;
+  index?: number;
 }
 
 export function PublicLinkItem({
@@ -21,6 +24,8 @@ export function PublicLinkItem({
   accentColor,
   textColorClass = "text-primary-container",
   bgColorClass = "bg-surface-container-highest",
+  layoutMode = "list",
+  index = 0,
 }: PublicLinkItemProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // SCALE-004: Eventos bloqueantes (Fire and forget)
@@ -49,27 +54,52 @@ export function PublicLinkItem({
   // For the icon background - we might just leave it transparent or slightly dark
   const iconStyle = accentColor ? { color: contrastColor } : {};
 
+  const isBento = layoutMode === "bento";
+
+  // Decide grid class span for bento based on index if bento is true.
+  // This is a simple pattern: first item large, next normal, etc. But we assume the parent grid will manage columns if using display: grid.
+  // Actually, we can just apply classes here or let the parent control it.
+  const bentoClasses = isBento
+    ? "flex-col items-start justify-between h-32 md:h-40 glass-panel bg-noise"
+    : "flex-row h-auto";
+
   return (
-    <a
+    <motion.a
       href={link.url}
       onClick={handleClick}
       aria-label={`Visit link to ${link.title}`}
-      className={`group focus-visible:ring-primary focus-visible:ring-offset-background relative flex w-full items-center p-4 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98] ${roundedClass} ${accentColor ? "hover:brightness-90" : "bg-surface-container-low hover:bg-surface-container-high"}`}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      className={`group focus-visible:ring-primary focus-visible:ring-offset-background relative flex w-full p-4 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${roundedClass} ${accentColor ? "hover:brightness-90" : "bg-surface-container-low hover:bg-surface-container-high"} ${bentoClasses} ${isBento && !accentColor ? "border-outline-variant/30 border" : ""}`}
       style={customStyles}
     >
       <div
-        className={`${accentColor ? "" : bgColorClass + " " + textColorClass} group-hover:luminous-gradient group-hover:text-on-primary-fixed flex h-12 w-12 items-center justify-center transition-colors ${roundedClass}`}
+        className={`${accentColor ? "" : bgColorClass + " " + textColorClass} group-hover:luminous-gradient group-hover:text-on-primary-fixed flex items-center justify-center transition-colors ${roundedClass} ${isBento ? "mb-2 h-10 w-10" : "h-12 w-12"}`}
         style={iconStyle}
       >
-        <Icon name={link.icon || "link"} />
+        <Icon name={link.icon || "link"} size={isBento ? 20 : 24} />
       </div>
-      <span className="font-label ml-4 text-lg font-medium tracking-tight">
+      <span
+        className={`font-label font-medium tracking-tight ${isBento ? "mt-auto line-clamp-2 text-lg md:text-xl" : "ml-4 text-lg"}`}
+      >
         {link.title}
       </span>
-      <Icon
-        name="arrow_forward"
-        className={`${accentColor ? "" : textColorClass} ml-auto opacity-0 transition-opacity group-hover:opacity-100`}
-      />
-    </a>
+      {!isBento && (
+        <Icon
+          name="arrow_forward"
+          className={`${accentColor ? "" : textColorClass} ml-auto opacity-0 transition-opacity group-hover:opacity-100`}
+        />
+      )}
+      {isBento && (
+        <div className="absolute top-4 right-4 opacity-0 transition-opacity group-hover:opacity-100">
+          <Icon
+            name="arrow_outward"
+            size={20}
+            className={accentColor ? "" : textColorClass}
+          />
+        </div>
+      )}
+    </motion.a>
   );
 }

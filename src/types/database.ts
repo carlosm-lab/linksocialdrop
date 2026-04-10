@@ -156,6 +156,7 @@ export type Database = {
           full_name: string | null;
           id: string;
           is_public: boolean | null;
+          layout_mode: string | null;
           show_logo: boolean | null;
           theme: string | null;
           updated_at: string | null;
@@ -172,6 +173,7 @@ export type Database = {
           full_name?: string | null;
           id: string;
           is_public?: boolean | null;
+          layout_mode?: string | null;
           show_logo?: boolean | null;
           theme?: string | null;
           updated_at?: string | null;
@@ -188,6 +190,7 @@ export type Database = {
           full_name?: string | null;
           id?: string;
           is_public?: boolean | null;
+          layout_mode?: string | null;
           show_logo?: boolean | null;
           theme?: string | null;
           updated_at?: string | null;

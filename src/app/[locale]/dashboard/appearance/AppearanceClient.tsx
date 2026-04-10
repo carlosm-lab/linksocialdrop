@@ -442,6 +442,46 @@ export function AppearanceClient({
       </div>
 
       <section className="bg-surface-container-low space-y-6 rounded-xl p-8">
+        <h3 className="font-headline text-lg font-bold">Layout Mode</h3>
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { value: "list", label: "Classic List", icon: "view_list" },
+            { value: "bento", label: "Bento Grid", icon: "grid_view" },
+          ].map((layout) => {
+            const isSelected =
+              profile.layout_mode === layout.value ||
+              (!profile.layout_mode && layout.value === "list");
+            return (
+              <button
+                key={layout.value}
+                type="button"
+                onClick={() => handleUpdate("layout_mode", layout.value)}
+                className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
+                  isSelected
+                    ? "bg-surface-container-highest border-primary-container"
+                    : "bg-surface-container-highest/40 hover:bg-surface-container-highest border-transparent"
+                }`}
+              >
+                <Icon
+                  name={layout.icon}
+                  className={`text-4xl ${isSelected ? "text-primary-container" : "text-on-surface-variant"}`}
+                />
+                <span
+                  className={`text-[10px] font-bold tracking-widest uppercase ${
+                    isSelected
+                      ? "text-primary-container"
+                      : "text-on-surface-variant"
+                  }`}
+                >
+                  {layout.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="bg-surface-container-low space-y-6 rounded-xl p-8">
         <h3 className="font-headline text-lg font-bold">
           {t("buttonArchitecture")}
         </h3>
