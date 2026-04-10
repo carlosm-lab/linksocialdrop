@@ -229,45 +229,50 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
       {links.map((link, index) => (
         <div
           key={link.id}
-          className={`group flex items-center gap-6 rounded-xl p-6 transition-all ${link.visible ? "bg-surface-container-low hover:bg-surface-container" : "bg-surface-container-lowest opacity-50"}`}
+          className={`group flex flex-col gap-4 rounded-xl p-4 transition-all sm:flex-row sm:items-center sm:gap-6 sm:p-6 ${link.visible ? "bg-surface-container-low hover:bg-surface-container" : "bg-surface-container-lowest opacity-50"}`}
         >
-          <div className="flex flex-col gap-1 text-slate-600">
-            <button
-              onClick={() => handleMoveUp(index)}
-              className="hover:text-white disabled:opacity-30"
-              disabled={index === 0}
-            >
-              <Icon name="keyboard_arrow_up" />
-            </button>
-            <button
-              onClick={() => handleMoveDown(index)}
-              className="hover:text-white disabled:opacity-30"
-              disabled={index === links.length - 1}
-            >
-              <Icon name="keyboard_arrow_down" />
-            </button>
+          <div className="flex w-full min-w-0 flex-grow items-center gap-4 sm:gap-6">
+            <div className="flex shrink-0 flex-col gap-1 text-slate-600">
+              <button
+                onClick={() => handleMoveUp(index)}
+                className="hover:text-white disabled:opacity-30"
+                disabled={index === 0}
+              >
+                <Icon name="keyboard_arrow_up" />
+              </button>
+              <button
+                onClick={() => handleMoveDown(index)}
+                className="hover:text-white disabled:opacity-30"
+                disabled={index === links.length - 1}
+              >
+                <Icon name="keyboard_arrow_down" />
+              </button>
+            </div>
+
+            <div className="min-w-0 flex-grow">
+              <div className="mb-1 flex items-center gap-3">
+                <Icon
+                  name={link.icon || "link"}
+                  className={`${link.visible ? "text-primary-container" : "text-slate-500"} shrink-0 text-lg`}
+                />
+                <h4
+                  className={`font-headline truncate text-lg font-bold ${link.visible ? "text-white" : "text-slate-300"}`}
+                >
+                  {link.title}
+                </h4>
+              </div>
+              <p className="truncate text-sm font-medium text-slate-500">
+                {link.url}
+              </p>
+              {!link.visible && (
+                <p className="mt-1 text-xs font-medium text-slate-600 italic">
+                  {t("hiddenFromProfile")}
+                </p>
+              )}
+            </div>
           </div>
 
-          <div className="flex-grow">
-            <div className="mb-1 flex items-center gap-3">
-              <Icon
-                name={link.icon || "link"}
-                className={`${link.visible ? "text-primary-container" : "text-slate-500"} text-lg`}
-              />
-              <h4
-                className={`font-headline text-lg font-bold ${link.visible ? "text-white" : "text-slate-300"}`}
-              >
-                {link.title}
-              </h4>
-            </div>
-            <p className="text-sm font-medium text-slate-500">{link.url}</p>
-            {!link.visible && (
-              <p className="mt-1 text-xs font-medium text-slate-600 italic">
-                {t("hiddenFromProfile")}
-              </p>
-            )}
-          </div>
-          <div className="flex items-center gap-3">
+          <div className="mt-2 flex shrink-0 items-center justify-end gap-3 self-end sm:mt-0 sm:self-auto">
             <button
               onClick={() => {
                 setEditingLink(link);
@@ -294,7 +299,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
               onClick={() =>
                 executeToggle({ id: link.id, visible: !link.visible })
               }
-              className={`relative flex h-6 w-12 cursor-pointer items-center rounded-full border-none px-1 ${link.visible ? "bg-primary-container" : "bg-surface-container-highest"}`}
+              className={`relative flex h-6 w-12 shrink-0 cursor-pointer items-center rounded-full border-none px-1 ${link.visible ? "bg-primary-container" : "bg-surface-container-highest"}`}
             >
               <div
                 className={`h-4 w-4 rounded-full ${link.visible ? "bg-on-primary-container ml-auto" : "bg-slate-600"}`}
