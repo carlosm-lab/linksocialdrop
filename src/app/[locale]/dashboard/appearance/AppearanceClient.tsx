@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
+import { useState, useTransition, useRef, useEffect, useCallback } from "react";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { updateProfile, updateAvatar } from "@/actions/profile";
+import { checkUsernameForUser, claimUsername } from "@/actions/username";
 import { Database } from "@/types/database";
 import Image from "next/image";
 
@@ -16,11 +17,88 @@ export function AppearanceClient({
   initialProfile: Profile;
 }) {
   const t = useTranslations("adminAppearance");
+  const tu = useTranslations("username");
+  const tc = useTranslations("common");
 
   const [isPending, startTransition] = useTransition();
   const [profile, setProfile] = useState<Profile>(initialProfile);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Username change state
+  const [newUsername, setNewUsername] = useState("");
+  const [usernameStatus, setUsernameStatus] = useState<
+    "idle" | "checking" | "available" | "taken" | "invalid"
+  >("idle");
+  const [isChangingUsername, setIsChangingUsername] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
+
+  const checkAvailability = useCallback(
+    async (value: string) => {
+      const regex = /^[a-zA-Z0-9._]+$/;
+      if (value.length < 3 || value.length > 30 || !regex.test(value)) {
+        setUsernameStatus("invalid");
+        return;
+      }
+      // If it's the same as current username, skip
+      if (value.toLowerCase() === profile.username?.toLowerCase()) {
+        setUsernameStatus("idle");
+        return;
+      }
+      setUsernameStatus("checking");
+      try {
+        const result = await checkUsernameForUser({
+          username: value,
+          userId: profile.id,
+        });
+        setUsernameStatus(result?.data?.available ? "available" : "taken");
+      } catch {
+        setUsernameStatus("invalid");
+      }
+    },
+    [profile.id, profile.username]
+  );
+
+  useEffect(() => {
+    if (!newUsername || newUsername.length < 3) {
+      setUsernameStatus("idle");
+      return;
+    }
+    const timer = setTimeout(() => checkAvailability(newUsername), 500);
+    return () => clearTimeout(timer);
+  }, [newUsername, checkAvailability]);
+
+  const handleChangeUsername = async () => {
+    if (usernameStatus !== "available") return;
+    setIsChangingUsername(true);
+    setUsernameError("");
+    try {
+      const result = await claimUsername({ username: newUsername });
+      if (result?.serverError) {
+        setUsernameError(result.serverError);
+      } else if (result?.data?.success) {
+        setProfile((prev) => ({
+          ...prev,
+          username: result.data!.username,
+        }));
+        setNewUsername("");
+        setUsernameStatus("idle");
+      }
+    } catch {
+      setUsernameError("Error updating username");
+    } finally {
+      setIsChangingUsername(false);
+    }
+  };
+
+  const usernameStatusColor =
+    usernameStatus === "available"
+      ? "text-emerald-400"
+      : usernameStatus === "taken"
+        ? "text-red-400"
+        : usernameStatus === "invalid"
+          ? "text-amber-400"
+          : "text-slate-500";
 
   const handleUpdate = async (field: string, value: string) => {
     setProfile((prev) => ({
@@ -87,6 +165,89 @@ export function AppearanceClient({
         </h2>
         <p className="text-on-surface-variant font-light">{t("description")}</p>
       </header>
+
+      {/* Username Section */}
+      <section className="bg-surface-container-low space-y-4 rounded-xl p-8">
+        <div className="flex items-center justify-between">
+          <h3 className="font-headline text-lg font-bold">{tu("change")}</h3>
+          <p className="text-on-surface-variant text-xs">
+            {tu("currentUrl")}:{" "}
+            <span className="text-primary-container font-mono font-bold">
+              /{profile.username}
+            </span>
+          </p>
+        </div>
+        <div className="space-y-2">
+          <div className="relative">
+            <span className="text-outline pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-sm font-medium">
+              @
+            </span>
+            <input
+              type="text"
+              value={newUsername}
+              onChange={(e) =>
+                setNewUsername(e.target.value.toLowerCase().replace(/\s/g, ""))
+              }
+              maxLength={30}
+              autoComplete="off"
+              placeholder={profile.username || tu("placeholder")}
+              className="bg-surface-container-highest text-on-surface placeholder:text-outline/40 focus:ring-primary-container/40 w-full rounded-lg border-none py-3 pr-12 pl-10 outline-none focus:ring-1"
+            />
+            {usernameStatus === "checking" && (
+              <div className="absolute top-1/2 right-4 -translate-y-1/2">
+                <div className="border-primary-container h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+              </div>
+            )}
+            {usernameStatus === "available" && (
+              <Icon
+                name="check_circle"
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-lg text-emerald-400"
+              />
+            )}
+            {usernameStatus === "taken" && (
+              <Icon
+                name="cancel"
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-lg text-red-400"
+              />
+            )}
+            {usernameStatus === "invalid" && newUsername.length >= 3 && (
+              <Icon
+                name="error"
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-lg text-amber-400"
+              />
+            )}
+          </div>
+          {usernameStatus !== "idle" && usernameStatus !== "checking" && (
+            <p className={`ml-1 text-xs font-medium ${usernameStatusColor}`}>
+              {usernameStatus === "available"
+                ? tu("available")
+                : usernameStatus === "taken"
+                  ? tu("taken")
+                  : tu("invalid")}
+            </p>
+          )}
+          {usernameStatus === "checking" && (
+            <p className="ml-1 text-xs text-slate-500">{tu("checking")}</p>
+          )}
+          {usernameError && (
+            <p className="ml-1 text-xs text-red-400">{usernameError}</p>
+          )}
+        </div>
+        <Button
+          type="button"
+          variant="luminous"
+          size="pill"
+          className="text-on-primary-fixed w-full py-3 text-sm font-bold disabled:opacity-50"
+          disabled={
+            isChangingUsername ||
+            usernameStatus !== "available" ||
+            newUsername.length < 3
+          }
+          onClick={handleChangeUsername}
+        >
+          {isChangingUsername ? tc("saving") : tc("save")}
+        </Button>
+      </section>
 
       <section className="bg-surface-container-low transform-gpu space-y-6 rounded-xl p-8 transition-all">
         <div className="flex items-start justify-between">

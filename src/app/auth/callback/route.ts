@@ -7,7 +7,7 @@ import { type NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/es/admin/links";
+  const next = searchParams.get("next") ?? "/es/dashboard/links";
 
   // Use NEXT_PUBLIC_APP_URL for production, fallback to request origin
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;

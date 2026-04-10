@@ -8,6 +8,7 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     SUPABASE_SECRET_KEY: z.string().min(1),
+    ADMIN_EMAIL: z.string().email(),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),

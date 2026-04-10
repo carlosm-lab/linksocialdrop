@@ -23,7 +23,7 @@ export default function SandboxPage() {
 
         <section>
           <h2 className="mb-4 text-2xl font-bold text-white">
-            1. Icons (Material Symbols)
+            1. Icons (Lucide React)
           </h2>
           <div className="bg-surface-container flex flex-wrap gap-4 rounded-xl p-8">
             <Icon name="home" />

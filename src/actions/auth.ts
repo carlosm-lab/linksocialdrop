@@ -56,7 +56,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${siteUrl}/auth/callback?next=/${locale}/admin/links`,
+      redirectTo: `${siteUrl}/auth/callback?next=/${locale}/dashboard/links`,
     },
   });
 
@@ -75,5 +75,5 @@ export async function signOut() {
   revalidatePath("/", "layout");
 
   const locale = await getLocale();
-  redirect(`/${locale}/login`);
+  redirect(`/${locale}`);
 }

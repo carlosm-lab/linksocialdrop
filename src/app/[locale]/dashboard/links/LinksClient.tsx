@@ -17,6 +17,7 @@ type LinkItem = Database["public"]["Tables"]["links"]["Row"];
 
 export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
   const t = useTranslations("adminLinks");
+  const tc = useTranslations("common");
   const [links, setLinks] = useState<LinkItem[]>(initialLinks);
   const [editingLink, setEditingLink] = useState<LinkItem | null>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -89,7 +90,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
   const handleSave = () => {
     setError("");
     if (!title || !url) {
-      setError("Title and URL are required");
+      setError(t("titleUrlRequired"));
       return;
     }
 
@@ -145,7 +146,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
       {(isCreating || editingLink) && (
         <div className="bg-surface-container border-outline-variant/30 rounded-xl border p-6">
           <h3 className="mb-4 text-xl font-bold text-white">
-            {editingLink ? "Edit Link" : "Create Link"}
+            {editingLink ? t("editLink") : t("createLink")}
           </h3>
 
           {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
@@ -156,7 +157,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
                 htmlFor="link-title"
                 className="mb-1 block text-sm text-slate-400"
               >
-                Title
+                {t("titleLabel")}
               </label>
               <input
                 id="link-title"
@@ -172,7 +173,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
                 htmlFor="link-url"
                 className="mb-1 block text-sm text-slate-400"
               >
-                URL
+                {t("urlLabel")}
               </label>
               <input
                 id="link-url"
@@ -188,7 +189,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
                 htmlFor="link-icon"
                 className="mb-1 block text-sm text-slate-400"
               >
-                Icon (Material Symbol)
+                {t("iconLabel")}
               </label>
               <input
                 id="link-icon"
@@ -205,14 +206,14 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
                 className="text-slate-400 hover:text-white"
                 disabled={isFormLoading}
               >
-                Cancel
+                {tc("cancel")}
               </button>
               <button
                 onClick={handleSave}
                 disabled={isFormLoading}
                 className="bg-primary-container text-on-primary-container rounded-lg px-6 py-2 font-bold disabled:opacity-50"
               >
-                {isFormLoading ? "Saving..." : "Save"}
+                {isFormLoading ? tc("saving") : tc("save")}
               </button>
             </div>
           </div>
@@ -289,7 +290,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
               onClick={() => executeDelete({ id: link.id })}
               className="text-xs font-bold tracking-widest text-red-500 uppercase transition-colors hover:text-red-400"
             >
-              Delete
+              {t("delete")}
             </button>
             <button
               type="button"

@@ -13,22 +13,22 @@ export function BottomNavBar() {
     <nav className="fixed bottom-0 left-0 z-50 w-full rounded-t-[1.5rem] bg-[#111316]/80 shadow-[0_-12px_32px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:hidden">
       <div className="flex w-full items-center justify-around px-4 pt-2 pb-6">
         <NavItem
-          href="/admin/links"
+          href="/dashboard/links"
           icon="link"
           label={t("links")}
-          isActive={currentPath === "/admin/links"}
+          isActive={currentPath === "/dashboard/links"}
         />
         <NavItem
-          href="/admin/appearance"
+          href="/dashboard/appearance"
           icon="palette"
           label={t("appearance")}
-          isActive={currentPath === "/admin/appearance"}
+          isActive={currentPath === "/dashboard/appearance"}
         />
         <NavItem
-          href="/admin/analytics"
+          href="/dashboard/analytics"
           icon="leaderboard"
           label={t("analytics")}
-          isActive={currentPath === "/admin/analytics"}
+          isActive={currentPath === "/dashboard/analytics"}
         />
       </div>
     </nav>
@@ -57,10 +57,7 @@ function NavItem({
           : "text-slate-500 hover:bg-slate-800/50 hover:text-slate-300"
       )}
     >
-      <Icon
-        name={icon}
-        style={{ fontVariationSettings: isActive ? "'FILL' 1" : undefined }}
-      />
+      <Icon name={icon} />
       <span className="mt-1 font-['Inter'] text-[10px] tracking-[0.05em] uppercase">
         {label}
       </span>

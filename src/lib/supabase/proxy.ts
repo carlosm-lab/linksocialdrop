@@ -39,16 +39,20 @@ export async function updateSession(request: NextRequest) {
 
   const user = data?.claims;
 
-  // Protected routes: redirect unauthenticated users from /admin
   const pathname = request.nextUrl.pathname;
+
+  // Route classification
+  const isDashboardRoute =
+    pathname.match(/^\/(es|en)\/dashboard/) ||
+    pathname.startsWith("/dashboard");
   const isAdminRoute =
     pathname.match(/^\/(es|en)\/admin/) || pathname.startsWith("/admin");
   const isLoginRoute =
     pathname.match(/^\/(es|en)\/login/) || pathname.startsWith("/login");
   const isAuthRoute = pathname.startsWith("/auth");
 
-  if (!user && isAdminRoute) {
-    // Extract the locale from the URL for proper redirect
+  // Protected routes: redirect unauthenticated users from /dashboard
+  if (!user && isDashboardRoute) {
     const localeMatch = pathname.match(/^\/(es|en)\//);
     const locale = localeMatch ? localeMatch[1] : "es";
     const url = request.nextUrl.clone();
@@ -56,12 +60,40 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // If user is logged in and trying to access login page, redirect to admin
+  // Protected routes: /admin requires auth + ADMIN_EMAIL
+  if (isAdminRoute) {
+    if (!user) {
+      const localeMatch = pathname.match(/^\/(es|en)\//);
+      const locale = localeMatch ? localeMatch[1] : "es";
+      const url = request.nextUrl.clone();
+      url.pathname = `/${locale}/login`;
+      return NextResponse.redirect(url);
+    }
+
+    // User is authenticated but not the admin — redirect to dashboard, not login
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const userEmail = user.email || (user as Record<string, unknown>).sub;
+
+    // We need to get the actual email from Supabase user
+    const {
+      data: { user: fullUser },
+    } = await supabase.auth.getUser();
+
+    if (!fullUser || fullUser.email !== adminEmail) {
+      const localeMatch = pathname.match(/^\/(es|en)\//);
+      const locale = localeMatch ? localeMatch[1] : "es";
+      const url = request.nextUrl.clone();
+      url.pathname = `/${locale}/dashboard`;
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // If user is logged in and trying to access login page, redirect to dashboard
   if (user && isLoginRoute) {
     const localeMatch = pathname.match(/^\/(es|en)\//);
     const locale = localeMatch ? localeMatch[1] : "es";
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/admin/links`;
+    url.pathname = `/${locale}/dashboard/links`;
     return NextResponse.redirect(url);
   }
 

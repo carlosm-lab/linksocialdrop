@@ -15,7 +15,8 @@ export async function GET(request: NextRequest) {
     ? "en"
     : "es";
 
-  const next = searchParams.get("next") ?? `/${preferredLocale}/admin/links`;
+  const next =
+    searchParams.get("next") ?? `/${preferredLocale}/dashboard/links`;
 
   // Build redirect URL using production URL if available
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;

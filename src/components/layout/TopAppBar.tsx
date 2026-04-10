@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { LogoutModal } from "@/components/shared/LogoutModal";
 import { useTranslations } from "next-intl";
-import { signOut } from "@/actions/auth";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface TopAppBarProps {
   isAuthenticated?: boolean;
@@ -21,8 +22,17 @@ export function TopAppBar({
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const currentPath = usePathname();
 
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  const navLinks = [
+    { href: "/dashboard/links", label: t("links") },
+    { href: "/dashboard/appearance", label: t("appearance") },
+    { href: "/dashboard/analytics", label: t("analytics") },
+  ] as const;
+
+  const isActive = (href: string) => currentPath === href;
 
   return (
     <header className="fixed top-0 z-50 w-full bg-[#111316]/70 backdrop-blur-xl">
@@ -44,24 +54,23 @@ export function TopAppBar({
         </div>
         <div className="flex items-center gap-6">
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-            <Link
-              href="/admin/links"
-              className="text-slate-400 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("links")}
-            </Link>
-            <Link
-              href="/admin/appearance"
-              className="text-slate-400 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("appearance")}
-            </Link>
-            <Link
-              href="/admin/analytics"
-              className="text-slate-400 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("analytics")}
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "relative transition-colors",
+                  isActive(link.href)
+                    ? "text-[#00F5FF]"
+                    : "text-slate-400 hover:text-[#63f7ff]"
+                )}
+              >
+                {link.label}
+                {isActive(link.href) && (
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-[#00F5FF]" />
+                )}
+              </Link>
+            ))}
 
             <LanguageSwitcher />
 
@@ -86,15 +95,18 @@ export function TopAppBar({
                     </div>
                   )}
                 </div>
-                <form action={signOut}>
-                  <button
-                    type="submit"
-                    className="text-slate-400 transition-colors hover:text-red-400"
-                    title="Sign out"
-                  >
-                    <Icon name="logout" className="text-xl" />
-                  </button>
-                </form>
+                <LogoutModal
+                  trigger={(open) => (
+                    <button
+                      type="button"
+                      onClick={open}
+                      className="text-slate-400 transition-colors hover:text-red-400"
+                      title={tc("signOut")}
+                    >
+                      <Icon name="logout" className="text-xl" />
+                    </button>
+                  )}
+                />
               </div>
             ) : (
               <Link href="/login">
@@ -126,27 +138,21 @@ export function TopAppBar({
       {isMobileMenuOpen && (
         <div className="bg-surface/95 absolute top-full left-0 w-full overflow-hidden border-b border-white/5 backdrop-blur-xl md:hidden">
           <nav className="flex flex-col space-y-6 p-6 text-base font-medium">
-            <Link
-              href="/admin/links"
-              onClick={closeMenu}
-              className="text-slate-300 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("links")}
-            </Link>
-            <Link
-              href="/admin/appearance"
-              onClick={closeMenu}
-              className="text-slate-300 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("appearance")}
-            </Link>
-            <Link
-              href="/admin/analytics"
-              onClick={closeMenu}
-              className="text-slate-300 transition-colors hover:text-[#63f7ff]"
-            >
-              {t("analytics")}
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className={cn(
+                  "transition-colors",
+                  isActive(link.href)
+                    ? "font-bold text-[#00F5FF]"
+                    : "text-slate-300 hover:text-[#63f7ff]"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
 
             <div className="border-t border-white/10 pt-4">
               <LanguageSwitcher />
@@ -177,15 +183,18 @@ export function TopAppBar({
                     </div>
                     <span className="text-slate-300">{tc("account")}</span>
                   </div>
-                  <form action={signOut}>
-                    <button
-                      type="submit"
-                      className="flex items-center gap-2 text-slate-400 transition-colors hover:text-red-400"
-                    >
-                      <span>{tc("signOut")}</span>
-                      <Icon name="logout" className="text-xl" />
-                    </button>
-                  </form>
+                  <LogoutModal
+                    trigger={(open) => (
+                      <button
+                        type="button"
+                        onClick={open}
+                        className="flex items-center gap-2 text-slate-400 transition-colors hover:text-red-400"
+                      >
+                        <span>{tc("signOut")}</span>
+                        <Icon name="logout" className="text-xl" />
+                      </button>
+                    )}
+                  />
                 </div>
               ) : (
                 <Link

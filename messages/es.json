@@ -11,7 +11,11 @@
     "learnMore": "Saber más",
     "join": "Unirse",
     "account": "Cuenta",
-    "signOut": "Salir"
+    "signOut": "Salir",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "confirm": "Confirmar"
   },
   "nav": {
     "links": "Links",
@@ -48,14 +52,36 @@
     "noAccount": "¿No tienes una cuenta?",
     "hasAccount": "¿Ya tienes una cuenta?",
     "signUp": "Regístrate",
-    "needHelp": "¿Necesitas ayuda?"
+    "needHelp": "¿Necesitas ayuda?",
+    "checkEmail": "¡Revisa tu correo!",
+    "checkEmailDesc": "Te hemos enviado un enlace de confirmación. Verifica tu bandeja de entrada."
+  },
+  "username": {
+    "chooseTitle": "Elige tu nombre de usuario",
+    "chooseDescription": "Este será tu URL pública: linksocialdrop.com/{username}",
+    "label": "Nombre de usuario",
+    "placeholder": "tu_nombre",
+    "available": "¡Disponible!",
+    "taken": "No disponible",
+    "invalid": "Solo letras, números, puntos y guiones bajos (3-30 caracteres)",
+    "checking": "Verificando...",
+    "claim": "Continuar",
+    "change": "Cambiar nombre de usuario",
+    "currentUrl": "Tu URL actual"
   },
   "adminLinks": {
     "title": "Tus Links",
     "description": "Gestiona tu identidad digital. Arrastra para reordenar, activa/desactiva la visibilidad y mantén tu galería fresca.",
     "edit": "Editar",
     "hiddenFromProfile": "Oculto del perfil",
-    "emptyStateText": "¿Tienes más para mostrar? Añade links ilimitados a tu perfil con nuestro plan Premium."
+    "emptyStateText": "¿Tienes más para mostrar? Añade links ilimitados a tu perfil con nuestro plan Premium.",
+    "createLink": "Crear Link",
+    "editLink": "Editar Link",
+    "titleLabel": "Título",
+    "urlLabel": "URL",
+    "iconLabel": "Ícono (nombre Lucide)",
+    "titleUrlRequired": "Título y URL son obligatorios",
+    "delete": "Eliminar"
   },
   "adminAnalytics": {
     "title": "Motor de Insights",
@@ -86,6 +112,22 @@
     "resetChanges": "Restablecer Cambios",
     "publishLive": "Publicar en Vivo"
   },
+  "support": {
+    "title": "Soporte",
+    "description": "¿Tienes alguna pregunta o problema? Envíanos un mensaje y te responderemos lo antes posible.",
+    "nameLabel": "Nombre Completo",
+    "namePlaceholder": "Tu nombre completo",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "subjectLabel": "Asunto",
+    "subjectPlaceholder": "¿En qué podemos ayudarte?",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Describe tu consulta o problema...",
+    "submit": "Enviar Mensaje",
+    "successTitle": "¡Mensaje Enviado!",
+    "successDescription": "Hemos recibido tu mensaje correctamente. Te responderemos a la brevedad posible a tu correo electrónico.",
+    "backToHome": "Volver al Inicio"
+  },
   "profile": {
     "madeWith": "hecho con",
     "joinNewsletter": "Únete al Newsletter",
@@ -97,6 +139,12 @@
   "livePreview": {
     "title": "Vista Previa",
     "status": "Perfil en Vivo"
+  },
+  "logout": {
+    "confirmTitle": "¿Cerrar sesión?",
+    "confirmDescription": "¿Seguro que quieres cerrar sesión?",
+    "confirm": "Cerrar Sesión",
+    "cancel": "Cancelar"
   },
   "errors": {
     "somethingWentWrong": "¡Algo salió mal!",

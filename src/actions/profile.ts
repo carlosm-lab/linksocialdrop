@@ -46,7 +46,7 @@ export const updateProfile = actionClient
       }
     }
 
-    revalidatePath("/[locale]/admin/appearance", "page");
+    revalidatePath("/[locale]/dashboard/appearance", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return { success: true };
@@ -114,7 +114,7 @@ export const updateAvatar = actionClient
       throw new Error("Error al actualizar la foto de perfil");
     }
 
-    revalidatePath("/[locale]/admin/appearance", "page");
+    revalidatePath("/[locale]/dashboard/appearance", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return { success: true, avatar_url: publicUrl };

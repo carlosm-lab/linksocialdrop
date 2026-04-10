@@ -53,7 +53,7 @@ export const createLink = actionClient
       throw new Error("Error al crear el link");
     }
 
-    revalidatePath("/[locale]/admin/links", "page");
+    revalidatePath("/[locale]/dashboard/links", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return data;
@@ -89,7 +89,7 @@ export const updateLink = actionClient
       throw new Error("Error al actualizar el link");
     }
 
-    revalidatePath("/[locale]/admin/links", "page");
+    revalidatePath("/[locale]/dashboard/links", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return data;
@@ -116,7 +116,7 @@ export const deleteLink = actionClient
       throw new Error("Error al eliminar el link");
     }
 
-    revalidatePath("/[locale]/admin/links", "page");
+    revalidatePath("/[locale]/dashboard/links", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return { success: true };
@@ -145,7 +145,7 @@ export const toggleLinkVisibility = actionClient
       throw new Error("Error al cambiar la visibilidad");
     }
 
-    revalidatePath("/[locale]/admin/links", "page");
+    revalidatePath("/[locale]/dashboard/links", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return data;
@@ -172,7 +172,7 @@ export const reorderLinks = actionClient
       throw new Error("Error reordering links");
     }
 
-    revalidatePath("/[locale]/admin/links", "page");
+    revalidatePath("/[locale]/dashboard/links", "page");
     revalidatePath("/[locale]/[username]", "page");
 
     return { success: true };

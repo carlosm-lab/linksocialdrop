@@ -11,7 +11,11 @@
     "learnMore": "Learn more",
     "join": "Join",
     "account": "Account",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "confirm": "Confirm"
   },
   "nav": {
     "links": "Links",
@@ -48,14 +52,36 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "signUp": "Sign up",
-    "needHelp": "Need help?"
+    "needHelp": "Need help?",
+    "checkEmail": "Check your email!",
+    "checkEmailDesc": "We've sent you a confirmation link. Check your inbox."
+  },
+  "username": {
+    "chooseTitle": "Choose your username",
+    "chooseDescription": "This will be your public URL: linksocialdrop.com/{username}",
+    "label": "Username",
+    "placeholder": "your_name",
+    "available": "Available!",
+    "taken": "Not available",
+    "invalid": "Only letters, numbers, dots and underscores (3-30 chars)",
+    "checking": "Checking...",
+    "claim": "Continue",
+    "change": "Change username",
+    "currentUrl": "Your current URL"
   },
   "adminLinks": {
     "title": "Your Links",
     "description": "Manage your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.",
     "edit": "Edit",
     "hiddenFromProfile": "Hidden from profile",
-    "emptyStateText": "Have more to show? Add unlimited links to your profile with our Premium plan."
+    "emptyStateText": "Have more to show? Add unlimited links to your profile with our Premium plan.",
+    "createLink": "Create Link",
+    "editLink": "Edit Link",
+    "titleLabel": "Title",
+    "urlLabel": "URL",
+    "iconLabel": "Icon (Lucide name)",
+    "titleUrlRequired": "Title and URL are required",
+    "delete": "Delete"
   },
   "adminAnalytics": {
     "title": "Insight Engine",
@@ -86,6 +112,22 @@
     "resetChanges": "Reset Changes",
     "publishLive": "Publish Live"
   },
+  "support": {
+    "title": "Support",
+    "description": "Have a question or issue? Send us a message and we'll get back to you as soon as possible.",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Your full name",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "you@email.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "How can we help you?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Describe your question or issue...",
+    "submit": "Send Message",
+    "successTitle": "Message Sent!",
+    "successDescription": "We've received your message successfully. We'll respond as soon as possible to your email address.",
+    "backToHome": "Back to Home"
+  },
   "profile": {
     "madeWith": "made with",
     "joinNewsletter": "Join the Newsletter",
@@ -97,6 +139,12 @@
   "livePreview": {
     "title": "Live Preview",
     "status": "Profile Live"
+  },
+  "logout": {
+    "confirmTitle": "Sign out?",
+    "confirmDescription": "Are you sure you want to sign out?",
+    "confirm": "Sign Out",
+    "cancel": "Cancel"
   },
   "errors": {
     "somethingWentWrong": "Something went wrong!",
