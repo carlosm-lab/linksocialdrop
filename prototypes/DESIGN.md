@@ -1,9 +1,9 @@
 ```markdown
-# Design System: The Digital Curator
+# Design System: The Digital Manager
 
 ## 1. Overview & Creative North Star
 
-The "Digital Curator" is the driving philosophy behind this design system. We are moving away from the "link-in-bio" template fatigue—characterized by rigid boxes and cluttered lists—and moving toward a high-end editorial experience. 
+The "Digital Manager" is the driving philosophy behind this design system. We are moving away from the "link-in-bio" template fatigue—characterized by rigid boxes and cluttered lists—and moving toward a high-end editorial experience. 
 
 This system treats digital real estate like a premium gallery space. We utilize **intentional asymmetry**, where content isn't always centered or perfectly balanced, creating a sense of professional, human-led curation. By leveraging the extreme contrast between the `display-lg` typography and generous white space (using the `20` and `24` spacing tokens), we create an interface that feels like a physical lookbook rather than a mobile app.
 

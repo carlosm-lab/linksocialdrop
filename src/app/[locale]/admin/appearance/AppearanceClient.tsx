@@ -160,7 +160,7 @@ export function AppearanceClient({
                   setProfile({ ...profile, full_name: e.target.value })
                 }
                 onBlur={(e) => handleUpdate("title", e.target.value)}
-                placeholder="Digital Curator"
+                placeholder="Digital Manager"
               />
             </div>
             <div className="bg-surface-container-highest/30 border-primary/10 focus-within:bg-surface-container-highest/50 rounded-lg border-b px-4 py-3 transition-colors">

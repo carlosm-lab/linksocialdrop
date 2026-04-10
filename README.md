@@ -1,6 +1,6 @@
 # LinkSocialDrop
 
-La alternativa gratuita a Linktree. Crea tu página de links personalizada en segundos.
+La alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos.
 
 ## ¿Qué es LinkSocialDrop?
 
@@ -31,13 +31,13 @@ npm run dev
 
 ## Scripts Disponibles
 
-| Comando | Descripción |
-|---|---|
-| `npm run dev` | Inicia el servidor de desarrollo |
-| `npm run build` | Genera el build de producción |
-| `npm run lint` | Ejecuta ESLint |
-| `npm run test` | Ejecuta tests con Vitest |
-| `npm run dead-code` | Detecta código muerto con Knip |
+| Comando              | Descripción                        |
+| -------------------- | ---------------------------------- |
+| `npm run dev`        | Inicia el servidor de desarrollo   |
+| `npm run build`      | Genera el build de producción      |
+| `npm run lint`       | Ejecuta ESLint                     |
+| `npm run test`       | Ejecuta tests con Vitest           |
+| `npm run dead-code`  | Detecta código muerto con Knip     |
 | `npm run agent:sync` | Lint + format + dead-code (uso AI) |
 
 ## Estructura del Proyecto

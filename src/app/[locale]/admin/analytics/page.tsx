@@ -162,7 +162,7 @@ export default async function AdminAnalyticsPage() {
                             <span className="font-headline text-xs font-black text-slate-700">
                               {rank}
                             </span>
-                            <span className="text-on-surface block max-w-[150px] truncate text-sm font-bold">
+                            <span className="text-on-surface block max-w-40 truncate text-sm font-bold">
                               {item.title}
                             </span>
                           </div>

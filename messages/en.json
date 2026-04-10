@@ -23,10 +23,10 @@
     "badge": "Now in Public Beta",
     "heroTitle1": "Your links,",
     "heroTitle2": "your identity.",
-    "heroDescription": "The best Linktree alternative. Create your customized and free link in bio page in seconds. Designed for creators and professionals.",
+    "heroDescription": "The best alternative to other platforms. Create your customized and free link in bio page in seconds. Designed for creators and professionals.",
     "viewShowcase": "View Showcase",
     "featuresTitle": "Your link in bio page, your edge.",
-    "featuresSubtitle": "We've stripped away the noise to give your links the breathing room they deserve. The free Linktree alternative you need.",
+    "featuresSubtitle": "We've stripped away the noise to give your links the breathing room they deserve. The free alternative to other platforms you need.",
     "featureFastTitle": "Fast",
     "featureFastDesc": "Lightning-fast load times. Optimized for mobile-first scrolling because your audience doesn't wait.",
     "featurePrivateTitle": "Private",
@@ -34,7 +34,7 @@
     "featureCustomTitle": "Customizable",
     "featureCustomDesc": "Beyond templates. Fine-tune every margin, color, and font to match your unique brand identity.",
     "ctaTitle": "Ready to create your link in bio?",
-    "ctaSubtitle": "Join 12,000+ creators who choose LinkSocialDrop as their Linktree alternative."
+    "ctaSubtitle": "Join 12,000+ creators who choose LinkSocialDrop as their alternative to other platforms."
   },
   "login": {
     "tagline": "Your Link in Bio Page",
@@ -52,7 +52,7 @@
   },
   "adminLinks": {
     "title": "Your Links",
-    "description": "Curate your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.",
+    "description": "Manage your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.",
     "edit": "Edit",
     "hiddenFromProfile": "Hidden from profile",
     "emptyStateText": "Have more to show? Add unlimited links to your profile with our Premium plan."
@@ -71,7 +71,7 @@
   },
   "adminAppearance": {
     "title": "Appearance",
-    "description": "Curate your digital gallery's visual signature.",
+    "description": "Manage your digital gallery's visual signature.",
     "profileIdentity": "Profile Identity",
     "updateAvatarBio": "Update your avatar and bio display.",
     "pickImage": "Pick Image",
@@ -89,7 +89,7 @@
   "profile": {
     "madeWith": "made with",
     "joinNewsletter": "Join the Newsletter",
-    "newsletterDesc": "Get curated inspiration every Sunday.",
+    "newsletterDesc": "Get selected inspiration every Sunday.",
     "privacy": "Privacy",
     "terms": "Terms",
     "report": "Report"
@@ -117,6 +117,6 @@
   },
   "metadata": {
     "title": "LinkSocialDrop",
-    "description": "The best free Linktree alternative. Create your customized link in bio page in seconds."
+    "description": "The best free alternative to other platforms. Create your customized link in bio page in seconds."
   }
 }

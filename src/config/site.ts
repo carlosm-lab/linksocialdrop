@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "LinkSocialDrop",
   description:
-    "La alternativa gratuita a Linktree. Crea tu página de links personalizada en segundos.",
+    "La alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos.",
   url: "https://linksocialdrop.vercel.app",
   ogImage: "https://linksocialdrop.vercel.app/og.jpg",
   links: {

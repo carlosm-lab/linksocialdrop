@@ -32,8 +32,10 @@ export default async function AdminLinksEditorPage() {
     <>
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pt-24 pb-32 lg:grid-cols-12">
         {/* Preview Section (Top for Mobile, Side for Web) */}
-        <section className="order-1 flex flex-col items-center lg:order-2 lg:col-span-5">
-          <LivePreview profile={profile} links={links || []} />
+        <section className="relative order-1 flex flex-col justify-start lg:order-2 lg:col-span-5">
+          <div className="w-full lg:sticky lg:top-24">
+            <LivePreview profile={profile} links={links || []} />
+          </div>
         </section>
 
         {/* Editor Section */}

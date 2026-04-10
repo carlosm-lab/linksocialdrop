@@ -11,8 +11,8 @@ interface LivePreviewProps {
 export function LivePreview({ profile, links }: LivePreviewProps) {
   const t = useTranslations("livePreview");
 
-  const displayName = profile?.full_name || "Digital Curator";
-  const username = profile?.username || "curator_studio";
+  const displayName = profile?.full_name || "Digital Manager";
+  const username = profile?.username || "manager_studio";
   const avatarUrl =
     profile?.avatar_url ||
     "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
@@ -55,7 +55,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
   // If links is [], we respect that the user has explicitly 0 links.
 
   return (
-    <div className="sticky top-28 mx-auto w-full max-w-[320px] md:mx-0">
+    <div className="mx-auto w-full max-w-xs">
       <div className="mb-6 flex items-end justify-between">
         <h2 className="font-headline text-2xl font-bold tracking-tight text-white">
           {t("title")}

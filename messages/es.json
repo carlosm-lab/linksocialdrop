@@ -23,10 +23,10 @@
     "badge": "Ahora en Beta Pública",
     "heroTitle1": "Tus links,",
     "heroTitle2": "tu identidad.",
-    "heroDescription": "La mejor alternativa a Linktree. Crea tu página de links personalizada y gratuita en segundos. Diseñada para creadores y profesionales.",
+    "heroDescription": "La mejor alternativa a otras plataformas. Crea tu página de links personalizada y gratuita en segundos. Diseñada para creadores y profesionales.",
     "viewShowcase": "Ver Ejemplos",
     "featuresTitle": "Tu página de links, tu ventaja.",
-    "featuresSubtitle": "Hemos eliminado el ruido para darle a tus links el espacio que merecen. La alternativa gratuita a Linktree que necesitas.",
+    "featuresSubtitle": "Hemos eliminado el ruido para darle a tus links el espacio que merecen. La alternativa gratuita a otras plataformas que necesitas.",
     "featureFastTitle": "Rápida",
     "featureFastDesc": "Tiempos de carga ultrarrápidos. Optimizada para mobile-first porque tu audiencia no espera.",
     "featurePrivateTitle": "Privada",
@@ -34,7 +34,7 @@
     "featureCustomTitle": "Personalizable",
     "featureCustomDesc": "Más que plantillas. Ajusta cada margen, color y fuente para que coincida con tu identidad de marca única.",
     "ctaTitle": "¿Listo para crear tu link in bio?",
-    "ctaSubtitle": "Únete a más de 12,000 creadores que eligen LinkSocialDrop como su alternativa a Linktree."
+    "ctaSubtitle": "Únete a más de 12,000 creadores que eligen LinkSocialDrop como su alternativa a otras plataformas."
   },
   "login": {
     "tagline": "Tu Página de Links",
@@ -52,7 +52,7 @@
   },
   "adminLinks": {
     "title": "Tus Links",
-    "description": "Cura tu identidad digital. Arrastra para reordenar, activa/desactiva la visibilidad y mantén tu galería fresca.",
+    "description": "Gestiona tu identidad digital. Arrastra para reordenar, activa/desactiva la visibilidad y mantén tu galería fresca.",
     "edit": "Editar",
     "hiddenFromProfile": "Oculto del perfil",
     "emptyStateText": "¿Tienes más para mostrar? Añade links ilimitados a tu perfil con nuestro plan Premium."
@@ -71,7 +71,7 @@
   },
   "adminAppearance": {
     "title": "Apariencia",
-    "description": "Cura la firma visual de tu galería digital.",
+    "description": "Gestiona la firma visual de tu galería digital.",
     "profileIdentity": "Identidad de Perfil",
     "updateAvatarBio": "Actualiza tu avatar y bio.",
     "pickImage": "Elegir Imagen",
@@ -89,7 +89,7 @@
   "profile": {
     "madeWith": "hecho con",
     "joinNewsletter": "Únete al Newsletter",
-    "newsletterDesc": "Recibe inspiración curada cada domingo.",
+    "newsletterDesc": "Recibe inspiración seleccionada cada domingo.",
     "privacy": "Privacidad",
     "terms": "Términos",
     "report": "Reportar"
@@ -117,6 +117,6 @@
   },
   "metadata": {
     "title": "LinkSocialDrop",
-    "description": "La mejor alternativa a Linktree gratuita. Crea tu página de links personalizada en segundos."
+    "description": "La mejor alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos."
   }
 }

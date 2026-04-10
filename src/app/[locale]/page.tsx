@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 export default function LandingPage({
   params,
@@ -94,7 +95,7 @@ function LandingContent() {
                     />
                   </div>
                   <div className="font-headline text-lg font-bold">
-                    @alexa_curates
+                    @alexa_gestiona
                   </div>
                   <p className="text-primary-container mb-6 text-[10px] tracking-widest uppercase">
                     Digital Strategist
@@ -207,9 +208,7 @@ function LandingContent() {
             </Link>
           </div>
           <div className="flex gap-4">
-            <div className="bg-surface-container-high text-primary-container flex h-8 w-8 items-center justify-center rounded-lg">
-              <Icon name="language" className="text-sm" />
-            </div>
+            <LanguageSwitcher />
           </div>
         </div>
       </footer>
@@ -230,7 +229,7 @@ function FeatureCard({
 }) {
   return (
     <div className="bg-surface-container-high group hover:bg-surface-container-highest relative space-y-6 overflow-hidden rounded-xl p-8 transition-colors duration-300">
-      <div className="pointer-events-none absolute top-0 right-0 h-[150px] w-[150px] bg-[radial-gradient(circle,rgba(0,245,255,0.05)_0%,transparent_70%)]"></div>
+      <div className="pointer-events-none absolute top-0 right-0 h-40 w-40 bg-[radial-gradient(circle,rgba(0,245,255,0.05)_0%,transparent_70%)]"></div>
 
       <div className="bg-primary-container/10 text-primary-container flex h-12 w-12 items-center justify-center rounded-lg">
         <Icon name={icon} />
