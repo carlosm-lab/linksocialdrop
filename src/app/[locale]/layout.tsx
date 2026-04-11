@@ -168,8 +168,12 @@ export default async function LocaleLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#111316" />
         <link rel="preconnect" href="https://lh3.googleusercontent.com" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL,GRAD,opsz@100..700,0..1,-50..200,20..48&display=swap"
+        />
       </head>
-      <body className="min-h-screen antialiased">
+      <body className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-max antialiased">
         <a
           href="#main-content"
           className="fixed top-4 left-4 z-[100] -translate-y-20 rounded-lg bg-[#00F5FF] px-4 py-2 text-sm font-bold text-black transition-transform focus:translate-y-0"

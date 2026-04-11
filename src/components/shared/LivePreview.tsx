@@ -138,91 +138,99 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
 
   return (
     <div className="mx-auto w-full max-w-xs">
-      {/* Header row */}
-      <div className="mb-6 flex items-end justify-between">
-        <h2 className="font-headline text-2xl font-bold tracking-tight text-white">
-          {t("title")}
-        </h2>
-        {username ? (
-          <a
-            href={`/${username}`}
-            target="_blank"
-            className="text-primary-container bg-primary-container/10 hover:bg-primary-container/20 flex cursor-pointer items-center gap-1 rounded-full px-3 py-1.5 text-[10px] font-bold tracking-widest uppercase transition-colors"
-          >
-            {t("status")} <Icon name="external_link" className="text-xs" />
-          </a>
-        ) : (
-          <span className="text-xs font-semibold tracking-widest text-[#00F5FF]/60 uppercase">
-            {t("status")}
-          </span>
-        )}
+      {/* Header row mimicking Mac OS traffic lights and uppercase typography */}
+      <div className="mb-6 flex items-center justify-between px-2">
+        <h3 className="text-on-surface-variant text-sm font-bold tracking-[0.2em] uppercase">
+          {t("title") || "LIVE PREVIEW"}
+        </h3>
+        <div className="flex gap-2">
+          {username ? (
+            <a
+              href={`/${username}`}
+              target="_blank"
+              className="group flex cursor-pointer items-center gap-1"
+            >
+              <span className="bg-error h-2 w-2 rounded-full transition-all group-hover:scale-110"></span>
+              <span className="bg-tertiary-fixed-dim h-2 w-2 rounded-full transition-all group-hover:scale-110"></span>
+              <span className="bg-primary-container h-2 w-2 rounded-full shadow-[0_0_8px_rgba(0,245,255,0.6)] transition-all group-hover:scale-110"></span>
+            </a>
+          ) : (
+            <>
+              <span className="bg-error h-2 w-2 rounded-full"></span>
+              <span className="bg-tertiary-fixed-dim h-2 w-2 rounded-full"></span>
+              <span className="bg-primary-container h-2 w-2 rounded-full shadow-[0_0_8px_rgba(0,245,255,0.6)]"></span>
+            </>
+          )}
+        </div>
       </div>
 
-      {/* Phone Frame */}
-      <div className="relative mx-auto aspect-[9/19.5] w-full overflow-hidden rounded-[3rem] border-[8px] border-[#333538] bg-[#0c0e11] shadow-2xl ring-1 ring-white/5">
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 z-20 h-6 w-32 -translate-x-1/2 rounded-b-2xl bg-[#333538]" />
+      {/* Phone Frame - Abstract Layered Frame from Prototype */}
+      <div className="bg-surface-container-highest border-surface-container-low relative aspect-[9/18] overflow-hidden rounded-[3rem] border-[8px] p-4 shadow-2xl">
+        {/* Glass Content Canvas */}
+        <div className="custom-scrollbar relative h-full w-full overflow-y-auto rounded-[2.2rem] bg-[#111316]">
+          {/* Static Gradient Overlay (matching background from prototype to prevent plain solid black) */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#1a1c1f] to-[#111316]"></div>
 
-        {/* Profile content layer dynamically adopting theme */}
-        <div
-          className="bg-background text-foreground relative flex h-full w-full flex-col items-center overflow-y-auto p-4 pt-10 pb-8"
-          style={{ ...(themeVars as React.CSSProperties), fontFamily }}
-        >
-          {/* Avatar */}
-          <div className="border-primary/30 relative mb-2 h-16 w-16 rounded-full border-2 p-0.5">
-            <div className="luminous-gradient pointer-events-none absolute inset-0 scale-110 rounded-full opacity-20 blur-xl"></div>
-            <div className="ring-primary/20 relative z-10 h-full w-full overflow-hidden rounded-full ring-2">
+          {/* Dynamic Content Layer */}
+          <div
+            className="text-foreground relative z-10 flex h-full w-full flex-col items-center p-8 pt-10"
+            style={{ ...(themeVars as React.CSSProperties), fontFamily }}
+          >
+            {/* Avatar */}
+            <div className="border-primary-container relative mb-4 h-20 w-20 overflow-hidden rounded-full border-2 shadow-[0_0_20px_rgba(0,245,255,0.2)]">
               <Image
                 alt="Avatar"
-                className="h-full w-full rounded-full object-cover"
+                className="h-full w-full object-cover"
                 src={avatarUrl}
-                width={64}
-                height={64}
-                sizes="64px"
+                width={80}
+                height={80}
+                sizes="80px"
               />
             </div>
-          </div>
 
-          {/* Name */}
-          <h3 className="text-foreground mb-0.5 text-center text-sm leading-tight font-extrabold">
-            {displayName}
-          </h3>
+            {/* Name */}
+            <h4 className="font-headline mb-2 text-xl font-bold tracking-tighter text-white">
+              {displayName}
+            </h4>
 
-          {/* Username */}
-          <p className="text-primary mb-1.5 text-[10px] tracking-wide">
-            @{username}
-          </p>
+            {/* Bio */}
+            <p className="text-on-surface-variant/80 mt-2 max-w-[200px] text-center text-xs">
+              {bio}
+            </p>
 
-          {/* Bio */}
-          <p className="text-muted-foreground mb-4 line-clamp-3 text-center text-[10px] leading-relaxed">
-            {bio}
-          </p>
+            {/* Default Links mimicking the prototype static visual but dynamically mapping real links */}
+            <div className="mt-10 w-full space-y-3">
+              <SmartBentoGrid isBento={isBento}>
+                {activeLinks.length > 0 ? (
+                  activeLinks.map((link, idx) => (
+                    <PreviewLinkButton
+                      key={link.id || idx}
+                      link={link}
+                      buttonStyle={buttonStyle}
+                      isBento={isBento}
+                    />
+                  ))
+                ) : (
+                  <div className="text-muted-foreground col-span-2 w-full py-4 text-center text-[10px]">
+                    {t("noActiveLinks")}
+                  </div>
+                )}
+              </SmartBentoGrid>
+            </div>
 
-          {/* Links grid/list */}
-          <div className="w-full">
-            <SmartBentoGrid isBento={isBento}>
-              {activeLinks.length > 0 ? (
-                activeLinks.map((link, idx) => (
-                  <PreviewLinkButton
-                    key={link.id || idx}
-                    link={link}
-                    buttonStyle={buttonStyle}
-                    isBento={isBento}
-                  />
-                ))
-              ) : (
-                <div className="text-muted-foreground col-span-2 w-full py-4 text-center text-[10px]">
-                  {t("noActiveLinks")}
-                </div>
-              )}
-            </SmartBentoGrid>
-          </div>
+            {/* Dummy Social Preview (Hardcoded for aesthetics matching prototype) */}
+            <div className="mt-12 flex gap-4">
+              <div className="bg-surface-container-low text-primary-container border-primary-container/10 flex h-10 w-10 items-center justify-center rounded-full border">
+                <Icon name="share" className="text-lg" />
+              </div>
+              <div className="bg-surface-container-low text-primary-container border-primary-container/10 flex h-10 w-10 items-center justify-center rounded-full border">
+                <Icon name="rss_feed" className="text-lg" />
+              </div>
+            </div>
 
-          {/* Bottom watermark */}
-          <div className="mt-auto flex items-center gap-1 pt-6">
-            <span className="text-[8px] tracking-widest text-white/20 uppercase">
-              linksocialdrop
-            </span>
+            <p className="font-headline text-on-surface-variant mt-20 text-[10px] font-black tracking-[0.3em] opacity-40">
+              LINKSOCIALDROP
+            </p>
           </div>
         </div>
       </div>
