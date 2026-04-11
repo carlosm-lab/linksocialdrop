@@ -30,6 +30,7 @@ export function TopAppBar({
     { href: "/dashboard/links", label: t("links") },
     { href: "/dashboard/appearance", label: t("appearance") },
     { href: "/dashboard/analytics", label: t("analytics") },
+    { href: "/dashboard/marketplace", label: t("marketplace") },
   ] as const;
 
   const isActive = (href: string) => currentPath === href;

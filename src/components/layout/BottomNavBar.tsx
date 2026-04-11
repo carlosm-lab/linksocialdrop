@@ -19,6 +19,12 @@ export function BottomNavBar() {
           isActive={currentPath === "/dashboard/links"}
         />
         <NavItem
+          href="/dashboard/marketplace"
+          icon="storefront"
+          label={t("marketplace")}
+          isActive={currentPath === "/dashboard/marketplace"}
+        />
+        <NavItem
           href="/dashboard/appearance"
           icon="palette"
           label={t("appearance")}
