@@ -63,7 +63,7 @@ function SortableItem({
   onEdit: () => void;
   onDelete: () => void;
   onToggle: () => void;
-  t: (key: string, args?: Record<string, unknown>) => string;
+  t: any;
 }) {
   const {
     attributes,
