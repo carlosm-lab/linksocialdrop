@@ -14,10 +14,11 @@ import { Suspense } from "react";
 import { PageViewTracker } from "./PageViewTracker";
 import { PublicLinkItem } from "./PublicLinkItem";
 import { NewsletterForm } from "./NewsletterForm";
+import { SmartBentoGrid } from "@/components/layout/SmartBentoGrid";
 import { routing } from "@/i18n/routing";
 import type { Metadata, ResolvingMetadata } from "next";
 import { siteConfig } from "@/config/site";
-import { getContrastColor } from "@/lib/colors";
+import { generateThemeColors } from "@/lib/colors";
 
 export const revalidate = 60; // Regenerar la caché en background cada 60 segundos (ISR)
 export const experimental_ppr = true; // Activar Partial Prerendering
@@ -178,20 +179,20 @@ function ProfileContent({
     ? typographyMap[profile.font_family] || "font-sans"
     : "font-sans";
 
-  // Accent color overrides
-  const customAccentStyle = profile.accent_color
-    ? { color: profile.accent_color }
-    : {};
-
-  // Base text color when hover/bg overrides happen
-  const textColorClass = profile.accent_color ? "" : "text-primary-container";
-  const bgColorClass = "bg-surface-container-highest";
+  // Generate dynamic theme variables ensuring full color harmony
+  // Cast allows preparing for future 'custom_text_color' DB migration without TS errors.
+  const themeVars = generateThemeColors(
+    profile.accent_color || "#00f5ff",
+    profile.background_color || "#111316",
+    (profile as any).custom_text_color
+  );
 
   const isBento = profile.layout_mode === "bento";
 
   return (
     <div
-      className={`bg-surface text-on-surface ${fontClass} selection:bg-primary-container selection:text-on-primary-container relative z-0 flex min-h-screen flex-col items-center`}
+      style={themeVars as React.CSSProperties}
+      className={`bg-background text-foreground ${fontClass} selection:bg-primary selection:text-primary-foreground relative z-0 flex min-h-screen flex-col items-center`}
     >
       <script
         type="application/ld+json"
@@ -233,63 +234,44 @@ function ProfileContent({
             />
           </div>
           <div className="text-center">
-            <h1
-              className="mb-2 text-3xl font-black tracking-tighter"
-              style={customAccentStyle}
-            >
+            <h1 className="text-primary mb-2 text-3xl font-black tracking-tighter">
               @{profile.username}
             </h1>
-            <p className="text-on-surface-variant mx-auto max-w-xs text-base leading-relaxed">
+            <p className="text-muted-foreground mx-auto max-w-xs text-base leading-relaxed">
               {profile.bio || `${profile.username} profile`}
             </p>
           </div>
         </header>
 
-        <div
-          className={`mb-16 w-full ${isBento ? "grid auto-rows-auto grid-cols-2 gap-4" : "space-y-4"}`}
-        >
+        <SmartBentoGrid isBento={isBento}>
           {links.length === 0 ? (
-            <p
-              className={`text-center text-slate-500 italic ${isBento ? "col-span-2" : ""}`}
-            >
+            <p className="col-span-2 w-full py-8 text-center text-slate-500 italic">
               {t("noLinks")}
             </p>
           ) : (
             links.map((link, index) => (
-              <div
+              <PublicLinkItem
                 key={link.id}
-                className={
-                  isBento && index === 0
-                    ? "col-span-2 row-span-1"
-                    : "col-span-1"
-                }
-              >
-                <PublicLinkItem
-                  link={link}
-                  buttonStyle={profile.button_style}
-                  accentColor={profile.accent_color}
-                  textColorClass={textColorClass}
-                  bgColorClass={bgColorClass}
-                  layoutMode={profile.layout_mode}
-                  index={index}
-                />
-              </div>
+                link={link}
+                buttonStyle={profile.button_style}
+                layoutMode={profile.layout_mode}
+                index={index}
+              />
             ))
           )}
+        </SmartBentoGrid>
 
-          <div className={`w-full pt-8 ${isBento ? "col-span-2" : ""}`}>
-            <NewsletterForm
-              profileId={profile.id}
-              accentColor={profile.accent_color}
-              texts={{
-                title: t("joinNewsletter"),
-                description: t("newsletterDesc"),
-                placeholder: "email@example.com",
-                button: t("joinNewsletter"),
-                success: "Done!",
-              }}
-            />
-          </div>
+        <div className={`w-full pt-8 ${isBento ? "col-span-2" : ""}`}>
+          <NewsletterForm
+            profileId={profile.id}
+            texts={{
+              title: t("joinNewsletter"),
+              description: t("newsletterDesc"),
+              placeholder: "email@example.com",
+              button: t("joinNewsletter"),
+              success: "Done!",
+            }}
+          />
         </div>
 
         <footer className="mt-auto py-8 text-center">
@@ -297,7 +279,7 @@ function ProfileContent({
             <span className="font-label text-[10px] tracking-[0.2em] uppercase transition-colors hover:text-slate-400">
               {t("madeWith")}
             </span>
-            <div className="group-hover:text-primary-container flex items-center gap-1 transition-colors">
+            <div className="group-hover:text-primary flex items-center gap-1 transition-colors">
               <span className="font-headline text-sm font-black tracking-tighter">
                 {tc("brandName")}
               </span>
@@ -307,19 +289,19 @@ function ProfileContent({
           <div className="font-label mt-4 flex justify-center gap-6 text-[10px] tracking-[0.1em] text-slate-600 uppercase">
             <Link
               href="/privacy"
-              className="hover:text-on-surface transition-colors"
+              className="hover:text-foreground transition-colors"
             >
               {t("privacy")}
             </Link>
             <Link
               href="/terms"
-              className="hover:text-on-surface transition-colors"
+              className="hover:text-foreground transition-colors"
             >
               {t("terms")}
             </Link>
             <Link
               href="/support"
-              className="hover:text-on-surface transition-colors"
+              className="hover:text-foreground transition-colors"
             >
               {t("report")}
             </Link>

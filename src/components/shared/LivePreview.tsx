@@ -6,6 +6,8 @@ import Image from "next/image";
 import { getContrastColor } from "@/lib/colors";
 import { Icon } from "@/components/ui/icon";
 import { Database } from "@/types/database";
+import { generateThemeColors } from "@/lib/colors";
+import { SmartBentoGrid } from "@/components/layout/SmartBentoGrid";
 
 type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 type LinkRow = Database["public"]["Tables"]["links"]["Row"];
@@ -46,106 +48,49 @@ function getButtonRadius(buttonStyle?: string | null): string {
   }
 }
 
-/** Renders a single link button in the preview respecting button_style and per-link colors */
 function PreviewLinkButton({
   link,
-  accentColor,
   buttonStyle,
-  isLast,
+  isBento,
 }: {
   link: Partial<LinkRow> & { highlight?: boolean };
-  accentColor: string;
   buttonStyle: string | null | undefined;
-  isLast: boolean;
+  isBento: boolean;
 }) {
   const radClass = getButtonRadius(buttonStyle);
-  const textOnAccent = getContrastColor(accentColor);
 
-  // Per-link custom colors override everything
-  const hasBg = !!link.bg_color;
-  const hasText = !!link.text_color;
-  const effectiveBg = hasBg ? link.bg_color! : undefined;
-  const effectiveText = hasText
-    ? link.text_color!
-    : hasBg
-      ? getContrastColor(link.bg_color!)
-      : undefined;
+  const baseClasses = isBento
+    ? "flex-col items-start justify-between h-24 glass-panel bg-noise border border-border/50 shadow-sm"
+    : "flex-row h-auto border border-border/30 bg-card text-card-foreground shadow-sm";
 
-  // Glassmorphism style
-  if (buttonStyle === "glassmorphism" && !hasBg) {
-    return (
-      <div
-        className={`w-full ${radClass} border border-white/20 px-4 py-3 text-center text-[11px] font-bold text-white`}
-        style={{
-          background: "rgba(255,255,255,0.07)",
-          backdropFilter: "blur(12px)",
-          color: effectiveText,
-        }}
-      >
-        {link.title}
-      </div>
-    );
-  }
-
-  // Neon style
-  if (buttonStyle === "neon" && !hasBg) {
-    return (
-      <div
-        className={`w-full ${radClass} border px-4 py-3 text-center text-[11px] font-bold`}
-        style={{
-          borderColor: accentColor,
-          color: accentColor,
-          boxShadow: `0 0 12px ${accentColor}60, inset 0 0 8px ${accentColor}20`,
-          background: "transparent",
-        }}
-      >
-        {link.title}
-      </div>
-    );
-  }
-
-  // Outline style
-  if (buttonStyle === "outline" && !hasBg) {
-    return (
-      <div
-        className={`w-full ${radClass} border px-4 py-3 text-center text-[11px] font-medium`}
-        style={{
-          borderColor: "rgba(255,255,255,0.4)",
-          color: "rgba(255,255,255,0.85)",
-          background: "transparent",
-        }}
-      >
-        {link.title}
-      </div>
-    );
-  }
-
-  // Last/highlighted link: accent color (or custom)
-  if (isLast || link.highlight) {
-    return (
-      <div
-        className={`w-full ${radClass} px-4 py-3 text-center text-[11px] font-bold shadow-lg`}
-        style={{
-          backgroundColor: effectiveBg || accentColor,
-          color: effectiveText || textOnAccent,
-          boxShadow: `0 8px 20px -4px ${effectiveBg || accentColor}50`,
-        }}
-      >
-        {link.title}
-      </div>
-    );
-  }
-
-  // Default: dark card (or custom per-link)
   return (
     <div
-      className={`w-full ${radClass} border border-white/5 px-4 py-3 text-center text-[11px] font-medium`}
-      style={{
-        backgroundColor: effectiveBg || "#1e2023",
-        color: effectiveText || "#e2e8f0",
-      }}
+      className={`relative flex w-full p-3 transition-all ${radClass} ${baseClasses} ${
+        link.highlight ? "ring-primary bg-primary/5 ring-2" : ""
+      }`}
     >
-      {link.title}
+      <div
+        className={`bg-secondary text-secondary-foreground flex items-center justify-center transition-colors ${radClass} ${
+          isBento ? "mb-1 h-7 w-7" : "h-8 w-8"
+        }`}
+      >
+        <Icon name={link.icon || "link"} size={isBento ? 14 : 16} />
+      </div>
+      <span
+        className={`font-label mt-auto font-medium tracking-tight ${
+          isBento ? "line-clamp-2 text-xs" : "ml-3 text-xs"
+        }`}
+      >
+        {link.title}
+      </span>
+      {!isBento && (
+        <Icon name="arrow_forward" className="ml-auto opacity-50" size={14} />
+      )}
+      {isBento && (
+        <div className="absolute top-3 right-3 opacity-50">
+          <Icon name="arrow_outward" size={14} />
+        </div>
+      )}
     </div>
   );
 }
@@ -159,10 +104,22 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
   const bio =
     profile?.bio ||
     "Synthesizing modern aesthetics with functional digital architecture.";
-  const accentColor = profile?.accent_color || "#00F5FF";
+  const accentColor = profile?.accent_color || "#00f5ff";
+  const backgroundColor = profile?.background_color || "#111316";
+  const customTextColor = (profile as any)?.custom_text_color;
+
   const buttonStyle = profile?.button_style || "pill";
+  const layoutMode = profile?.layout_mode || "list";
+  const isBento = layoutMode === "bento";
+
   const fontFamilyValue = profile?.font_family || "Inter";
   const fontFamily = FONT_FAMILY_MAP[fontFamilyValue] || FONT_FAMILY_MAP.Inter;
+
+  const themeVars = generateThemeColors(
+    accentColor,
+    backgroundColor,
+    customTextColor
+  );
 
   type PreviewLink = Partial<LinkRow> & { highlight?: boolean };
 
@@ -206,20 +163,15 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
         {/* Notch */}
         <div className="absolute top-0 left-1/2 z-20 h-6 w-32 -translate-x-1/2 rounded-b-2xl bg-[#333538]" />
 
-        {/* Profile content */}
+        {/* Profile content layer dynamically adopting theme */}
         <div
-          className="relative flex h-full w-full flex-col items-center overflow-y-auto p-6 pt-14 pb-8"
-          style={{ fontFamily }}
+          className="bg-background text-foreground relative flex h-full w-full flex-col items-center overflow-y-auto p-4 pt-10 pb-8"
+          style={{ ...(themeVars as React.CSSProperties), fontFamily }}
         >
           {/* Avatar */}
-          <div
-            className="ring-opacity-30 mb-3 h-16 w-16 rounded-full p-0.5 ring-4"
-            style={{ "--tw-ring-color": accentColor } as React.CSSProperties}
-          >
-            <div
-              className="ring-opacity-20 h-full w-full overflow-hidden rounded-full ring-2"
-              style={{ boxShadow: `0 0 0 2px ${accentColor}33` }}
-            >
+          <div className="border-primary/30 relative mb-2 h-16 w-16 rounded-full border-2 p-0.5">
+            <div className="luminous-gradient pointer-events-none absolute inset-0 scale-110 rounded-full opacity-20 blur-xl"></div>
+            <div className="ring-primary/20 relative z-10 h-full w-full overflow-hidden rounded-full ring-2">
               <Image
                 alt="Avatar"
                 className="h-full w-full rounded-full object-cover"
@@ -232,40 +184,38 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
           </div>
 
           {/* Name */}
-          <h3 className="mb-0.5 text-center text-sm leading-tight font-extrabold text-white">
+          <h3 className="text-foreground mb-0.5 text-center text-sm leading-tight font-extrabold">
             {displayName}
           </h3>
 
           {/* Username */}
-          <p
-            className="mb-1.5 text-[10px] tracking-wide"
-            style={{ color: accentColor }}
-          >
+          <p className="text-primary mb-1.5 text-[10px] tracking-wide">
             @{username}
           </p>
 
           {/* Bio */}
-          <p className="mb-5 line-clamp-3 text-center text-[10px] leading-relaxed text-slate-400">
+          <p className="text-muted-foreground mb-4 line-clamp-3 text-center text-[10px] leading-relaxed">
             {bio}
           </p>
 
-          {/* Links */}
-          <div className="w-full space-y-2">
-            {activeLinks.length > 0 ? (
-              activeLinks.map((link, idx) => (
-                <PreviewLinkButton
-                  key={link.id || idx}
-                  link={link}
-                  accentColor={accentColor}
-                  buttonStyle={buttonStyle}
-                  isLast={idx === activeLinks.length - 1}
-                />
-              ))
-            ) : (
-              <div className="text-center text-[10px] text-white/40">
-                {t("noActiveLinks")}
-              </div>
-            )}
+          {/* Links grid/list */}
+          <div className="w-full">
+            <SmartBentoGrid isBento={isBento}>
+              {activeLinks.length > 0 ? (
+                activeLinks.map((link, idx) => (
+                  <PreviewLinkButton
+                    key={link.id || idx}
+                    link={link}
+                    buttonStyle={buttonStyle}
+                    isBento={isBento}
+                  />
+                ))
+              ) : (
+                <div className="text-muted-foreground col-span-2 w-full py-4 text-center text-[10px]">
+                  {t("noActiveLinks")}
+                </div>
+              )}
+            </SmartBentoGrid>
           </div>
 
           {/* Bottom watermark */}

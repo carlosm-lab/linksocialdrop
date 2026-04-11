@@ -556,6 +556,63 @@ export function AppearanceClient({
               </span>
             </div>
           )}
+
+          {/* Custom Text Color (Brand Mode / Escape Hatch) */}
+          <div className="mt-6 border-t border-white/5 pt-6">
+            <h4 className="font-headline mb-1 text-sm font-bold opacity-80">
+              Advanced Brand Mode (Custom Text)
+            </h4>
+            <p className="text-on-surface-variant mb-4 text-xs">
+              Override the automatic APCA contrast color with a custom hex.
+            </p>
+            <div className="flex items-center gap-3">
+              <label className="bg-surface-container-highest border-outline-variant hover:bg-surface-container relative flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl border transition-colors">
+                <input
+                  type="color"
+                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                  value={profile.custom_text_color || "#ffffff"}
+                  onChange={(e) => {
+                    setProfile((prev) => ({
+                      ...prev,
+                      custom_text_color: e.target.value,
+                    }));
+                    if (colorTimeoutRef.current)
+                      clearTimeout(colorTimeoutRef.current);
+                    colorTimeoutRef.current = setTimeout(() => {
+                      startTransition(async () => {
+                        await updateProfile({
+                          custom_text_color: e.target.value,
+                        });
+                      });
+                    }, 500);
+                  }}
+                />
+                <Icon name="palette" className="text-sm opacity-50" />
+              </label>
+
+              <div className="flex flex-col">
+                <span className="bg-surface-container-highest rounded-md px-3 py-1.5 font-mono text-xs text-slate-500">
+                  {profile.custom_text_color || "Automatic (APCA)"}
+                </span>
+                {profile.custom_text_color && (
+                  <button
+                    onClick={() => {
+                      setProfile((prev) => ({
+                        ...prev,
+                        custom_text_color: null,
+                      }));
+                      startTransition(async () => {
+                        await updateProfile({ custom_text_color: null });
+                      });
+                    }}
+                    className="mt-1 text-left text-[10px] font-medium text-red-400 hover:underline"
+                  >
+                    Reset to Automatic
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Typography — 8 fonts */}

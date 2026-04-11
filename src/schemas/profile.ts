@@ -26,6 +26,13 @@ export const updateProfileSchema = z.object({
   theme: z.string().optional().nullable(),
   background_color: z.string().optional().nullable(),
   layout_mode: z.enum(["list", "bento"]).optional().nullable(),
+  custom_text_color: z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/, {
+      message: "Must be a valid hex color (#RRGGBB)",
+    })
+    .optional()
+    .nullable(),
 });
 
 import { zfd } from "zod-form-data";

@@ -159,6 +159,7 @@ export type Database = {
           bio: string | null;
           button_style: string | null;
           created_at: string | null;
+          custom_text_color: string | null;
           font_family: string | null;
           full_name: string | null;
           id: string;
@@ -177,6 +178,7 @@ export type Database = {
           bio?: string | null;
           button_style?: string | null;
           created_at?: string | null;
+          custom_text_color?: string | null;
           font_family?: string | null;
           full_name?: string | null;
           id: string;
@@ -195,6 +197,7 @@ export type Database = {
           bio?: string | null;
           button_style?: string | null;
           created_at?: string | null;
+          custom_text_color?: string | null;
           font_family?: string | null;
           full_name?: string | null;
           id?: string;

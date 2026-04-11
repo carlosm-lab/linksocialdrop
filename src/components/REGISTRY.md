@@ -183,3 +183,14 @@ import { OnboardingFlow } from "@/components/OnboardingFlow";
 
 - `themes` (`ThemeRow[]`): List of all marketplace themes regardless of active status.
 - `themeUserCounts` (`Record<string, number>`): Map of theme ID to number of users currently using it.
+
+---
+
+### `<SmartBentoGrid />`
+
+**Path:** `src/components/layout/SmartBentoGrid.tsx`
+**Description:** A highly optimized, responsive masonry/bento layout engine. Automatically distributes children into an aesthetically pleasing mosaic.
+**Props:**
+
+- `children` (`ReactNode[]`): Elements to render.
+- `isBento` (`boolean`): Whether to apply the grid layout or stack vertically.
