@@ -13,6 +13,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PageViewTracker } from "./PageViewTracker";
 import { PublicLinkItem } from "./PublicLinkItem";
+import { NewsletterForm } from "./NewsletterForm";
+import { routing } from "@/i18n/routing";
 import type { Metadata, ResolvingMetadata } from "next";
 import { siteConfig } from "@/config/site";
 import { getContrastColor } from "@/lib/colors";
@@ -23,7 +25,7 @@ export const experimental_ppr = true; // Activar Partial Prerendering
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 // Creamos un cliente público sin cookies para permitir caching estático e ISR
-const supabasePublic = createSupabaseClient(
+const supabasePublic = createSupabaseClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 );
@@ -84,10 +86,13 @@ export async function generateMetadata(
     },
     alternates: {
       canonical: url,
-      languages: {
-        en: `${siteConfig.url}/en/${profile.username}`,
-        es: `${siteConfig.url}/es/${profile.username}`,
-      },
+      languages: routing.locales.reduce(
+        (acc, l) => {
+          acc[l] = `${siteConfig.url}/${l}/${profile.username}`;
+          return acc;
+        },
+        {} as Record<string, string>
+      ),
     },
   };
 }
@@ -165,9 +170,13 @@ function ProfileContent({
   const tc = useTranslations("common");
 
   // Custom typography based on profile.font_family
-  let fontClass = "font-sans";
-  if (profile.font_family === "Epilogue") fontClass = "font-headline";
-  else if (profile.font_family === "Inter") fontClass = "font-body";
+  const typographyMap: Record<string, string> = {
+    Epilogue: "font-headline",
+    Inter: "font-body",
+  };
+  const fontClass = profile.font_family
+    ? typographyMap[profile.font_family] || "font-sans"
+    : "font-sans";
 
   // Accent color overrides
   const customAccentStyle = profile.accent_color
@@ -269,41 +278,17 @@ function ProfileContent({
           )}
 
           <div className={`w-full pt-8 ${isBento ? "col-span-2" : ""}`}>
-            <div className="bg-surface-container-low border-outline-variant/10 relative overflow-hidden rounded-2xl border p-6">
-              <div className="luminous-gradient pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-10 blur-3xl"></div>
-              <h3
-                className="relative z-10 mb-2 text-lg font-bold tracking-tight"
-                style={customAccentStyle}
-              >
-                {t("joinNewsletter")}
-              </h3>
-              <p className="text-on-surface-variant relative z-10 mb-4 text-sm">
-                {t("newsletterDesc")}
-              </p>
-              <div className="relative z-10 flex gap-2">
-                <input
-                  aria-label={t("joinNewsletter")}
-                  className="bg-surface-container-highest text-on-surface focus-visible:ring-primary-container focus-visible:ring-offset-background flex-1 rounded-lg border-none px-3 text-sm outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-offset-2"
-                  placeholder="email@example.com"
-                  type="email"
-                />
-                <Button
-                  size="pill"
-                  disabled
-                  className="text-on-primary-fixed font-bold opacity-50 shadow-none"
-                  style={
-                    profile.accent_color
-                      ? {
-                          backgroundColor: profile.accent_color,
-                          color: getContrastColor(profile.accent_color),
-                        }
-                      : {}
-                  }
-                >
-                  {t("newsletterComingSoon")}
-                </Button>
-              </div>
-            </div>
+            <NewsletterForm
+              profileId={profile.id}
+              accentColor={profile.accent_color}
+              texts={{
+                title: t("joinNewsletter"),
+                description: t("newsletterDesc"),
+                placeholder: "email@example.com",
+                button: t("joinNewsletter"),
+                success: "Done!",
+              }}
+            />
           </div>
         </div>
 
