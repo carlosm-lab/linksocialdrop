@@ -4,9 +4,14 @@ import Image from "next/image";
 import { getContrastColor } from "@/lib/colors";
 import { Icon } from "@/components/ui/icon";
 
+import { Database } from "@/types/database";
+
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
+type LinkRow = Database["public"]["Tables"]["links"]["Row"];
+
 interface LivePreviewProps {
-  profile?: any;
-  links?: any[];
+  profile?: Partial<ProfileRow> | null;
+  links?: Partial<LinkRow>[] | null;
 }
 
 export function LivePreview({ profile, links }: LivePreviewProps) {
@@ -14,9 +19,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
 
   const displayName = profile?.full_name || "Digital Manager";
   const username = profile?.username || "manager_studio";
-  const avatarUrl =
-    profile?.avatar_url ||
-    "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
+  const avatarUrl = profile?.avatar_url || "/images/avatar-placeholder.png";
 
   const bio =
     profile?.bio ||
@@ -40,13 +43,15 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
         ? "font-sans"
         : "font-body";
 
-  const defaultLinks = [
+  type PreviewLink = Partial<LinkRow> & { highlight?: boolean };
+
+  const defaultLinks: PreviewLink[] = [
     { id: "1", title: "Portfolio Reel" },
     { id: "2", title: "Read the Manifesto" },
     { id: "3", title: "Book a Consultation", highlight: true },
   ];
 
-  let activeLinks: any[] = [];
+  let activeLinks: PreviewLink[] = [];
   if (Array.isArray(links) && links.length > 0) {
     activeLinks = links.filter((l) => l.visible !== false);
   } else if (!links) {
@@ -105,7 +110,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
 
           <div className="w-full space-y-3">
             {activeLinks.length > 0 ? (
-              activeLinks.map((link: any, idx: number) => {
+              activeLinks.map((link, idx: number) => {
                 if (link.highlight || idx === activeLinks.length - 1) {
                   return (
                     <div
@@ -132,7 +137,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
               })
             ) : (
               <div className="text-center text-xs text-white/50">
-                No active links
+                {t("noActiveLinks")}
               </div>
             )}
           </div>

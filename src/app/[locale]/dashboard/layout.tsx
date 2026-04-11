@@ -1,6 +1,8 @@
 import { TopAppBar } from "@/components/layout/TopAppBar";
 import { BottomNavBar } from "@/components/layout/BottomNavBar";
 import { createClient } from "@/lib/supabase/server";
+import { getLocale } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export default async function AdminLayout({
   children,
@@ -11,6 +13,8 @@ export default async function AdminLayout({
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const locale = await getLocale();
 
   // Fetch profile data for the avatar and onboarding check
   let avatarUrl: string | undefined;
@@ -23,15 +27,9 @@ export default async function AdminLayout({
 
     avatarUrl = profile?.avatar_url ?? user.user_metadata?.avatar_url;
 
-    // Check onboarding status
+    // Check onboarding status — use dynamic locale (C-001 fix)
     if (!profile?.username) {
-      // Import redirect from next/navigation
-      const { redirect } = await import("next/navigation");
-      // Import routing to get the current locale if needed, wait, we don't have locale here easily.
-      // We can just rely on middleware or assume a default /es/ or redirect to /onboarding and let middleware affix locale.
-      // Wait, let's redirect to auth/login with next param or just `/onboarding`.
-      // The middleware prefixes locales.
-      redirect("/es/onboarding"); // For simplicity we assume 'es' or we can extract it.
+      redirect(`/${locale}/onboarding`);
     }
   }
 

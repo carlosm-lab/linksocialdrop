@@ -11,7 +11,14 @@ export async function generateMetadata({
   return { title: `Onboarding | ${t("title")}` };
 }
 
-export default function OnboardingPage() {
+export default async function OnboardingPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "onboarding" });
+
   return (
     <div className="bg-surface text-on-surface relative flex min-h-[100dvh] flex-col items-center justify-center p-4">
       {/* Background decoration */}
@@ -22,13 +29,13 @@ export default function OnboardingPage() {
 
       <div className="relative z-10 mb-10 w-full max-w-md text-center">
         <span className="bg-surface-container border-outline-variant text-primary mb-4 inline-block rounded-full border px-3 py-1 text-xs font-bold tracking-wider">
-          ¡BIENVENIDO!
+          {t("welcomeBadge")}
         </span>
         <h1 className="font-headline text-on-surface text-3xl font-bold tracking-tight sm:text-4xl">
-          Comencemos a crear tu espacio
+          {t("welcomeTitle")}
         </h1>
         <p className="text-on-surface-variant mt-2 text-base">
-          Configura tu perfil en menos de 2 minutos
+          {t("welcomeDesc")}
         </p>
       </div>
 

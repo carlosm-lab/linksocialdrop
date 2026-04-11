@@ -70,3 +70,34 @@ import { Icon } from "@/components/ui/icon";
 ```
 
 **Used in:** Landing page, BottomNavBar, TopAppBar, LinksClient, AppearanceClient, PublicLinkItem, Analytics, Admin, Sandbox
+
+---
+
+### `<ExportCsvButton />`
+
+**Path:** `src/components/analytics/ExportCsvButton.tsx`
+**Description:** Client component that generates and triggers a CSV file download containing the user's analytics summary (views, clicks, CTR) and link performance leaderboard. The CSV is UTF-8 encoded with BOM for Excel compatibility.
+
+**Props:**
+
+- `label` (`string`): The button text label (i18n-driven).
+- `views` (`number`): Total page views count.
+- `clicks` (`number`): Total unique clicks count.
+- `ctr` (`string`): CTR average percentage as a string.
+- `leaderboard` (`{ id: string; title: string; clicks: number }[]`): Array of link performance data for the leaderboard section.
+
+**Example Usage:**
+
+```tsx
+import { ExportCsvButton } from "@/components/analytics/ExportCsvButton";
+
+<ExportCsvButton
+  label="Export"
+  views={1234}
+  clicks={567}
+  ctr="45.9"
+  leaderboard={[{ id: "1", title: "My Link", clicks: 42 }]}
+/>;
+```
+
+**Used in:** Analytics dashboard page

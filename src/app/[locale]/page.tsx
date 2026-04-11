@@ -81,7 +81,7 @@ function LandingContent() {
 
             {/* Floating Mockup */}
             <div className="relative flex w-full items-center justify-center md:w-1/2">
-              <div className="bg-surface-container-lowest border-surface-container-highest relative h-[480px] w-[260px] max-w-[90vw] rotate-[-2deg] overflow-hidden rounded-[2.5rem] border-[6px] shadow-2xl transition-transform duration-500 hover:rotate-0 sm:h-[580px] sm:w-72 sm:rounded-[3rem] sm:border-[8px]">
+              <div className="bg-surface-container-lowest border-surface-container-highest relative aspect-[9/19.5] w-[260px] max-w-[90vw] rotate-[-2deg] overflow-hidden rounded-[2.5rem] border-[6px] shadow-2xl transition-transform duration-500 hover:rotate-0 sm:w-72 sm:rounded-[3rem] sm:border-[8px]">
                 <div className="from-primary-container/20 absolute top-0 h-40 w-full bg-gradient-to-b to-transparent"></div>
                 <div className="flex flex-col items-center px-4 pt-8 sm:px-6 sm:pt-12">
                   <div className="bg-surface-container-high border-primary-container mb-4 h-16 w-16 rounded-full border-2 p-1 sm:h-20 sm:w-20">
@@ -97,10 +97,10 @@ function LandingContent() {
                     />
                   </div>
                   <div className="font-headline text-base font-bold sm:text-lg">
-                    @alexa_gestiona
+                    {t("mockupUsername")}
                   </div>
                   <p className="text-primary-container mb-6 text-[9px] tracking-widest uppercase sm:text-[10px]">
-                    Digital Strategist
+                    {t("mockupRole")}
                   </p>
 
                   <div className="w-full space-y-3">

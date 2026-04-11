@@ -85,7 +85,7 @@ export function AppearanceClient({
         setUsernameStatus("idle");
       }
     } catch {
-      setUsernameError("Error updating username");
+      setUsernameError(t("errorUpdatingUsername"));
     } finally {
       setIsChangingUsername(false);
     }
@@ -153,13 +153,13 @@ export function AppearanceClient({
   ];
 
   const COLOR_NAMES: Record<string, string> = {
-    "#00F5FF": "Cyan",
-    "#FFD700": "Gold",
-    "#FF6B6B": "Coral",
-    "#A061FF": "Purple",
-    "#4ECDC4": "Teal",
-    "#FF8C42": "Orange",
-    "#FFFFFF": "White",
+    "#00F5FF": t("colorCyan"),
+    "#FFD700": t("colorGold"),
+    "#FF6B6B": t("colorCoral"),
+    "#A061FF": t("colorPurple"),
+    "#4ECDC4": t("colorTeal"),
+    "#FF8C42": t("colorOrange"),
+    "#FFFFFF": t("colorWhite"),
   };
 
   const TYPOGRAPHY_OPTIONS = [
@@ -338,7 +338,7 @@ export function AppearanceClient({
                   setProfile({ ...profile, full_name: e.target.value })
                 }
                 onBlur={(e) => handleUpdate("title", e.target.value)}
-                placeholder="Digital Manager"
+                placeholder={t("profileTitlePlaceholder")}
               />
             </div>
             <div className="bg-surface-container-highest/30 border-primary/10 focus-within:bg-surface-container-highest/50 rounded-lg border-b px-4 py-3 transition-colors">
@@ -357,7 +357,7 @@ export function AppearanceClient({
                   setProfile({ ...profile, bio: e.target.value })
                 }
                 onBlur={(e) => handleUpdate("bio", e.target.value)}
-                placeholder="Synthesizing modern aesthetics with functional digital architecture."
+                placeholder={t("bioPlaceholder")}
               />
             </div>
           </div>
@@ -442,11 +442,11 @@ export function AppearanceClient({
       </div>
 
       <section className="bg-surface-container-low space-y-6 rounded-xl p-8">
-        <h3 className="font-headline text-lg font-bold">Layout Mode</h3>
+        <h3 className="font-headline text-lg font-bold">{t("layoutMode")}</h3>
         <div className="grid grid-cols-2 gap-4">
           {[
-            { value: "list", label: "Classic List", icon: "view_list" },
-            { value: "bento", label: "Bento Grid", icon: "grid_view" },
+            { value: "list", label: t("classicList"), icon: "view_list" },
+            { value: "bento", label: t("bentoGrid"), icon: "grid_view" },
           ].map((layout) => {
             const isSelected =
               profile.layout_mode === layout.value ||

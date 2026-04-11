@@ -46,7 +46,7 @@ function SortableItem({
   onEdit: () => void;
   onDelete: () => void;
   onToggle: () => void;
-  t: any;
+  t: (key: string, args?: any) => string;
 }) {
   const {
     attributes,
@@ -125,6 +125,7 @@ function SortableItem({
           type="button"
           role="switch"
           aria-checked={link.visible ?? true}
+          aria-label={`${t("edit")} ${link.title}`}
           onClick={onToggle}
           className={`relative flex h-6 w-12 shrink-0 cursor-pointer items-center rounded-full border-none px-1 ${link.visible ? "bg-primary-container" : "bg-surface-container-highest"}`}
         >
@@ -339,6 +340,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
       <div className="fixed right-8 bottom-32 z-30 md:right-12 md:bottom-12">
         <button
           onClick={openCreateModal}
+          aria-label={t("createLink")}
           className="luminous-glow text-on-primary-fixed group flex h-16 w-16 items-center justify-center rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95"
         >
           <Icon
@@ -411,8 +413,7 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
                   <div className="flex items-center gap-4">
                     <IconPicker value={icon} onChange={setIcon} />
                     <span className="text-xs text-slate-500">
-                      Haz clic en el cuadro para selector un ícono. Escribe una
-                      url de redes sociales para auto-completar.
+                      {t("iconHelperText")}
                     </span>
                   </div>
                 </div>
@@ -449,25 +450,24 @@ export function LinksClient({ initialLinks }: { initialLinks: LinkItem[] }) {
               <Icon name="trash" className="text-2xl text-red-500" />
             </div>
             <h3 className="font-headline mb-2 text-xl font-bold text-white">
-              Eliminar enlace
+              {t("deleteDialogTitle")}
             </h3>
             <p className="mb-6 text-sm text-slate-400">
-              ¿Estás seguro de que quieres eliminar este enlace? Esta acción no
-              se puede deshacer.
+              {t("deleteDialogDesc")}
             </p>
             <div className="flex w-full gap-3">
               <button
                 onClick={() => setDeleteId(null)}
                 className="bg-surface-container-highest hover:bg-surface-container-highest/80 w-1/2 rounded-xl py-3 font-bold text-white transition-colors"
               >
-                Cancelar
+                {tc("cancel")}
               </button>
               <button
                 disabled={isDeletingAction}
                 onClick={() => executeDelete({ id: deleteId })}
                 className="w-1/2 rounded-xl bg-red-500 py-3 font-bold text-white shadow-lg transition-colors hover:bg-red-600 disabled:opacity-50"
               >
-                Eliminar
+                {tc("delete")}
               </button>
             </div>
           </div>

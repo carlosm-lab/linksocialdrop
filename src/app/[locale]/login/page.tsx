@@ -40,7 +40,7 @@ export default function LoginPage() {
         setError(result.serverError);
       } else if (result?.validationErrors) {
         const fieldErrors = Object.values(result.validationErrors).flat();
-        setError((fieldErrors[0] as string) || "Invalid input");
+        setError((fieldErrors[0] as string) || tc("invalidInput"));
       } else if (result?.data?.success) {
         if (isSignUp) {
           // After signup, go to username selection step
@@ -115,7 +115,7 @@ export default function LoginPage() {
         router.push("/dashboard/links");
       }
     } catch {
-      setError("Error setting username");
+      setError(t("errorSettingUsername") ?? tc("unexpectedError"));
     } finally {
       setLoading(false);
     }
@@ -244,7 +244,7 @@ export default function LoginPage() {
                           className="text-outline hover:text-primary-container absolute top-1/2 right-4 -translate-y-1/2 transition-colors"
                           type="button"
                           aria-pressed={showPassword}
-                          aria-label="Toggle password visibility"
+                          aria-label={t("togglePasswordVisibility")}
                           onClick={() => setShowPassword(!showPassword)}
                         >
                           <Icon

@@ -15,7 +15,8 @@
     "cancel": "Cancel",
     "save": "Save",
     "saving": "Saving...",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "delete": "Delete"
   },
   "nav": {
     "links": "Links",
@@ -38,7 +39,9 @@
     "featureCustomTitle": "Customizable",
     "featureCustomDesc": "Beyond templates. Fine-tune every margin, color, and font to match your unique brand identity.",
     "ctaTitle": "Ready to create your link in bio?",
-    "ctaSubtitle": "Join 12,000+ creators who choose LinkSocialDrop as their alternative to other platforms."
+    "ctaSubtitle": "Join 12,000+ creators who choose LinkSocialDrop as their alternative to other platforms.",
+    "mockupUsername": "@alexa_gestiona",
+    "mockupRole": "Digital Strategist"
   },
   "login": {
     "tagline": "Your Link in Bio Page",
@@ -54,7 +57,8 @@
     "signUp": "Sign up",
     "needHelp": "Need help?",
     "checkEmail": "Check your email!",
-    "checkEmailDesc": "We've sent you a confirmation link. Check your inbox."
+    "checkEmailDesc": "We've sent you a confirmation link. Check your inbox.",
+    "togglePasswordVisibility": "Toggle password visibility"
   },
   "username": {
     "chooseTitle": "Choose your username",
@@ -69,6 +73,33 @@
     "change": "Change username",
     "currentUrl": "Your current URL"
   },
+  "onboarding": {
+    "stepOf": "Step {step} of {total}",
+    "claimLink": "Claim your link",
+    "claimLinkDesc": "Choose a unique username for your premium public profile.",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "yourname",
+    "continue": "Continue",
+    "introduce": "Introduce yourself",
+    "introduceDesc": "Add your name and a short description of what you do.",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "e.g. Jane Doe",
+    "bio": "Bio",
+    "bioPlaceholder": "Content creator & Artist...",
+    "optional": "Optional",
+    "back": "Back",
+    "nextStep": "Next step",
+    "firstLink": "Your first link",
+    "firstLinkDesc": "Add the most important link for your followers.",
+    "linkTitle": "Link title",
+    "linkTitlePlaceholder": "My YouTube channel",
+    "linkUrlPlaceholder": "youtube.com/...",
+    "creating": "Creating profile...",
+    "ready": "Done, let's go!",
+    "welcomeBadge": "WELCOME!",
+    "welcomeTitle": "Let's start creating your space",
+    "welcomeDesc": "Set up your profile in under 2 minutes"
+  },
   "adminLinks": {
     "title": "Your Links",
     "description": "Manage your digital identity. Drag to reorder, toggle visibility, and keep your gallery fresh.",
@@ -81,7 +112,10 @@
     "urlLabel": "URL",
     "iconLabel": "Icon (Lucide name)",
     "titleUrlRequired": "Title and URL are required",
-    "delete": "Delete"
+    "delete": "Delete",
+    "iconHelperText": "Click the box to select an icon. Type a social media URL to auto-complete.",
+    "deleteDialogTitle": "Delete Link",
+    "deleteDialogDesc": "Are you sure you want to delete this link? This action cannot be undone."
   },
   "adminAnalytics": {
     "title": "Insight Engine",
@@ -93,7 +127,11 @@
     "last30Days": "Last 30 Days Engagement",
     "export": "Export",
     "performanceLeaderboard": "Performance Leaderboard",
-    "viewDetailedAudit": "View Detailed Audit"
+    "viewDetailedAudit": "View Detailed Audit",
+    "day01": "Day 01",
+    "day15": "Day 15",
+    "day30": "Day 30",
+    "noActivityYet": "No activity yet"
   },
   "adminAppearance": {
     "title": "Appearance",
@@ -102,15 +140,46 @@
     "updateAvatarBio": "Update your avatar and bio display.",
     "pickImage": "Pick Image",
     "profileTitle": "Profile Title",
+    "profileTitlePlaceholder": "Digital Manager",
     "bioDescription": "Bio Description",
+    "bioPlaceholder": "Synthesizing modern aesthetics with functional digital architecture.",
     "accentColor": "Accent Color",
     "typography": "Typography",
     "buttonArchitecture": "Button Architecture",
+    "layoutMode": "Layout Mode",
+    "classicList": "Classic List",
+    "bentoGrid": "Bento Grid",
     "pill": "Pill",
     "rounded": "Rounded",
     "square": "Square",
     "resetChanges": "Reset Changes",
-    "publishLive": "Publish Live"
+    "publishLive": "Publish Live",
+    "colorCyan": "Cyan",
+    "colorGold": "Gold",
+    "colorCoral": "Coral",
+    "colorPurple": "Purple",
+    "colorTeal": "Teal",
+    "colorOrange": "Orange",
+    "colorWhite": "White",
+    "errorUpdatingUsername": "Error updating username. Please try again."
+  },
+  "admin": {
+    "adminPanel": "Admin Panel",
+    "dashboard": "Dashboard",
+    "messages": "Messages",
+    "backToDashboard": "← Back to Dashboard"
+  },
+  "adminMessages": {
+    "total": "{count, plural, one {# message} other {# messages}} total",
+    "unread": "{count} unread",
+    "empty": "No support messages yet",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "markAsRead": "Mark as read",
+    "supportMessagesTitle": "Support Messages",
+    "supportMessagesDesc": "Manage messages received from the contact form."
   },
   "support": {
     "title": "Support",
@@ -132,13 +201,19 @@
     "madeWith": "made with",
     "joinNewsletter": "Join the Newsletter",
     "newsletterDesc": "Get selected inspiration every Sunday.",
+    "newsletterComingSoon": "Coming soon",
     "privacy": "Privacy",
     "terms": "Terms",
-    "report": "Report"
+    "report": "Report",
+    "noLinks": "No links added yet.",
+    "visitLink": "Visit {title}",
+    "portraitOf": "Portrait of {name}",
+    "profileBio": "{username} profile"
   },
   "livePreview": {
     "title": "Live Preview",
-    "status": "Profile Live"
+    "status": "Profile Live",
+    "noActiveLinks": "No active links"
   },
   "logout": {
     "confirmTitle": "Sign out?",
@@ -151,7 +226,12 @@
     "unexpectedError": "An unexpected error occurred. Please try again or go back to the home page.",
     "tryAgain": "Try again",
     "notFound": "Page not found.",
-    "goHome": "Go back home"
+    "goHome": "Go back home",
+    "profileNotFound": "Profile not found",
+    "invalidInput": "Invalid input. Please check your data.",
+    "errorSettingUsername": "Error setting username. Please try again.",
+    "validationError": "Validation error. Please check your data.",
+    "unexpectedTryAgain": "Unexpected error. Please try again."
   },
   "legal": {
     "privacyTitle": "Privacy Policy",
@@ -165,6 +245,7 @@
   },
   "metadata": {
     "title": "LinkSocialDrop",
-    "description": "The best free alternative to other platforms. Create your customized link in bio page in seconds."
+    "description": "The best free alternative to other platforms. Create your customized link in bio page in seconds.",
+    "profileNotFound": "Not Found"
   }
 }

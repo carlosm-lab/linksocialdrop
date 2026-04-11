@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 export default function SupportPage() {
   const t = useTranslations("support");
   const tc = useTranslations("common");
+  const te = useTranslations("errors");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,12 +32,12 @@ export default function SupportPage() {
         setError(result.serverError);
       } else if (result?.validationErrors) {
         const fieldErrors = Object.values(result.validationErrors).flat();
-        setError((fieldErrors[0] as string) || "Error de validación");
+        setError((fieldErrors[0] as string) || te("validationError"));
       } else if (result?.data?.success) {
         setSubmitted(true);
       }
     } catch {
-      setError("Error inesperado. Intenta de nuevo.");
+      setError(te("unexpectedTryAgain"));
     } finally {
       setLoading(false);
     }

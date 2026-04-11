@@ -5,6 +5,7 @@ import { recordLinkClick } from "@/actions/analytics";
 import { Database } from "@/types/database";
 import { getContrastColor } from "@/lib/colors";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 type LinkRow = Database["public"]["Tables"]["links"]["Row"];
 
@@ -27,9 +28,13 @@ export function PublicLinkItem({
   layoutMode = "list",
   index = 0,
 }: PublicLinkItemProps) {
+  const t = useTranslations("profile");
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // SCALE-004: Eventos bloqueantes (Fire and forget)
-    // Redirigimos al usuario inmediatamente sin esperar a que responda analytics
+    // M-010: Prevent default <a> navigation to avoid double-tab opening
+    e.preventDefault();
+
+    // SCALE-004: Fire and forget — redirect user immediately without waiting for analytics
     window.open(link.url, "_blank", "noopener,noreferrer");
 
     // Registramos en background
@@ -67,7 +72,7 @@ export function PublicLinkItem({
     <motion.a
       href={link.url}
       onClick={handleClick}
-      aria-label={`Visit link to ${link.title}`}
+      aria-label={t("visitLink", { title: link.title })}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}

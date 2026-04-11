@@ -4,7 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAction } from "next-safe-action/hooks";
 import { completeOnboarding } from "@/actions/onboarding";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { siteConfig } from "@/config/site";
 import {
   Loader2,
   ArrowRight,
@@ -16,6 +18,7 @@ import {
 export function OnboardingFlow() {
   const [step, setStep] = useState(1);
   const router = useRouter();
+  const t = useTranslations("onboarding");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -27,7 +30,7 @@ export function OnboardingFlow() {
 
   const { execute, status, result } = useAction(completeOnboarding, {
     onSuccess: () => {
-      router.push("/es/dashboard/links");
+      router.push("/dashboard/links");
     },
   });
 
@@ -82,7 +85,7 @@ export function OnboardingFlow() {
           ))}
         </div>
         <span className="text-outline text-sm font-medium">
-          Paso {step} de 3
+          {t("stepOf", { step, total: 3 })}
         </span>
       </div>
 
@@ -99,11 +102,10 @@ export function OnboardingFlow() {
             >
               <div>
                 <h2 className="font-headline text-on-surface mb-2 text-3xl font-bold">
-                  Reclama tu enlace
+                  {t("claimLink")}
                 </h2>
                 <p className="text-on-surface-variant text-base">
-                  Elige un nombre de usuario único para tu perfil público
-                  premium.
+                  {t("claimLinkDesc")}
                 </p>
               </div>
 
@@ -112,21 +114,23 @@ export function OnboardingFlow() {
                   htmlFor="username"
                   className="text-on-surface text-sm font-medium"
                 >
-                  Nombre de usuario
+                  {t("usernameLabel")}
                 </label>
                 <div className="relative flex items-center">
-                  <span className="text-on-surface-variant absolute left-4 font-medium">
-                    linkdrop.com/
-                  </span>
-                  <input
-                    id="username"
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="bg-surface-container-highest border-outline-variant focus:border-primary text-on-surface focus:ring-primary w-full rounded-xl border py-3 pr-4 pl-[114px] transition-colors outline-none focus:ring-1"
-                    placeholder="tunombre"
-                  />
+                  <div className="bg-surface-container-highest border-outline-variant focus-within:border-primary focus-within:ring-primary flex w-full items-center overflow-hidden rounded-xl border transition-colors focus-within:ring-1">
+                    <span className="text-on-surface-variant shrink-0 pl-4 text-xs font-medium">
+                      {siteConfig.url.replace("https://", "")}/
+                    </span>
+                    <input
+                      id="username"
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      className="text-on-surface w-full border-none bg-transparent py-3 pr-4 pl-1 outline-none"
+                      placeholder={t("usernamePlaceholder")}
+                    />
+                  </div>
                 </div>
                 {result?.serverError && (
                   <p className="text-error mt-1 text-sm">
@@ -145,7 +149,7 @@ export function OnboardingFlow() {
                 disabled={!isStep1Valid}
                 className="bg-primary text-on-primary hover:bg-primary/90 shadow-primary/20 mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Continuar <ArrowRight size={18} />
+                {t("continue")} <ArrowRight size={18} />
               </button>
             </motion.div>
           )}
@@ -161,10 +165,10 @@ export function OnboardingFlow() {
             >
               <div>
                 <h2 className="font-headline text-on-surface mb-2 text-3xl font-bold">
-                  Preséntate
+                  {t("introduce")}
                 </h2>
                 <p className="text-on-surface-variant text-base">
-                  Añade tu nombre y una breve descripción de lo que haces.
+                  {t("introduceDesc")}
                 </p>
               </div>
 
@@ -174,7 +178,7 @@ export function OnboardingFlow() {
                     htmlFor="full_name"
                     className="text-on-surface text-sm font-medium"
                   >
-                    Nombre para mostrar
+                    {t("displayName")}
                   </label>
                   <div className="relative">
                     <User
@@ -188,7 +192,7 @@ export function OnboardingFlow() {
                       value={formData.full_name}
                       onChange={handleChange}
                       className="bg-surface-container-highest border-outline-variant focus:border-primary text-on-surface focus:ring-primary w-full rounded-xl border py-3 pr-4 pl-10 transition-colors outline-none focus:ring-1"
-                      placeholder="Ej. Jane Doe"
+                      placeholder={t("displayNamePlaceholder")}
                     />
                   </div>
                 </div>
@@ -198,9 +202,9 @@ export function OnboardingFlow() {
                     htmlFor="bio"
                     className="text-on-surface text-sm font-medium"
                   >
-                    Biografía{" "}
+                    {t("bio")}{" "}
                     <span className="text-outline text-xs font-normal">
-                      (Opcional)
+                      ({t("optional")})
                     </span>
                   </label>
                   <textarea
@@ -209,7 +213,7 @@ export function OnboardingFlow() {
                     value={formData.bio}
                     onChange={handleChange}
                     className="bg-surface-container-highest border-outline-variant focus:border-primary text-on-surface focus:ring-primary h-24 w-full resize-none rounded-xl border px-4 py-3 transition-colors outline-none focus:ring-1"
-                    placeholder="Creadora de contenido & Artista..."
+                    placeholder={t("bioPlaceholder")}
                   />
                 </div>
               </div>
@@ -219,14 +223,14 @@ export function OnboardingFlow() {
                   onClick={handleBack}
                   className="border-outline-variant text-on-surface hover:bg-surface-container rounded-xl border px-4 py-3 font-medium transition-colors"
                 >
-                  Volver
+                  {t("back")}
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={!isStep2Valid}
                   className="bg-primary text-on-primary hover:bg-primary/90 shadow-primary/20 flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Siguiente paso <ArrowRight size={18} />
+                  {t("nextStep")} <ArrowRight size={18} />
                 </button>
               </div>
             </motion.div>
@@ -243,10 +247,10 @@ export function OnboardingFlow() {
             >
               <div>
                 <h2 className="font-headline text-on-surface mb-2 text-3xl font-bold">
-                  Tu primer enlace
+                  {t("firstLink")}
                 </h2>
                 <p className="text-on-surface-variant text-base">
-                  Agrega el enlace más importante para tus seguidores.
+                  {t("firstLinkDesc")}
                 </p>
               </div>
 
@@ -256,7 +260,7 @@ export function OnboardingFlow() {
                     htmlFor="link_title"
                     className="text-on-surface text-sm font-medium"
                   >
-                    Título del enlace
+                    {t("linkTitle")}
                   </label>
                   <input
                     id="link_title"
@@ -265,7 +269,7 @@ export function OnboardingFlow() {
                     value={formData.link_title}
                     onChange={handleChange}
                     className="bg-surface-container-highest border-outline-variant focus:border-primary text-on-surface focus:ring-primary w-full rounded-xl border px-4 py-3 transition-colors outline-none focus:ring-1"
-                    placeholder="Mi canal de YouTube"
+                    placeholder={t("linkTitlePlaceholder")}
                   />
                 </div>
 
@@ -288,7 +292,7 @@ export function OnboardingFlow() {
                       value={formData.link_url}
                       onChange={handleChange}
                       className="bg-surface-container-highest border-outline-variant focus:border-primary text-on-surface focus:ring-primary w-full rounded-xl border py-3 pr-4 pl-10 transition-colors outline-none focus:ring-1"
-                      placeholder="youtube.com/..."
+                      placeholder={t("linkUrlPlaceholder")}
                     />
                   </div>
                 </div>
@@ -300,7 +304,7 @@ export function OnboardingFlow() {
                   disabled={status === "executing"}
                   className="border-outline-variant text-on-surface hover:bg-surface-container rounded-xl border px-4 py-3 font-medium transition-colors disabled:opacity-50"
                 >
-                  Volver
+                  {t("back")}
                 </button>
                 <button
                   onClick={handleComplete}
@@ -309,12 +313,12 @@ export function OnboardingFlow() {
                 >
                   {status === "executing" ? (
                     <>
-                      <Loader2 size={18} className="animate-spin" /> Creando
-                      perfil...
+                      <Loader2 size={18} className="animate-spin" />{" "}
+                      {t("creating")}
                     </>
                   ) : (
                     <>
-                      <CheckCircle2 size={18} /> ¡Listo, comenzar!
+                      <CheckCircle2 size={18} /> {t("ready")}
                     </>
                   )}
                 </button>

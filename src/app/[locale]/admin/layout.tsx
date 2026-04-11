@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
 import { Link } from "@/i18n/navigation";
 
@@ -15,6 +15,7 @@ export default async function AdminLayout({
   } = await supabase.auth.getUser();
 
   const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "admin" });
 
   // Double-check: only ADMIN_EMAIL can access
   if (!user || user.email !== process.env.ADMIN_EMAIL) {
@@ -35,7 +36,7 @@ export default async function AdminLayout({
               href="/admin"
               className="font-headline text-xl font-black tracking-tighter text-amber-400"
             >
-              Admin Panel
+              {t("adminPanel")}
             </Link>
           </div>
 
@@ -44,19 +45,19 @@ export default async function AdminLayout({
               href="/admin"
               className="text-slate-400 transition-colors hover:text-amber-300"
             >
-              Dashboard
+              {t("dashboard")}
             </Link>
             <Link
               href="/admin/mensajes"
               className="text-slate-400 transition-colors hover:text-amber-300"
             >
-              Mensajes
+              {t("messages")}
             </Link>
             <Link
               href="/dashboard/links"
               className="text-slate-400 transition-colors hover:text-slate-200"
             >
-              ← Volver al Dashboard
+              {t("backToDashboard")}
             </Link>
           </nav>
         </div>

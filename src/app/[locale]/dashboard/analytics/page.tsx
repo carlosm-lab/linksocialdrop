@@ -2,6 +2,8 @@ import { Icon } from "@/components/ui/icon";
 import { getTranslations } from "next-intl/server";
 import { getAnalyticsDashboard } from "@/actions/analytics";
 import { redirect } from "next/navigation";
+import { ExportCsvButton } from "@/components/analytics/ExportCsvButton";
+import { Link } from "@/i18n/navigation";
 
 export default async function AdminAnalyticsPage() {
   const t = await getTranslations("adminAnalytics");
@@ -100,9 +102,13 @@ export default async function AdminAnalyticsPage() {
               <p className="text-sm text-slate-500">{t("last30Days")}</p>
             </div>
             <div className="flex gap-2">
-              <button className="bg-surface-container-highest text-primary-container font-label hover:bg-surface-container-highest/80 rounded-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors">
-                {t("export")}
-              </button>
+              <ExportCsvButton
+                label={t("export")}
+                views={views}
+                clicks={clicks}
+                ctr={ctr}
+                leaderboard={leaderboard}
+              />
             </div>
           </div>
 
@@ -122,13 +128,13 @@ export default async function AdminAnalyticsPage() {
 
           <div className="mt-6 flex justify-between px-1">
             <span className="font-label text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-              Day 01
+              {t("day01")}
             </span>
             <span className="font-label text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-              Day 15
+              {t("day15")}
             </span>
             <span className="font-label text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-              Day 30
+              {t("day30")}
             </span>
           </div>
         </div>
@@ -139,7 +145,9 @@ export default async function AdminAnalyticsPage() {
           </h4>
           <div className="space-y-8">
             {leaderboard.length === 0 ? (
-              <p className="text-sm text-slate-500 italic">No activity yet</p>
+              <p className="text-sm text-slate-500 italic">
+                {t("noActivityYet")}
+              </p>
             ) : (
               leaderboard
                 .slice(0, 5)
@@ -183,9 +191,12 @@ export default async function AdminAnalyticsPage() {
             )}
           </div>
 
-          <button className="font-label mt-10 w-full border-t border-slate-800/50 py-4 pt-8 text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase transition-colors hover:text-white">
+          <Link
+            href="/dashboard/analytics/detailed-audit"
+            className="font-label mt-10 block w-full border-t border-slate-800/50 py-4 pt-8 text-center text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase transition-colors hover:text-white"
+          >
             {t("viewDetailedAudit")}
-          </button>
+          </Link>
         </div>
       </div>
     </main>

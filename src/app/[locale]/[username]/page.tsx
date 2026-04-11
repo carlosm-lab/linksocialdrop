@@ -3,6 +3,11 @@ import Image from "next/image";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { Database } from "@/types/database";
+
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
+type LinkRow = Database["public"]["Tables"]["links"]["Row"];
 
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -28,6 +33,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { username, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
 
   // Obtener Perfil
   const { data: profile } = await supabasePublic
@@ -38,8 +44,8 @@ export async function generateMetadata(
 
   if (!profile) {
     return {
-      title: "Not Found",
-      description: "Profile not found",
+      title: t("profileNotFound"),
+      description: t("profileNotFound"),
     };
   }
 
@@ -123,8 +129,8 @@ export default async function PublicProfilePage({
 
   // Filter visible links and sort by position
   const links = (profile.links || [])
-    .filter((l: any) => l.visible)
-    .sort((a: any, b: any) => a.position - b.position);
+    .filter((l: LinkRow) => l.visible)
+    .sort((a: LinkRow, b: LinkRow) => (a.position ?? 0) - (b.position ?? 0));
 
   // SEO-003: JSON-LD structured data for Person
   const jsonLd = {
@@ -134,7 +140,7 @@ export default async function PublicProfilePage({
     url: `${siteConfig.url}/${username}`,
     ...(profile.bio && { description: profile.bio }),
     ...(profile.avatar_url && { image: profile.avatar_url }),
-    sameAs: links.filter((l: any) => l.url).map((l: any) => l.url),
+    sameAs: links.filter((l: LinkRow) => l.url).map((l: LinkRow) => l.url),
   };
 
   return (
@@ -148,7 +154,13 @@ export default async function PublicProfilePage({
   );
 }
 
-function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
+function ProfileContent({
+  profile,
+  links,
+}: {
+  profile: ProfileRow;
+  links: LinkRow[];
+}) {
   const t = useTranslations("profile");
   const tc = useTranslations("common");
 
@@ -204,10 +216,7 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
             <Image
               alt={`Portrait of ${profile.full_name || profile.username}`}
               className="border-surface-container-high relative z-10 h-32 w-32 rounded-full border-4 object-cover"
-              src={
-                profile.avatar_url ||
-                "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
-              }
+              src={profile.avatar_url || "/images/avatar-placeholder.png"}
               width={128}
               height={128}
               sizes="128px"
@@ -234,7 +243,7 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
             <p
               className={`text-center text-slate-500 italic ${isBento ? "col-span-2" : ""}`}
             >
-              No links added yet.
+              {t("noLinks")}
             </p>
           ) : (
             links.map((link, index) => (
@@ -280,7 +289,8 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
                 />
                 <Button
                   size="pill"
-                  className="text-on-primary-fixed font-bold shadow-none"
+                  disabled
+                  className="text-on-primary-fixed font-bold opacity-50 shadow-none"
                   style={
                     profile.accent_color
                       ? {
@@ -290,7 +300,7 @@ function ProfileContent({ profile, links }: { profile: any; links: any[] }) {
                       : {}
                   }
                 >
-                  {tc("join")}
+                  {t("newsletterComingSoon")}
                 </Button>
               </div>
             </div>

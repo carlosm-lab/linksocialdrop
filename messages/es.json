@@ -15,7 +15,8 @@
     "cancel": "Cancelar",
     "save": "Guardar",
     "saving": "Guardando...",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "delete": "Eliminar"
   },
   "nav": {
     "links": "Links",
@@ -38,7 +39,9 @@
     "featureCustomTitle": "Personalizable",
     "featureCustomDesc": "Más que plantillas. Ajusta cada margen, color y fuente para que coincida con tu identidad de marca única.",
     "ctaTitle": "¿Listo para crear tu link in bio?",
-    "ctaSubtitle": "Únete a más de 12,000 creadores que eligen LinkSocialDrop como su alternativa a otras plataformas."
+    "ctaSubtitle": "Únete a más de 12,000 creadores que eligen LinkSocialDrop como su alternativa a otras plataformas.",
+    "mockupUsername": "@alexa_gestiona",
+    "mockupRole": "Estratega Digital"
   },
   "login": {
     "tagline": "Tu Página de Links",
@@ -54,7 +57,8 @@
     "signUp": "Regístrate",
     "needHelp": "¿Necesitas ayuda?",
     "checkEmail": "¡Revisa tu correo!",
-    "checkEmailDesc": "Te hemos enviado un enlace de confirmación. Verifica tu bandeja de entrada."
+    "checkEmailDesc": "Te hemos enviado un enlace de confirmación. Verifica tu bandeja de entrada.",
+    "togglePasswordVisibility": "Mostrar/ocultar contraseña"
   },
   "username": {
     "chooseTitle": "Elige tu nombre de usuario",
@@ -69,6 +73,33 @@
     "change": "Cambiar nombre de usuario",
     "currentUrl": "Tu URL actual"
   },
+  "onboarding": {
+    "stepOf": "Paso {step} de {total}",
+    "claimLink": "Reclama tu enlace",
+    "claimLinkDesc": "Elige un nombre de usuario único para tu perfil público premium.",
+    "usernameLabel": "Nombre de usuario",
+    "usernamePlaceholder": "tunombre",
+    "continue": "Continuar",
+    "introduce": "Preséntate",
+    "introduceDesc": "Añade tu nombre y una breve descripción de lo que haces.",
+    "displayName": "Nombre para mostrar",
+    "displayNamePlaceholder": "Ej. Jane Doe",
+    "bio": "Biografía",
+    "bioPlaceholder": "Creadora de contenido & Artista...",
+    "optional": "Opcional",
+    "back": "Volver",
+    "nextStep": "Siguiente paso",
+    "firstLink": "Tu primer enlace",
+    "firstLinkDesc": "Agrega el enlace más importante para tus seguidores.",
+    "linkTitle": "Título del enlace",
+    "linkTitlePlaceholder": "Mi canal de YouTube",
+    "linkUrlPlaceholder": "youtube.com/...",
+    "creating": "Creando perfil...",
+    "ready": "¡Listo, comenzar!",
+    "welcomeBadge": "¡BIENVENIDO!",
+    "welcomeTitle": "Comencemos a crear tu espacio",
+    "welcomeDesc": "Configura tu perfil en menos de 2 minutos"
+  },
   "adminLinks": {
     "title": "Tus Links",
     "description": "Gestiona tu identidad digital. Arrastra para reordenar, activa/desactiva la visibilidad y mantén tu galería fresca.",
@@ -81,7 +112,10 @@
     "urlLabel": "URL",
     "iconLabel": "Ícono (nombre Lucide)",
     "titleUrlRequired": "Título y URL son obligatorios",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "iconHelperText": "Haz clic en el cuadro para seleccionar un ícono. Escribe una url de redes sociales para auto-completar.",
+    "deleteDialogTitle": "Eliminar enlace",
+    "deleteDialogDesc": "¿Estás seguro de que quieres eliminar este enlace? Esta acción no se puede deshacer."
   },
   "adminAnalytics": {
     "title": "Motor de Insights",
@@ -93,7 +127,11 @@
     "last30Days": "Interacción últimos 30 días",
     "export": "Exportar",
     "performanceLeaderboard": "Ranking de Rendimiento",
-    "viewDetailedAudit": "Ver Auditoría Detallada"
+    "viewDetailedAudit": "Ver Auditoría Detallada",
+    "day01": "Día 01",
+    "day15": "Día 15",
+    "day30": "Día 30",
+    "noActivityYet": "Sin actividad aún"
   },
   "adminAppearance": {
     "title": "Apariencia",
@@ -102,15 +140,46 @@
     "updateAvatarBio": "Actualiza tu avatar y bio.",
     "pickImage": "Elegir Imagen",
     "profileTitle": "Título del Perfil",
+    "profileTitlePlaceholder": "Gestor Digital",
     "bioDescription": "Descripción de Bio",
+    "bioPlaceholder": "Sintetizando estética moderna con arquitectura digital funcional.",
     "accentColor": "Color de Acento",
     "typography": "Tipografía",
     "buttonArchitecture": "Estilo de Botones",
+    "layoutMode": "Modo de Diseño",
+    "classicList": "Lista Clásica",
+    "bentoGrid": "Bento Grid",
     "pill": "Píldora",
     "rounded": "Redondeado",
     "square": "Cuadrado",
     "resetChanges": "Restablecer Cambios",
-    "publishLive": "Publicar en Vivo"
+    "publishLive": "Publicar en Vivo",
+    "colorCyan": "Cian",
+    "colorGold": "Dorado",
+    "colorCoral": "Coral",
+    "colorPurple": "Morado",
+    "colorTeal": "Verde Azulado",
+    "colorOrange": "Naranja",
+    "colorWhite": "Blanco",
+    "errorUpdatingUsername": "Error al actualizar el nombre de usuario. Inténtalo de nuevo."
+  },
+  "admin": {
+    "adminPanel": "Panel de Admin",
+    "dashboard": "Dashboard",
+    "messages": "Mensajes",
+    "backToDashboard": "← Volver al Dashboard"
+  },
+  "adminMessages": {
+    "total": "{count, plural, one {# mensaje} other {# mensajes}} total",
+    "unread": "{count} sin leer",
+    "empty": "No hay mensajes de soporte aún",
+    "name": "Nombre",
+    "email": "Email",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "markAsRead": "Marcar como leído",
+    "supportMessagesTitle": "Mensajes de Soporte",
+    "supportMessagesDesc": "Gestiona los mensajes recibidos del formulario de contacto."
   },
   "support": {
     "title": "Soporte",
@@ -132,13 +201,19 @@
     "madeWith": "hecho con",
     "joinNewsletter": "Únete al Newsletter",
     "newsletterDesc": "Recibe inspiración seleccionada cada domingo.",
+    "newsletterComingSoon": "Próximamente",
     "privacy": "Privacidad",
     "terms": "Términos",
-    "report": "Reportar"
+    "report": "Reportar",
+    "noLinks": "Aún no hay enlaces.",
+    "visitLink": "Visitar {title}",
+    "portraitOf": "Retrato de {name}",
+    "profileBio": "Perfil de {username}"
   },
   "livePreview": {
     "title": "Vista Previa",
-    "status": "Perfil en Vivo"
+    "status": "Perfil en Vivo",
+    "noActiveLinks": "Sin enlaces activos"
   },
   "logout": {
     "confirmTitle": "¿Cerrar sesión?",
@@ -151,7 +226,12 @@
     "unexpectedError": "Ha ocurrido un error inesperado. Por favor, intenta de nuevo o vuelve al inicio.",
     "tryAgain": "Intentar de nuevo",
     "notFound": "Página no encontrada.",
-    "goHome": "Volver al inicio"
+    "goHome": "Volver al inicio",
+    "profileNotFound": "Perfil no encontrado",
+    "invalidInput": "Datos inválidos. Por favor, verifica tu información.",
+    "errorSettingUsername": "Error al configurar el nombre de usuario. Inténtalo de nuevo.",
+    "validationError": "Error de validación. Por favor, verifica tus datos.",
+    "unexpectedTryAgain": "Error inesperado. Intenta de nuevo."
   },
   "legal": {
     "privacyTitle": "Política de Privacidad",
@@ -165,6 +245,7 @@
   },
   "metadata": {
     "title": "LinkSocialDrop",
-    "description": "La mejor alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos."
+    "description": "La mejor alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos.",
+    "profileNotFound": "No Encontrado"
   }
 }

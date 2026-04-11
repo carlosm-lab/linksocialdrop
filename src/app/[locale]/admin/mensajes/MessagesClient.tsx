@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { markMessageAsRead } from "@/actions/admin";
+import { useTranslations } from "next-intl";
 
 interface SupportMessage {
   id: string;
@@ -22,6 +23,7 @@ interface MessagesClientProps {
 export function MessagesClient({ initialMessages }: MessagesClientProps) {
   const [messages, setMessages] = useState(initialMessages);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const t = useTranslations("adminMessages");
 
   async function handleMarkAsRead(id: string) {
     const result = await markMessageAsRead({ id });
@@ -39,12 +41,12 @@ export function MessagesClient({ initialMessages }: MessagesClientProps) {
       {/* Summary */}
       <div className="mb-6 flex items-center gap-4">
         <span className="text-on-surface-variant text-sm">
-          {messages.length} mensaje{messages.length !== 1 ? "s" : ""} total
+          {t("total", { count: messages.length })}
         </span>
         {unreadCount > 0 && (
           <span className="flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400">
             <span className="h-2 w-2 rounded-full bg-amber-400" />
-            {unreadCount} sin leer
+            {t("unread", { count: unreadCount })}
           </span>
         )}
       </div>
@@ -56,9 +58,7 @@ export function MessagesClient({ initialMessages }: MessagesClientProps) {
             name="inbox"
             className="text-on-surface-variant mb-4 text-5xl"
           />
-          <p className="text-on-surface-variant text-lg">
-            No hay mensajes de soporte aún
-          </p>
+          <p className="text-on-surface-variant text-lg">{t("empty")}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -129,19 +129,19 @@ export function MessagesClient({ initialMessages }: MessagesClientProps) {
                   <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
                     <div>
                       <span className="text-on-surface-variant text-xs font-semibold tracking-wider uppercase">
-                        Nombre
+                        {t("name")}
                       </span>
                       <p className="mt-1 text-sm text-white">{msg.name}</p>
                     </div>
                     <div>
                       <span className="text-on-surface-variant text-xs font-semibold tracking-wider uppercase">
-                        Email
+                        {t("email")}
                       </span>
                       <p className="mt-1 text-sm text-white">{msg.email}</p>
                     </div>
                     <div>
                       <span className="text-on-surface-variant text-xs font-semibold tracking-wider uppercase">
-                        Asunto
+                        {t("subject")}
                       </span>
                       <p className="mt-1 text-sm text-white">{msg.subject}</p>
                     </div>
@@ -149,7 +149,7 @@ export function MessagesClient({ initialMessages }: MessagesClientProps) {
 
                   <div className="mb-4">
                     <span className="text-on-surface-variant text-xs font-semibold tracking-wider uppercase">
-                      Mensaje
+                      {t("message")}
                     </span>
                     <p className="mt-2 text-sm leading-relaxed whitespace-pre-wrap text-slate-300">
                       {msg.message}
@@ -162,7 +162,7 @@ export function MessagesClient({ initialMessages }: MessagesClientProps) {
                       className="flex items-center gap-2 rounded-lg bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400 transition-colors hover:bg-amber-500/20"
                     >
                       <Icon name="done" className="text-base" />
-                      Marcar como leído
+                      {t("markAsRead")}
                     </button>
                   )}
                 </div>
