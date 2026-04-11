@@ -214,7 +214,7 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
           {/* Avatar */}
           <div
             className="ring-opacity-30 mb-3 h-16 w-16 rounded-full p-0.5 ring-4"
-            style={{ ringColor: accentColor }}
+            style={{ "--tw-ring-color": accentColor } as React.CSSProperties}
           >
             <div
               className="ring-opacity-20 h-full w-full overflow-hidden rounded-full ring-2"

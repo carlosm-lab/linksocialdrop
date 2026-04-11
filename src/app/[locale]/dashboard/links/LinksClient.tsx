@@ -63,7 +63,7 @@ function SortableItem({
   onEdit: () => void;
   onDelete: () => void;
   onToggle: () => void;
-  t: any;
+  t: ReturnType<typeof useTranslations<"adminLinks">>;
 }) {
   const {
     attributes,

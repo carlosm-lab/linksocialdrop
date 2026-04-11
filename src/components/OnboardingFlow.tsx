@@ -418,7 +418,7 @@ export function OnboardingFlow() {
 
               <button
                 onClick={handleNext}
-                disabled={!isStep1Valid || usernameStatus === "checking"}
+                disabled={!isStep1Valid}
                 className="bg-primary text-on-primary hover:bg-primary/90 shadow-primary/20 mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-lg transition-all hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {t("continue")} <ArrowRight size={18} />
