@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 interface SmartBentoGridProps {
-  children: ReactNode[];
+  children: ReactNode;
   isBento: boolean;
 }
 
@@ -35,7 +35,7 @@ export function SmartBentoGrid({ children, isBento }: SmartBentoGridProps) {
 
   return (
     <div className="grid w-full auto-rows-[minmax(120px,auto)] grid-cols-2 gap-4">
-      {children.map((child, i) => (
+      {React.Children.toArray(children).map((child, i) => (
         <div key={i} className={`flex h-full w-full ${getBentoClasses(i)}`}>
           {child}
         </div>
