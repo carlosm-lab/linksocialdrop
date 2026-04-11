@@ -98,7 +98,17 @@
     "ready": "Done, let's go!",
     "welcomeBadge": "WELCOME!",
     "welcomeTitle": "Let's start creating your space",
-    "welcomeDesc": "Set up your profile in under 2 minutes"
+    "welcomeDesc": "Set up your profile in under 2 minutes",
+    "profileReady": "Your profile is ready!",
+    "redirecting": "Redirecting to dashboard...",
+    "uploadPhoto": "Upload photo",
+    "changePhoto": "Change photo",
+    "bioCounter": "{count}/150",
+    "usernameAvailable": "Available!",
+    "usernameTaken": "Not available",
+    "usernameChecking": "Checking...",
+    "socialDetected": "{platform} detected",
+    "missingHttps": "Make sure to include https:// at the start"
   },
   "adminLinks": {
     "title": "Your Links",
@@ -107,6 +117,7 @@
     "hiddenFromProfile": "Hidden from profile",
     "emptyStateText": "Have more to show? Add unlimited links to your profile with our Premium plan.",
     "createLink": "Create Link",
+    "addLink": "Add link",
     "editLink": "Edit Link",
     "titleLabel": "Title",
     "urlLabel": "URL",
@@ -115,7 +126,16 @@
     "delete": "Delete",
     "iconHelperText": "Click the box to select an icon. Type a social media URL to auto-complete.",
     "deleteDialogTitle": "Delete Link",
-    "deleteDialogDesc": "Are you sure you want to delete this link? This action cannot be undone."
+    "deleteDialogDesc": "Are you sure you want to delete this link? This action cannot be undone.",
+    "profileUrl": "Your profile",
+    "copyUrl": "Copy URL",
+    "copied": "Copied!",
+    "viewLive": "My Live Profile",
+    "bgColor": "Background color",
+    "textColor": "Text color",
+    "urlWarning": "URL should start with https://",
+    "customColors": "Custom colors",
+    "autoDetected": "auto-detected"
   },
   "adminAnalytics": {
     "title": "Insight Engine",
@@ -152,8 +172,15 @@
     "pill": "Pill",
     "rounded": "Rounded",
     "square": "Square",
+    "glassmorphism": "Glassmorphism",
+    "neon": "Neon",
+    "outline": "Outline",
     "resetChanges": "Reset Changes",
     "publishLive": "Publish Live",
+    "published": "Published!",
+    "publishing": "Publishing...",
+    "noChanges": "No pending changes",
+    "viewProfile": "View Profile",
     "colorCyan": "Cyan",
     "colorGold": "Gold",
     "colorCoral": "Coral",
@@ -161,7 +188,15 @@
     "colorTeal": "Teal",
     "colorOrange": "Orange",
     "colorWhite": "White",
-    "errorUpdatingUsername": "Error updating username. Please try again."
+    "errorUpdatingUsername": "Error updating username. Please try again.",
+    "fontInter": "Inter",
+    "fontEpilogue": "Epilogue",
+    "fontPoppins": "Poppins",
+    "fontOutfit": "Outfit",
+    "fontSpaceGrotesk": "Space Grotesk",
+    "fontDMSans": "DM Sans",
+    "fontPlayfair": "Playfair Display",
+    "fontRoboto": "Roboto"
   },
   "admin": {
     "adminPanel": "Admin Panel",
@@ -213,7 +248,9 @@
   "livePreview": {
     "title": "Live Preview",
     "status": "Profile Live",
-    "noActiveLinks": "No active links"
+    "noActiveLinks": "No active links",
+    "viewLive": "View live",
+    "mobilePreview": "Mobile preview"
   },
   "logout": {
     "confirmTitle": "Sign out?",
@@ -247,5 +284,33 @@
     "title": "LinkSocialDrop",
     "description": "The best free alternative to other platforms. Create your customized link in bio page in seconds.",
     "profileNotFound": "Not Found"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "description": "Discover premium templates designed to impress. Apply them with one click and transform your profile.",
+    "filterAll": "View All",
+    "filterFree": "Free",
+    "filterPremium": "Premium",
+    "apply": "Apply Theme",
+    "free": "FREE",
+    "buyComingSoon": "Coming Soon",
+    "currentTheme": "Current Theme",
+    "active": "ACTIVE",
+    "noThemes": "No themes available at the moment."
+  },
+  "adminThemes": {
+    "title": "Theme Management",
+    "description": "Create, edit and manage Marketplace templates.",
+    "createNew": "Create New Theme",
+    "active": "Active",
+    "inactive": "Inactive",
+    "edit": "Edit",
+    "price": "Price",
+    "preview": "Preview",
+    "name": "Name",
+    "slug": "Slug",
+    "saving": "Saving...",
+    "save": "Save Theme",
+    "cancel": "Cancel"
   }
 }

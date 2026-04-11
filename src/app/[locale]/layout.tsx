@@ -1,4 +1,13 @@
-import { Inter, Epilogue } from "next/font/google";
+import {
+  Inter,
+  Epilogue,
+  Poppins,
+  Outfit,
+  Space_Grotesk,
+  DM_Sans,
+  Playfair_Display,
+  Roboto,
+} from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import {
@@ -13,13 +22,51 @@ import { Providers } from "@/providers";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
 const epilogue = Epilogue({
   subsets: ["latin"],
   variable: "--font-headline",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
   display: "swap",
 });
 
@@ -102,12 +149,19 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  const fontVars = [
+    inter.variable,
+    epilogue.variable,
+    poppins.variable,
+    outfit.variable,
+    spaceGrotesk.variable,
+    dmSans.variable,
+    playfair.variable,
+    roboto.variable,
+  ].join(" ");
+
   return (
-    <html
-      lang={locale}
-      className={`${inter.variable} ${epilogue.variable} dark`}
-      suppressHydrationWarning
-    >
+    <html lang={locale} className={`${fontVars} dark`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />

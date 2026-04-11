@@ -1,9 +1,10 @@
+"use client";
+
 import React from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { getContrastColor } from "@/lib/colors";
 import { Icon } from "@/components/ui/icon";
-
 import { Database } from "@/types/database";
 
 type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
@@ -14,34 +15,154 @@ interface LivePreviewProps {
   links?: Partial<LinkRow>[] | null;
 }
 
+/** Maps font family names to CSS variables set in layout.tsx */
+const FONT_FAMILY_MAP: Record<string, string> = {
+  Inter: "var(--font-inter)",
+  Epilogue: "var(--font-epilogue)",
+  Poppins: "var(--font-poppins)",
+  Outfit: "var(--font-outfit)",
+  "Space Grotesk": "var(--font-space-grotesk)",
+  "DM Sans": "var(--font-dm-sans)",
+  "Playfair Display": "var(--font-playfair)",
+  Roboto: "var(--font-roboto)",
+};
+
+/** Returns Tailwind border radius classes per button_style value */
+function getButtonRadius(buttonStyle?: string | null): string {
+  switch (buttonStyle) {
+    case "square":
+      return "rounded-none";
+    case "rounded":
+      return "rounded-xl";
+    case "glassmorphism":
+      return "rounded-xl";
+    case "neon":
+      return "rounded-xl";
+    case "outline":
+      return "rounded-xl";
+    case "pill":
+    default:
+      return "rounded-full";
+  }
+}
+
+/** Renders a single link button in the preview respecting button_style and per-link colors */
+function PreviewLinkButton({
+  link,
+  accentColor,
+  buttonStyle,
+  isLast,
+}: {
+  link: Partial<LinkRow> & { highlight?: boolean };
+  accentColor: string;
+  buttonStyle: string | null | undefined;
+  isLast: boolean;
+}) {
+  const radClass = getButtonRadius(buttonStyle);
+  const textOnAccent = getContrastColor(accentColor);
+
+  // Per-link custom colors override everything
+  const hasBg = !!link.bg_color;
+  const hasText = !!link.text_color;
+  const effectiveBg = hasBg ? link.bg_color! : undefined;
+  const effectiveText = hasText
+    ? link.text_color!
+    : hasBg
+      ? getContrastColor(link.bg_color!)
+      : undefined;
+
+  // Glassmorphism style
+  if (buttonStyle === "glassmorphism" && !hasBg) {
+    return (
+      <div
+        className={`w-full ${radClass} border border-white/20 px-4 py-3 text-center text-[11px] font-bold text-white`}
+        style={{
+          background: "rgba(255,255,255,0.07)",
+          backdropFilter: "blur(12px)",
+          color: effectiveText,
+        }}
+      >
+        {link.title}
+      </div>
+    );
+  }
+
+  // Neon style
+  if (buttonStyle === "neon" && !hasBg) {
+    return (
+      <div
+        className={`w-full ${radClass} border px-4 py-3 text-center text-[11px] font-bold`}
+        style={{
+          borderColor: accentColor,
+          color: accentColor,
+          boxShadow: `0 0 12px ${accentColor}60, inset 0 0 8px ${accentColor}20`,
+          background: "transparent",
+        }}
+      >
+        {link.title}
+      </div>
+    );
+  }
+
+  // Outline style
+  if (buttonStyle === "outline" && !hasBg) {
+    return (
+      <div
+        className={`w-full ${radClass} border px-4 py-3 text-center text-[11px] font-medium`}
+        style={{
+          borderColor: "rgba(255,255,255,0.4)",
+          color: "rgba(255,255,255,0.85)",
+          background: "transparent",
+        }}
+      >
+        {link.title}
+      </div>
+    );
+  }
+
+  // Last/highlighted link: accent color (or custom)
+  if (isLast || link.highlight) {
+    return (
+      <div
+        className={`w-full ${radClass} px-4 py-3 text-center text-[11px] font-bold shadow-lg`}
+        style={{
+          backgroundColor: effectiveBg || accentColor,
+          color: effectiveText || textOnAccent,
+          boxShadow: `0 8px 20px -4px ${effectiveBg || accentColor}50`,
+        }}
+      >
+        {link.title}
+      </div>
+    );
+  }
+
+  // Default: dark card (or custom per-link)
+  return (
+    <div
+      className={`w-full ${radClass} border border-white/5 px-4 py-3 text-center text-[11px] font-medium`}
+      style={{
+        backgroundColor: effectiveBg || "#1e2023",
+        color: effectiveText || "#e2e8f0",
+      }}
+    >
+      {link.title}
+    </div>
+  );
+}
+
 export function LivePreview({ profile, links }: LivePreviewProps) {
   const t = useTranslations("livePreview");
 
   const displayName = profile?.full_name || "Digital Manager";
   const username = profile?.username || "manager_studio";
   const avatarUrl = profile?.avatar_url || "/images/avatar-placeholder.png";
-
   const bio =
     profile?.bio ||
     "Synthesizing modern aesthetics with functional digital architecture.";
   const accentColor = profile?.accent_color || "#00F5FF";
   const buttonStyle = profile?.button_style || "pill";
   const fontFamilyValue = profile?.font_family || "Inter";
-
-  const roundedClass =
-    buttonStyle === "square"
-      ? "rounded-none"
-      : buttonStyle === "rounded"
-        ? "rounded-lg"
-        : "rounded-xl"; // Default to pill/xl
-
-  // Map font families to classes roughly
-  const fontClass =
-    fontFamilyValue === "Epilogue"
-      ? "font-headline"
-      : fontFamilyValue === "Roboto"
-        ? "font-sans"
-        : "font-body";
+  const fontFamily = FONT_FAMILY_MAP[fontFamilyValue] || FONT_FAMILY_MAP.Inter;
 
   type PreviewLink = Partial<LinkRow> & { highlight?: boolean };
 
@@ -55,13 +176,12 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
   if (Array.isArray(links) && links.length > 0) {
     activeLinks = links.filter((l) => l.visible !== false);
   } else if (!links) {
-    // If links is completely undefined/null, show defaults to help visualize
     activeLinks = defaultLinks;
   }
-  // If links is [], we respect that the user has explicitly 0 links.
 
   return (
     <div className="mx-auto w-full max-w-xs">
+      {/* Header row */}
       <div className="mb-6 flex items-end justify-between">
         <h2 className="font-headline text-2xl font-bold tracking-tight text-white">
           {t("title")}
@@ -84,62 +204,75 @@ export function LivePreview({ profile, links }: LivePreviewProps) {
       {/* Phone Frame */}
       <div className="relative mx-auto aspect-[9/19.5] w-full overflow-hidden rounded-[3rem] border-[8px] border-[#333538] bg-[#0c0e11] shadow-2xl ring-1 ring-white/5">
         {/* Notch */}
-        <div className="absolute top-0 left-1/2 z-20 h-6 w-32 -translate-x-1/2 rounded-b-2xl bg-[#333538]"></div>
+        <div className="absolute top-0 left-1/2 z-20 h-6 w-32 -translate-x-1/2 rounded-b-2xl bg-[#333538]" />
 
-        {/* Profile Content inside Preview */}
+        {/* Profile content */}
         <div
-          className={`relative flex h-full w-full flex-col items-center p-8 pt-16 ${fontClass}`}
+          className="relative flex h-full w-full flex-col items-center overflow-y-auto p-6 pt-14 pb-8"
+          style={{ fontFamily }}
         >
-          <div className="mb-4 h-20 w-20 rounded-full p-1 ring-4 ring-[#00F5FF]/20">
-            <Image
-              alt="Avatar"
-              className="h-full w-full rounded-full object-cover"
-              src={avatarUrl}
-              width={80}
-              height={80}
-              sizes="80px"
-            />
+          {/* Avatar */}
+          <div
+            className="ring-opacity-30 mb-3 h-16 w-16 rounded-full p-0.5 ring-4"
+            style={{ ringColor: accentColor }}
+          >
+            <div
+              className="ring-opacity-20 h-full w-full overflow-hidden rounded-full ring-2"
+              style={{ boxShadow: `0 0 0 2px ${accentColor}33` }}
+            >
+              <Image
+                alt="Avatar"
+                className="h-full w-full rounded-full object-cover"
+                src={avatarUrl}
+                width={64}
+                height={64}
+                sizes="64px"
+              />
+            </div>
           </div>
-          <h3 className="mb-1 text-xl font-extrabold text-white">
+
+          {/* Name */}
+          <h3 className="mb-0.5 text-center text-sm leading-tight font-extrabold text-white">
             {displayName}
           </h3>
-          <p className="mb-2 text-xs tracking-wide text-slate-400">
+
+          {/* Username */}
+          <p
+            className="mb-1.5 text-[10px] tracking-wide"
+            style={{ color: accentColor }}
+          >
             @{username}
           </p>
-          <p className="mb-8 text-center text-xs text-slate-300">{bio}</p>
 
-          <div className="w-full space-y-3">
+          {/* Bio */}
+          <p className="mb-5 line-clamp-3 text-center text-[10px] leading-relaxed text-slate-400">
+            {bio}
+          </p>
+
+          {/* Links */}
+          <div className="w-full space-y-2">
             {activeLinks.length > 0 ? (
-              activeLinks.map((link, idx: number) => {
-                if (link.highlight || idx === activeLinks.length - 1) {
-                  return (
-                    <div
-                      key={link.id}
-                      className={`w-full ${roundedClass} px-4 py-3 text-center text-sm font-bold shadow-lg`}
-                      style={{
-                        backgroundColor: accentColor,
-                        color: getContrastColor(accentColor),
-                        boxShadow: `0 10px 15px -3px ${accentColor}33`,
-                      }}
-                    >
-                      {link.title}
-                    </div>
-                  );
-                }
-                return (
-                  <div
-                    key={link.id}
-                    className={`w-full ${roundedClass} border border-white/5 bg-[#282a2d] px-4 py-3 text-center text-sm font-medium text-white`}
-                  >
-                    {link.title}
-                  </div>
-                );
-              })
+              activeLinks.map((link, idx) => (
+                <PreviewLinkButton
+                  key={link.id || idx}
+                  link={link}
+                  accentColor={accentColor}
+                  buttonStyle={buttonStyle}
+                  isLast={idx === activeLinks.length - 1}
+                />
+              ))
             ) : (
-              <div className="text-center text-xs text-white/50">
+              <div className="text-center text-[10px] text-white/40">
                 {t("noActiveLinks")}
               </div>
             )}
+          </div>
+
+          {/* Bottom watermark */}
+          <div className="mt-auto flex items-center gap-1 pt-6">
+            <span className="text-[8px] tracking-widest text-white/20 uppercase">
+              linksocialdrop
+            </span>
           </div>
         </div>
       </div>

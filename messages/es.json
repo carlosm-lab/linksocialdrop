@@ -98,7 +98,17 @@
     "ready": "¡Listo, comenzar!",
     "welcomeBadge": "¡BIENVENIDO!",
     "welcomeTitle": "Comencemos a crear tu espacio",
-    "welcomeDesc": "Configura tu perfil en menos de 2 minutos"
+    "welcomeDesc": "Configura tu perfil en menos de 2 minutos",
+    "profileReady": "¡Tu perfil está listo!",
+    "redirecting": "Redirigiendo al dashboard...",
+    "uploadPhoto": "Subir foto",
+    "changePhoto": "Cambiar foto",
+    "bioCounter": "{count}/150",
+    "usernameAvailable": "¡Disponible!",
+    "usernameTaken": "No disponible",
+    "usernameChecking": "Verificando...",
+    "socialDetected": "{platform} detectado",
+    "missingHttps": "Incluye https:// al inicio de la URL"
   },
   "adminLinks": {
     "title": "Tus Links",
@@ -107,6 +117,7 @@
     "hiddenFromProfile": "Oculto del perfil",
     "emptyStateText": "¿Tienes más para mostrar? Añade links ilimitados a tu perfil con nuestro plan Premium.",
     "createLink": "Crear Link",
+    "addLink": "Agregar link",
     "editLink": "Editar Link",
     "titleLabel": "Título",
     "urlLabel": "URL",
@@ -115,7 +126,16 @@
     "delete": "Eliminar",
     "iconHelperText": "Haz clic en el cuadro para seleccionar un ícono. Escribe una url de redes sociales para auto-completar.",
     "deleteDialogTitle": "Eliminar enlace",
-    "deleteDialogDesc": "¿Estás seguro de que quieres eliminar este enlace? Esta acción no se puede deshacer."
+    "deleteDialogDesc": "¿Estás seguro de que quieres eliminar este enlace? Esta acción no se puede deshacer.",
+    "profileUrl": "Tu perfil",
+    "copyUrl": "Copiar URL",
+    "copied": "¡Copiado!",
+    "viewLive": "Mi Perfil en Vivo",
+    "bgColor": "Color de fondo",
+    "textColor": "Color de texto",
+    "urlWarning": "La URL debería comenzar con https://",
+    "customColors": "Colores personalizados",
+    "autoDetected": "detectado automáticamente"
   },
   "adminAnalytics": {
     "title": "Motor de Insights",
@@ -152,8 +172,15 @@
     "pill": "Píldora",
     "rounded": "Redondeado",
     "square": "Cuadrado",
+    "glassmorphism": "Glassmorphism",
+    "neon": "Neón",
+    "outline": "Outline",
     "resetChanges": "Restablecer Cambios",
     "publishLive": "Publicar en Vivo",
+    "published": "¡Publicado!",
+    "publishing": "Publicando...",
+    "noChanges": "Sin cambios pendientes",
+    "viewProfile": "Ver Perfil",
     "colorCyan": "Cian",
     "colorGold": "Dorado",
     "colorCoral": "Coral",
@@ -161,7 +188,15 @@
     "colorTeal": "Verde Azulado",
     "colorOrange": "Naranja",
     "colorWhite": "Blanco",
-    "errorUpdatingUsername": "Error al actualizar el nombre de usuario. Inténtalo de nuevo."
+    "errorUpdatingUsername": "Error al actualizar el nombre de usuario. Inténtalo de nuevo.",
+    "fontInter": "Inter",
+    "fontEpilogue": "Epilogue",
+    "fontPoppins": "Poppins",
+    "fontOutfit": "Outfit",
+    "fontSpaceGrotesk": "Space Grotesk",
+    "fontDMSans": "DM Sans",
+    "fontPlayfair": "Playfair Display",
+    "fontRoboto": "Roboto"
   },
   "admin": {
     "adminPanel": "Panel de Admin",
@@ -213,7 +248,9 @@
   "livePreview": {
     "title": "Vista Previa",
     "status": "Perfil en Vivo",
-    "noActiveLinks": "Sin enlaces activos"
+    "noActiveLinks": "Sin enlaces activos",
+    "viewLive": "Ver en vivo",
+    "mobilePreview": "Vista móvil"
   },
   "logout": {
     "confirmTitle": "¿Cerrar sesión?",
@@ -247,5 +284,33 @@
     "title": "LinkSocialDrop",
     "description": "La mejor alternativa gratuita a otras plataformas. Crea tu página de links personalizada en segundos.",
     "profileNotFound": "No Encontrado"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "description": "Descubre plantillas premium diseñadas para impresionar. Aplícalas con un clic y transforma tu perfil.",
+    "filterAll": "Ver Todo",
+    "filterFree": "Gratis",
+    "filterPremium": "Premium",
+    "apply": "Aplicar Tema",
+    "free": "GRATIS",
+    "buyComingSoon": "Próximamente",
+    "currentTheme": "Tema Actual",
+    "active": "ACTIVO",
+    "noThemes": "No hay temas disponibles en este momento."
+  },
+  "adminThemes": {
+    "title": "Gestión de Temas",
+    "description": "Crea, edita y gestiona las plantillas del Marketplace.",
+    "createNew": "Crear Nuevo Tema",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "edit": "Editar",
+    "price": "Precio",
+    "preview": "Vista Previa",
+    "name": "Nombre",
+    "slug": "Slug",
+    "saving": "Guardando...",
+    "save": "Guardar Tema",
+    "cancel": "Cancelar"
   }
 }

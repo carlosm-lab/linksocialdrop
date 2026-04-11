@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+const hexColor = z
+  .string()
+  .regex(/^#[0-9A-Fa-f]{6}$/, {
+    message: "Must be a valid hex color (#RRGGBB)",
+  })
+  .optional()
+  .nullable();
+
 export const createLinkSchema = z.object({
   title: z
     .string()
@@ -13,6 +21,8 @@ export const createLinkSchema = z.object({
       message: "Solo URLs HTTP/HTTPS permitidas",
     }),
   icon: z.string().optional(),
+  bg_color: hexColor,
+  text_color: hexColor,
 });
 
 export const updateLinkSchema = createLinkSchema.extend({

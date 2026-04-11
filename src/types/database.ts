@@ -64,10 +64,12 @@ export type Database = {
       };
       links: {
         Row: {
+          bg_color: string | null;
           created_at: string | null;
           icon: string | null;
           id: string;
           position: number | null;
+          text_color: string | null;
           title: string;
           updated_at: string | null;
           url: string;
@@ -75,10 +77,12 @@ export type Database = {
           visible: boolean | null;
         };
         Insert: {
+          bg_color?: string | null;
           created_at?: string | null;
           icon?: string | null;
           id?: string;
           position?: number | null;
+          text_color?: string | null;
           title: string;
           updated_at?: string | null;
           url: string;
@@ -86,10 +90,12 @@ export type Database = {
           visible?: boolean | null;
         };
         Update: {
+          bg_color?: string | null;
           created_at?: string | null;
           icon?: string | null;
           id?: string;
           position?: number | null;
+          text_color?: string | null;
           title?: string;
           updated_at?: string | null;
           url?: string;
@@ -147,6 +153,7 @@ export type Database = {
       profiles: {
         Row: {
           accent_color: string | null;
+          active_theme_id: string | null;
           avatar_url: string | null;
           background_color: string | null;
           bio: string | null;
@@ -164,6 +171,7 @@ export type Database = {
         };
         Insert: {
           accent_color?: string | null;
+          active_theme_id?: string | null;
           avatar_url?: string | null;
           background_color?: string | null;
           bio?: string | null;
@@ -181,6 +189,7 @@ export type Database = {
         };
         Update: {
           accent_color?: string | null;
+          active_theme_id?: string | null;
           avatar_url?: string | null;
           background_color?: string | null;
           bio?: string | null;
@@ -196,14 +205,139 @@ export type Database = {
           updated_at?: string | null;
           username?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "profiles_active_theme_id_fkey";
+            columns: ["active_theme_id"];
+            isOneToOne: false;
+            referencedRelation: "themes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      support_messages: {
+        Row: {
+          created_at: string;
+          email: string;
+          id: string;
+          message: string;
+          name: string;
+          read: boolean;
+          subject: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          id?: string;
+          message: string;
+          name: string;
+          read?: boolean;
+          subject: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          id?: string;
+          message?: string;
+          name?: string;
+          read?: boolean;
+          subject?: string;
+        };
         Relationships: [];
+      };
+      themes: {
+        Row: {
+          config: Json;
+          created_at: string;
+          description: string | null;
+          id: string;
+          is_active: boolean;
+          name: string;
+          preview_image_url: string | null;
+          price: number;
+          slug: string;
+        };
+        Insert: {
+          config?: Json;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean;
+          name: string;
+          preview_image_url?: string | null;
+          price?: number;
+          slug: string;
+        };
+        Update: {
+          config?: Json;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean;
+          name?: string;
+          preview_image_url?: string | null;
+          price?: number;
+          slug?: string;
+        };
+        Relationships: [];
+      };
+      user_themes: {
+        Row: {
+          id: string;
+          is_active: boolean;
+          purchased_at: string;
+          theme_id: string;
+          user_id: string;
+        };
+        Insert: {
+          id?: string;
+          is_active?: boolean;
+          purchased_at?: string;
+          theme_id: string;
+          user_id: string;
+        };
+        Update: {
+          id?: string;
+          is_active?: boolean;
+          purchased_at?: string;
+          theme_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_themes_theme_id_fkey";
+            columns: ["theme_id"];
+            isOneToOne: false;
+            referencedRelation: "themes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_themes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_user_link_leaderboard: {
+        Args: { p_user_id: string };
+        Returns: {
+          clicks: number;
+          link_id: string;
+          title: string;
+          url: string;
+        }[];
+      };
+      reorder_links: {
+        Args: { p_links: Json; p_user_id: string };
+        Returns: undefined;
+      };
     };
     Enums: {
       [_ in never]: never;

@@ -31,9 +31,9 @@ export default async function AdminLinksEditorPage() {
   return (
     <>
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pt-24 pb-32 lg:grid-cols-12">
-        {/* Preview Section (Top for Mobile, Side for Web) */}
-        <section className="relative order-1 flex flex-col justify-start lg:order-2 lg:col-span-5">
-          <div className="w-full lg:sticky lg:top-24">
+        {/* Preview Section — sticky with vertical centering */}
+        <section className="relative order-1 flex flex-col items-center justify-start lg:order-2 lg:col-span-5">
+          <div className="w-full lg:sticky lg:top-24 lg:flex lg:items-center lg:justify-center">
             <LivePreview profile={profile} links={links || []} />
           </div>
         </section>
@@ -49,7 +49,10 @@ export default async function AdminLinksEditorPage() {
             </p>
           </div>
 
-          <LinksClient initialLinks={links || []} />
+          <LinksClient
+            initialLinks={links || []}
+            profile={profile || { username: null }}
+          />
         </section>
       </main>
     </>

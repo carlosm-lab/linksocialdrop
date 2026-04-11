@@ -45,6 +45,8 @@ export const createLink = actionClient
         icon: parsedInput.icon || "link",
         position: nextPosition,
         visible: true,
+        bg_color: parsedInput.bg_color || null,
+        text_color: parsedInput.text_color || null,
       })
       .select()
       .single();
@@ -76,6 +78,8 @@ export const updateLink = actionClient
         title: parsedInput.title,
         url: parsedInput.url,
         icon: parsedInput.icon,
+        bg_color: parsedInput.bg_color ?? null,
+        text_color: parsedInput.text_color ?? null,
         ...(parsedInput.visible !== undefined && {
           visible: parsedInput.visible,
         }),

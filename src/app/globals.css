@@ -5,12 +5,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Fuentes */
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
-  --font-headline: "Epilogue", var(--font-sans);
-  --font-body: "Inter", var(--font-sans);
-  --font-label: "Inter", var(--font-sans);
+  /* Fuentes principales */
+  --font-sans: var(--font-inter);
+  --font-headline: "Epilogue", var(--font-inter);
+  --font-body: "Inter", var(--font-inter);
+  --font-label: "Inter", var(--font-inter);
+
+  /* Fuentes Google adicionales (switchable) */
+  --font-poppins: var(--font-poppins);
+  --font-outfit: var(--font-outfit);
+  --font-space-grotesk: var(--font-space-grotesk);
+  --font-dm-sans: var(--font-dm-sans);
+  --font-playfair: var(--font-playfair);
+  --font-roboto: var(--font-roboto);
 
   /* Paleta Extraida Pixel Perfect HTML Prototypes (Hex puros) */
   --color-surface: #111316;
@@ -257,4 +264,51 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid
     color-mix(in srgb, var(--color-outline-variant) 40%, transparent);
+}
+
+/* Button style variants for public profiles */
+.btn-glassmorphism {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-neon {
+  background: transparent;
+  border: 2px solid currentColor;
+  box-shadow:
+    0 0 12px currentColor,
+    inset 0 0 12px rgba(0, 245, 255, 0.05);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dynamic font utilities */
+.font-profile-inter {
+  font-family: var(--font-inter), sans-serif;
+}
+.font-profile-epilogue {
+  font-family: var(--font-headline), sans-serif;
+}
+.font-profile-poppins {
+  font-family: var(--font-poppins), sans-serif;
+}
+.font-profile-outfit {
+  font-family: var(--font-outfit), sans-serif;
+}
+.font-profile-space-grotesk {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+.font-profile-dm-sans {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+.font-profile-playfair {
+  font-family: var(--font-playfair), serif;
+}
+.font-profile-roboto {
+  font-family: var(--font-roboto), sans-serif;
 }
